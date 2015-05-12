@@ -1,0 +1,17 @@
+{
+  "env" : "developement",
+  "port" : "e",
+  "directory" : [
+    { "main" : "./main_directory" },
+    { "models"      : "./models" },
+    { "controllers" : "./controllers" },    
+    { "views"       : "./views" },    
+    { "public"      : "./public" },    
+    { "icons"       : "./public/icons" }            
+  ],
+  "encrypt_key" : {
+    "key"   : "6e67ae372ad6d85cfad1abc366823e28",
+    "type"  : "invalid-data"
+  },
+  "extend-data" : 1
+}

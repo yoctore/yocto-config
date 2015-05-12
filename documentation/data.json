@@ -1,0 +1,191 @@
+{
+    "project": {
+        "name": "yocto-config",
+        "description": "Config manager for a yocto stack usage",
+        "version": "0.0.1",
+        "url": ""
+    },
+    "files": {
+        "src/index.js": {
+            "name": "src/index.js",
+            "modules": {},
+            "classes": {
+                "Config": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "Config": {
+            "name": "Config",
+            "shortname": "Config",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/index.js",
+            "line": 11,
+            "description": "Yocto config controller. <br/>\nManage your configuration file (all / common / env  & specific file)\n\nConfig file has priority. And priority is defined like a php ini system.\n(Other file).json < all.json < common.json < development.json < stagging.json < production.json\n\nAll specific data must be configured on a each correct file.\n\nall.json contains general data (special keys, app name, etc) => not env data\ncommon.json must containt all common data between each env\ndevelopment data on development.json\nstagging data on stagging.json\nproduction data on production.json \n\nFor more details on these dependencies read links below :\n- yocto-logger : lab.yocto.digital:yocto-node-modules/yocto-logger.git\n- Lodash : https://lodash.com/\n- path : https://nodejs.org/api/path.html\n- joi : https://github.com/hapijs/joi\n- fs : https://nodejs.org/api/fs.html\n- glob : https://www.npmjs.com/package/glob",
+            "date": ": 12/05/2015",
+            "author": ": ROBERT Mathieu <mathieu@yocto.re>",
+            "copyright": ": Yocto SAS, All right reserved"
+        }
+    },
+    "classitems": [
+        {
+            "file": "src/index.js",
+            "line": 40,
+            "description": "Default config value",
+            "itemtype": "property",
+            "name": "config",
+            "type": "{String}",
+            "default": "{}",
+            "class": "Config"
+        },
+        {
+            "file": "src/index.js",
+            "line": 49,
+            "description": "Default state value, true if config state is or false otherwise",
+            "class": "Config"
+        },
+        {
+            "file": "src/index.js",
+            "line": 53,
+            "description": "Default env value",
+            "itemtype": "property",
+            "name": "env",
+            "type": "{String}",
+            "default": "development",
+            "class": "Config"
+        },
+        {
+            "file": "src/index.js",
+            "line": 62,
+            "description": "Default base path",
+            "itemtype": "property",
+            "name": "base",
+            "type": "string",
+            "class": "Config"
+        },
+        {
+            "file": "src/index.js",
+            "line": 70,
+            "description": "Default logger instance. can be override by set function",
+            "itemtype": "property",
+            "name": "logger",
+            "type": "Object",
+            "class": "Config"
+        },
+        {
+            "file": "src/index.js",
+            "line": 78,
+            "description": "Default schema validation for config validator",
+            "itemtype": "property",
+            "name": "schema",
+            "type": "Object",
+            "class": "Config"
+        },
+        {
+            "file": "src/index.js",
+            "line": 147,
+            "description": "Default set function, a value to a specific params",
+            "itemtype": "method",
+            "name": "set",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "current name to use",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "current value to assign on params name",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "current value to assign on params name",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "Config"
+        },
+        {
+            "file": "src/index.js",
+            "line": 178,
+            "description": "Return correct property from given name",
+            "itemtype": "method",
+            "name": "get",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "the property name",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "needed data",
+                "type": "Mixed"
+            },
+            "class": "Config"
+        },
+        {
+            "file": "src/index.js",
+            "line": 189,
+            "description": "Reload data",
+            "itemtype": "method",
+            "name": "reload",
+            "params": [
+                {
+                    "name": "base",
+                    "description": "if base exists and is valid reassign base and reload",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "true if load succeed false otherwise",
+                "type": "Boolean"
+            },
+            "class": "Config"
+        },
+        {
+            "file": "src/index.js",
+            "line": 206,
+            "description": "Default load function, load data from all.js constant file",
+            "itemtype": "method",
+            "name": "load",
+            "return": {
+                "description": "return true if load is ok false otherwise",
+                "type": "Boolean"
+            },
+            "class": "Config"
+        },
+        {
+            "file": "src/index.js",
+            "line": 281,
+            "description": "Export the ConfController",
+            "class": "Config"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "unknown tag: date",
+            "line": " src/index.js:11"
+        },
+        {
+            "message": "unknown tag: copyright",
+            "line": " src/index.js:11"
+        },
+        {
+            "message": "Missing item type\nDefault state value, true if config state is or false otherwise",
+            "line": " src/index.js:49"
+        },
+        {
+            "message": "Missing item type\nExport the ConfController",
+            "line": " src/index.js:281"
+        }
+    ]
+}

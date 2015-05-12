@@ -1,0 +1,46 @@
+{
+  "app" : {
+    "name" : "myAppName",
+    "stackError" : "e",
+    "session" : {
+      "timeout" : "a"
+    }
+  },
+  "express" : {
+    "jsonp"       : true,       
+    "prettyHtml"  : true,
+    "filter"      : {
+      "rules" : "json|text|javascript|css|html",
+      "by"    : "Content-Type",
+      "level" : 9
+    },
+    "viewEngine" : "another value",
+    "session" : {
+      "enable" : true,
+      "options" : {
+        "secret" : "15Octobre2014",
+        "name" : "mySessionName",
+        "secure" : true,
+        "genuuid" : true,
+        "proxy" : true,
+        "resave" : true,
+        "saveUninitialized" : true
+      }
+    },
+    "vhost" : {
+      "enable"      : false,
+      "options" : {
+        "url"         : "myhosturl.url",
+        "aliases"     : [ "alias.myhosturl.url" ],      
+        "subdomains"  : true,
+        "http"        : {
+          "redirect" : {
+            "type" : 301,
+            "url"  : "www.myurl.url",
+            "port" : 80
+          }
+        }
+      }
+    }
+  }
+}
