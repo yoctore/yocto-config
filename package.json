@@ -4,6 +4,29 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {},
+  "homepage": "http://www.yocto.re",
+  "author": {
+    "name": "Yocto SAS <http://www.yocto.re>"
+  },
+  "contributors": [
+    {
+      "name": "ROBERT Mathieu",
+      "email": "mathieu@yocto.re"
+    }
+  ],
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh:://git@lab.yocto.digital:yocto-node-modules/yocto-config.git"
+  },
+  "engines": {
+    "node": ">=0.12.2"
+  },
+  "files": [
+    "dist",
+    "documentation",
+    "example"
+  ],    
   "dependencies": {
     "glob": "^5.0.5",
     "joi": "^6.4.1",
