@@ -3,7 +3,7 @@
         "name": "yocto-config",
         "description": "Config manager for a yocto stack usage",
         "version": "0.0.1",
-        "url": ""
+        "url": "http://www.yocto.re"
     },
     "files": {
         "src/index.js": {
@@ -28,7 +28,7 @@
             "extension_for": [],
             "file": "src/index.js",
             "line": 11,
-            "description": "Yocto config controller. <br/>\nManage your configuration file (all / common / env  & specific file)\n\nConfig file has priority. And priority is defined like a php ini system.\n(Other file).json < all.json < common.json < development.json < stagging.json < production.json\n\nAll specific data must be configured on a each correct file.\n\nall.json contains general data (special keys, app name, etc) => not env data\ncommon.json must containt all common data between each env\ndevelopment data on development.json\nstagging data on stagging.json\nproduction data on production.json \n\nFor more details on these dependencies read links below :\n- yocto-logger : lab.yocto.digital:yocto-node-modules/yocto-logger.git\n- Lodash : https://lodash.com/\n- path : https://nodejs.org/api/path.html\n- joi : https://github.com/hapijs/joi\n- fs : https://nodejs.org/api/fs.html\n- glob : https://www.npmjs.com/package/glob",
+            "description": "Yocto config controller. <br/>\nManage your configuration file (all / common / env  & specific file)\n\nConfig file has priority. And priority is defined like a php ini system.\n(Other file).json < all.json < common.json < development.json < stagging.json < production.json\n\nAll specific data must be configured on a each correct file.\n\nall.json : contains general data (special keys, app name, etc) => not env data\ncommon.json : must containt all common data between each env\ndevelopment.json : must contains development data for development environnement\nstaging.json : must contains stagging data for staging environnement\nproduction.json : must contains production data for production environnement \n\nFor more details on these dependencies read links below :\n- yocto-logger : lab.yocto.digital:yocto-node-modules/yocto-logger.git\n- Lodash : https://lodash.com/\n- path : https://nodejs.org/api/path.html\n- joi : https://github.com/hapijs/joi\n- fs : https://nodejs.org/api/fs.html\n- glob : https://www.npmjs.com/package/glob",
             "date": ": 12/05/2015",
             "author": ": ROBERT Mathieu <mathieu@yocto.re>",
             "copyright": ": Yocto SAS, All right reserved"

@@ -17,11 +17,11 @@ var util     = require('util');
  *
  * All specific data must be configured on a each correct file.
  * 
- * all.json contains general data (special keys, app name, etc) => not env data
- * common.json must containt all common data between each env
- * development data on development.json
- * stagging data on stagging.json
- * production data on production.json 
+ * all.json : contains general data (special keys, app name, etc) => not env data
+ * common.json : must containt all common data between each env
+ * development.json : must contains development data for development environnement
+ * staging.json : must contains stagging data for staging environnement
+ * production.json : must contains production data for production environnement 
  *
  * For more details on these dependencies read links below :
  * - yocto-logger : lab.yocto.digital:yocto-node-modules/yocto-logger.git
@@ -233,11 +233,11 @@ Config.prototype.load = function() {
       var all         = path.normalize([ this.base, 'all.json' ].join('/'));
       var common      = path.normalize([ this.base, 'common.json' ].join('/'));
       var development = path.normalize([ this.base, 'development.json' ].join('/'));
-      var stagging    = path.normalize([ this.base, 'stagging.json' ].join('/'));
+      var staging     = path.normalize([ this.base, 'staging.json' ].join('/'));
       var production  = path.normalize([ this.base, 'production.json' ].join('/'));
       
       // return data order
-      return [ p == production, p == stagging,  p == development, p == common, p == all, p == p ].join('|');                         
+      return [ p == production, p == staging,  p == development, p == common, p == all, p == p ].join('|');                         
     }, this);
     
     // parse all and merge if no error
