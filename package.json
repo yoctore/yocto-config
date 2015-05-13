@@ -1,7 +1,7 @@
 {
   "name": "yocto-config",
   "description": "Config manager for a yocto stack usage",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "scripts": {},
   "homepage": "http://www.yocto.re",
