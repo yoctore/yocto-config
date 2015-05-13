@@ -82,8 +82,8 @@ If we merge data for *production* envrionement we get this output :
  "allB" : 2
  "commonA" : 3
  "commonB" : 4
- "devA" : 7
- "devB" : 8
+ "devA" : 9
+ "devB" : 10
 }
 
 // staging value are changed by production data
