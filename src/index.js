@@ -155,13 +155,12 @@ function Config() {
 Config.prototype.set = function(name, value) {
   // check requirements
   if (!_.isUndefined(name) && _.isString(name) && !_.isEmpty(name)) {
-    
     // need to normalize path ?
     if (name == 'base') {
       // is relative path ?
       if (value.charAt(0) == '.') {
         // normalize
-        value = path.normalize([ __dirname, value ].join('/'));
+        value = path.normalize([ process.cwd(), value ].join('/'));
       }
     }
 

@@ -15,6 +15,7 @@ describe('Config()', function() {
       './example/myinvlidpath',
       './example/myinvlidpath2',
       './example/myinvlidpath4',
+      '../example/config',      
       '/Users/yocto/Documents/Yocto/projets/yocto-node-modules/yocto-config/example/configeeee'
     ];
     
@@ -28,7 +29,7 @@ describe('Config()', function() {
 
   describe('load() must return true with a valid config path AND valid config file', function() {    
     var paths = [
-      '../example/config',
+      './example/config',
       '/Users/yocto/Documents/Yocto/projets/yocto-node-modules/yocto-config/example/config'
     ];
     

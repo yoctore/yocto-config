@@ -83,6 +83,9 @@
    grunt.loadNpmTasks('grunt-contrib-yuidoc');
    grunt.loadNpmTasks('grunt-mocha-cli');
 
-   // register task 
-   grunt.registerTask('default', [ 'jshint', 'mochacli','yuidoc', 'uglify']);
+   // register tasks
+   grunt.registerTask('default', [ 'jshint', 'mochacli','yuidoc', 'uglify' ]);
+   grunt.registerTask('norme', 'jshint');   
+   grunt.registerTask('tests', 'mochacli');   
+   grunt.registerTask('build', [ 'jshint', 'yuidoc', 'uglify' ]);
  };
