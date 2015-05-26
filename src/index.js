@@ -264,6 +264,23 @@ Config.prototype.load = function() {
       throw 'Config validation failed';
     }
     
+    // build directory value to UPPERCASE constants
+    _.each(config.directory, function(dir) {
+      // build path
+      var p = [ _.values(dir), 'directory' ].join('_').toLowerCase();
+
+      // is relative path ?
+      if (_.first(_.values(dir)).charAt(0) == '.') {
+        p = path.normalize([ process.cwd(), p ].join('/'));              
+      }
+
+      // build key            
+      var k = [ _.first(_.keys(dir)), 'directory' ].join('_').toUpperCase();
+      
+      // assign
+      this[k] = p;
+    }, this);
+        
     // valid so assign config
     this.config = config;
     this.logger.info([ '[ Config.load ] - Success - Config file was changed with files based on :', this.base ].join(' '));

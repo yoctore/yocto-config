@@ -165,7 +165,7 @@
         },
         {
             "file": "src/index.js",
-            "line": 280,
+            "line": 297,
             "description": "Export the ConfController",
             "class": "Config"
         }
@@ -185,7 +185,7 @@
         },
         {
             "message": "Missing item type\nExport the ConfController",
-            "line": " src/index.js:280"
+            "line": " src/index.js:297"
         }
     ]
 }
