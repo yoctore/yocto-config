@@ -267,10 +267,10 @@ Config.prototype.load = function() {
     // build directory value to UPPERCASE constants
     _.each(config.directory, function(dir) {
       // build path
-      var p = [ _.values(dir), 'directory' ].join('_').toLowerCase();
+      var p = _.first(_.values(dir));
 
       // is relative path ?
-      if (_.first(_.values(dir)).charAt(0) == '.') {
+      if (p.charAt(0) == '.') {
         p = path.normalize([ process.cwd(), p ].join('/'));              
       }
 
