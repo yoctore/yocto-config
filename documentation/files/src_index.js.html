@@ -361,7 +361,10 @@ Config.prototype.load = function() {
       // assign
       this[k] = p;
     }, this);
-        
+    
+    // change state
+    this.state = true;
+
     // valid so assign config
     this.config = config;
     this.logger.info([ &#x27;[ Config.load ] - Success - Config file was changed with files based on :&#x27;, this.base ].join(&#x27; &#x27;));
