@@ -173,7 +173,7 @@ function Config() {
       express : joi.object().required().keys({
         jsonp       : joi.boolean().required(),
         prettyHtml  : joi.boolean().required(),
-        viewEngine  : joi.boolean().required().allow(&#x27;jade&#x27;),
+        viewEngine  : joi.string().required().allow(&#x27;jade&#x27;),
         filter      : joi.object().required().keys({
           rules : joi.string().required().empty(),
           by    : joi.string().required().allow(&#x27;Content-Type&#x27;), // for the moment only allow content type
