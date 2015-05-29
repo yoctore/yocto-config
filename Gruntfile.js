@@ -74,18 +74,40 @@
           'bail'           : false
         },
         all : [ 'test/*.js' ]
-      }
-   });
+      },
+ 
+     /**
+      * Todo process
+      */
+      todo : {
+        options : {
+          marks: [
+            { name : "TODO", pattern : /TODO/, color : "yellow" },
+            { name : "FIXME", pattern : /FIXME/, color : "red" },
+            { name : "NOTE", pattern : /NOTE/, color : "blue" }
+          ],
+          file : "REPORT.md",
+          githubBoxes : true,
+          colophon : true,
+          usePackage : true
+        },
+        src : [
+          'src/*'
+        ]
+      }      
+    });
 
    // Load the plugins
    grunt.loadNpmTasks('grunt-contrib-jshint');
    grunt.loadNpmTasks('grunt-contrib-uglify');
    grunt.loadNpmTasks('grunt-contrib-yuidoc');
    grunt.loadNpmTasks('grunt-mocha-cli');
-
+   grunt.loadNpmTasks('grunt-todo');
+   
    // register tasks
-   grunt.registerTask('default', [ 'jshint', 'mochacli','yuidoc', 'uglify' ]);
+   grunt.registerTask('default', [ 'jshint', 'mochacli','yuidoc', 'uglify', 'todo' ]);
    grunt.registerTask('norme', 'jshint');   
    grunt.registerTask('tests', 'mochacli');   
+   grunt.registerTask('report', 'todo');   
    grunt.registerTask('build', [ 'jshint', 'yuidoc', 'uglify' ]);
  };

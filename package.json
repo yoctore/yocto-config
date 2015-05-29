@@ -1,7 +1,7 @@
 {
   "name": "yocto-config",
   "description": "Config manager for a yocto stack usage",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {},
   "homepage": "http://www.yocto.re",
@@ -26,7 +26,7 @@
     "dist",
     "documentation",
     "example"
-  ],    
+  ],
   "dependencies": {
     "glob": "^5.0.5",
     "joi": "^6.4.1",
@@ -40,6 +40,7 @@
     "grunt-contrib-nodeunit": "~0.4.1",
     "grunt-contrib-uglify": "~0.5.0",
     "grunt-contrib-yuidoc": "^0.7.0",
-    "grunt-mocha-cli": "^1.13.0"
+    "grunt-mocha-cli": "^1.13.0",
+    "grunt-todo": "^0.5.0"
   }
 }
