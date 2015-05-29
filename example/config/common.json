@@ -13,9 +13,7 @@
       "by"    : "Content-Type",
       "level" : 9
     },
-    "cookieParser" : true,
-    "json" : true,
-    "multipart" : true,
+
     "viewEngine" : "jade",
     "session" : {
       "options" : {

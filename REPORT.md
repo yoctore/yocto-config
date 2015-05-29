@@ -1,6 +1,6 @@
 # [yocto-config]( http://www.yocto.re )
 
-**Version:** `0.1.0`
+**Version:** `0.2.0`
 
 > Config manager for a yocto stack usage
 
@@ -15,4 +15,4 @@
 
 * * *
 
-Last generated: Fri May 29 2015 14:16:35 by [grunt-todo](https://github.com/leny/grunt-todo).
+Last generated: Fri May 29 2015 14:31:50 by [grunt-todo](https://github.com/leny/grunt-todo).

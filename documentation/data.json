@@ -2,7 +2,7 @@
     "project": {
         "name": "yocto-config",
         "description": "Config manager for a yocto stack usage",
-        "version": "0.1.0",
+        "version": "0.2.0",
         "url": "http://www.yocto.re"
     },
     "files": {

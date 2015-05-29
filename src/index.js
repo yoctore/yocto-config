@@ -99,9 +99,9 @@ function Config() {
           by    : joi.string().default('Content-Type').allow('Content-Type'), // for the moment only allow content type
           level : joi.number().default(9).min(0).max(9)
         }).allow('rules', 'by', 'level'),
-        cookieParser  : joi.boolean().required().default(false),
-        json          : joi.boolean().required().default(false),
-        multipart     : joi.boolean().required().default(false),        
+        cookieParser  : joi.boolean().default(false),
+        json          : joi.boolean().default(false),
+        multipart     : joi.boolean().default(false),        
         session :  joi.object().default({ enable : false }).keys({
           enable : joi.boolean().default(true),
           options : joi.object().optional().keys({

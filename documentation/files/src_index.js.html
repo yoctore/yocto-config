@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="yocto-config" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.1.0</em>
+            <em>API Docs for: 0.2.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -180,9 +180,9 @@ function Config() {
           by    : joi.string().default(&#x27;Content-Type&#x27;).allow(&#x27;Content-Type&#x27;), // for the moment only allow content type
           level : joi.number().default(9).min(0).max(9)
         }).allow(&#x27;rules&#x27;, &#x27;by&#x27;, &#x27;level&#x27;),
-        cookieParser  : joi.boolean().required().default(false),
-        json          : joi.boolean().required().default(false),
-        multipart     : joi.boolean().required().default(false),        
+        cookieParser  : joi.boolean().default(false),
+        json          : joi.boolean().default(false),
+        multipart     : joi.boolean().default(false),        
         session :  joi.object().default({ enable : false }).keys({
           enable : joi.boolean().default(true),
           options : joi.object().optional().keys({
