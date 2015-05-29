@@ -98,7 +98,8 @@ var util     = require(&#x27;util&#x27;);
  *
  * All specific data must be configured on a each correct file.
  * 
- * all.json : contains general data (special keys, app name, etc) =&gt; not env data
+ * all.json : contains general data (speci
+ al keys, app name, etc) =&gt; not env data
  * common.json : must containt all common data between each env
  * development.json : must contains development data for development environnement
  * staging.json : must contains stagging data for staging environnement
@@ -146,7 +147,7 @@ function Config() {
      * @property base
      * @type string
      */
-    this.base = path.normalize([ &#x27;./&#x27;, __dirname ].join(&#x27;&#x27;));
+    this.base = path.normalize([ process.cwd(), __dirname ].join(&#x27;&#x27;));
     
     /**
      * Default logger instance. can be override by set function
@@ -165,62 +166,73 @@ function Config() {
     this.schema = joi.object().min(1).keys({
       app : joi.object().required().keys({
         name        : joi.string().required().empty().min(3),
-        stackError  : joi.boolean().required(),
-        session     : joi.object().required().keys({
-          timeout : joi.number().required()
+        stackError  : joi.boolean().default(true),
+        session     : joi.object().default({ timeout : 50000 }).keys({
+          timeout : joi.number().default(500000)
         }).allow(&#x27;timeout&#x27;)        
       }).allow(&#x27;name&#x27;, &#x27;stackError&#x27;, &#x27;session&#x27;),
       express : joi.object().required().keys({
-        jsonp       : joi.boolean().required(),
-        prettyHtml  : joi.boolean().required(),
-        viewEngine  : joi.string().required().allow(&#x27;jade&#x27;),
-        filter      : joi.object().required().keys({
-          rules : joi.string().required().empty(),
-          by    : joi.string().required().allow(&#x27;Content-Type&#x27;), // for the moment only allow content type
-          level : joi.number().required().min(0).max(9)
+        jsonp       : joi.boolean().default(false),
+        prettyHtml  : joi.boolean().default(true),
+        viewEngine  : joi.string().empty().default(&#x27;jade&#x27;).allow(&#x27;jade&#x27;),
+        filter      : joi.object().default({ rules : &#x27;json|text|javascript|css|html&#x27;, by : &#x27;Content-type&#x27;, level : 9 }).keys({
+          rules : joi.string().default(&#x27;json|text|javascript|css|html&#x27;).empty(),
+          by    : joi.string().default(&#x27;Content-Type&#x27;).allow(&#x27;Content-Type&#x27;), // for the moment only allow content type
+          level : joi.number().default(9).min(0).max(9)
         }).allow(&#x27;rules&#x27;, &#x27;by&#x27;, &#x27;level&#x27;),
-        session :  joi.object().required().keys({
-          enable : joi.boolean().required(),
+        cookieParser  : joi.boolean().required().default(false),
+        json          : joi.boolean().required().default(false),
+        multipart     : joi.boolean().required().default(false),        
+        session :  joi.object().default({ enable : false }).keys({
+          enable : joi.boolean().default(true),
           options : joi.object().optional().keys({
-            secret  : joi.string().required().min(8),
-            name              : joi.string().required().min(5),
-            secure            : joi.boolean().required(),
-            genuuid           : joi.boolean().required(),            
-            proxy             : joi.boolean().required(),
-            resave            : joi.boolean().required(),
-            saveUninitialized : joi.boolean().required()                        
-          }).allow(&#x27;secret&#x27;, &#x27;name&#x27;, &#x27;secure&#x27;, &#x27;genuuid&#x27;, &#x27;proxy&#x27;, &#x27;resave&#x27;, &#x27;saveUninitialized&#x27;)
+            cookie : joi.object().default({ path : &#x27;/&#x27;, httpOnly : false, secure : true, maxAge : null }).keys({
+              path      : joi.string().optional().default(&#x27;/&#x27;),
+              httpOnly  : joi.boolean().optional().default(false),              
+            	secure    : joi.boolean().optional().default(true),
+              maxAge    : joi.number().optional().default(null)
+            }).allow(&#x27;path&#x27;, &#x27;httpOnly&#x27;, &#x27;secure&#x27;, &#x27;maxAge&#x27;),
+            secret            : joi.string().optional().min(8).default(&#x27;yocto-config-secret-key&#x27;),
+            name              : joi.string().optional().min(5).default(&#x27;connect.sid&#x27;),
+            genuuid           : joi.boolean().optional().default(false),            
+            proxy             : joi.boolean().optional().default(undefined),
+            resave            : joi.boolean().optional().default(false),
+            saveUninitialized : joi.boolean().optional().default(true),
+            rolling           : joi.boolean().optional().default(false),
+          }).allow(&#x27;cookie&#x27;, &#x27;secret&#x27;, &#x27;name&#x27;, &#x27;genuuid&#x27;, &#x27;proxy&#x27;, &#x27;resave&#x27;, &#x27;saveUninitialized&#x27;, &#x27;rolling&#x27;)
         }).allow(&#x27;enable&#x27;, &#x27;options&#x27;),
-        vhost : joi.object().required().keys({
-          enable : joi.boolean().required(),
+        // TODO : if we need to integrate vhost, we must to complete these rules
+        vhost : joi.object().optional().keys({
+          enable : joi.boolean().required().default(false),
           options : joi.object().optional().keys({
-            url     : joi.string().required(),
+            url     : joi.string().required().default(&#x27;/&#x27;),
             aliases : joi.array().items(
               joi.string().required().empty()
             ),
-            subdomains : joi.boolean().required(),
-            http : joi.object().required().keys({
+            subdomains : joi.boolean().required().default(false),
+            http : joi.object().optional().keys({
               redirect : joi.object().required().keys({
                 type     : joi.number(),
                 url      : joi.string().required().empty(),
                 port     : joi.number().required()
               }).allow(&#x27;type&#x27;, &#x27;url&#x27;, &#x27;port&#x27;)
-            }).allow(&#x27;redirect&#x27;) 
+            }).allow(&#x27;redirect&#x27;)
           }).allow(&#x27;url&#x27;, &#x27;aliases&#x27;, &#x27;subdomains&#x27;, &#x27;http&#x27;)
         }).allow(&#x27;enable&#x27;, &#x27;options&#x27;)
       }),
-      env       : joi.string().required().valid([ &#x27;development&#x27;, &#x27;staging&#x27;, &#x27;production&#x27; ]),
-      port      : joi.number().required(),
-      directory : joi.array().required().items([
-        joi.object().required().keys({ models       :  joi.string().required().empty().min(3) }),
-        joi.object().required().keys({ controllers  :  joi.string().required().empty().min(3) }),
-        joi.object().required().keys({ views        :  joi.string().required().empty().min(3) }),
-        joi.object().required().keys({ public       :  joi.string().required().empty().min(3) }),
-        joi.object().required().keys({ icons        :  joi.string().required().empty().min(3) })                                
+      env       : joi.string().default(&#x27;development&#x27;).empty().valid([ &#x27;development&#x27;, &#x27;staging&#x27;, &#x27;production&#x27; ]),
+      port      : joi.number().default(3000),
+      directory : joi.array().min(1).unique().default([ { models : &#x27;/&#x27; }, { controllers : &#x27;/&#x27; }, { views : &#x27;/&#x27; }, { public : &#x27;/&#x27; }, { icons : &#x27;/&#x27; } ]).items([
+        joi.object().required().keys({ models       :  joi.string().empty().min(2).default(&#x27;/&#x27;) }),
+        joi.object().required().keys({ controllers  :  joi.string().empty().min(2).default(&#x27;/&#x27;) }),
+        joi.object().required().keys({ views        :  joi.string().empty().min(2).default(&#x27;/&#x27;) }),
+        joi.object().required().keys({ public       :  joi.string().empty().min(2).default(&#x27;/&#x27;) }),
+        joi.object().required().keys({ icons        :  joi.string().empty().min(2).default(&#x27;/&#x27;) }),
+        joi.object().empty()
       ]),
-      encrypt_key : joi.object().required().keys({
-        key   : joi.string().required(),
-        type  : joi.string().required().valid([ &#x27;ascii&#x27;, &#x27;utf8&#x27;, &#x27;utf16le&#x27;, &#x27;ucs2&#x27;, &#x27;base64&#x27;, &#x27;binary&#x27;, &#x27;hex&#x27; ])
+      encrypt_key : joi.object().default({ key : &#x27;MyAppKey&#x27;, type : &#x27;hex&#x27; }).keys({
+        key   : joi.string().default(&#x27;MyAppKey&#x27;).empty(),
+        type  : joi.string().default(&#x27;hex&#x27;).valid([ &#x27;ascii&#x27;, &#x27;utf8&#x27;, &#x27;utf16le&#x27;, &#x27;ucs2&#x27;, &#x27;base64&#x27;, &#x27;binary&#x27;, &#x27;hex&#x27; ])
       })
     }).unknown(true);
 }
@@ -366,7 +378,7 @@ Config.prototype.load = function() {
     this.state = true;
 
     // valid so assign config
-    this.config = config;
+    this.config = result.value;
     this.logger.info([ &#x27;[ Config.load ] - Success - Config file was changed with files based on :&#x27;, this.base ].join(&#x27; &#x27;));
   } catch (e) {
       this.logger.error([ &#x27;[ Config.load ] - an error occured during load config file. Error is :&#x27;, e ].join(&#x27; &#x27;));

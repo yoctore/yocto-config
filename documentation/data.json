@@ -28,7 +28,7 @@
             "extension_for": [],
             "file": "src/index.js",
             "line": 11,
-            "description": "Yocto config controller. <br/>\nManage your configuration file (all / common / env  & specific file)\n\nConfig file has priority. And priority is defined like a php ini system.\n(Other file).json < all.json < common.json < development.json < stagging.json < production.json\n\nAll specific data must be configured on a each correct file.\n\nall.json : contains general data (special keys, app name, etc) => not env data\ncommon.json : must containt all common data between each env\ndevelopment.json : must contains development data for development environnement\nstaging.json : must contains stagging data for staging environnement\nproduction.json : must contains production data for production environnement \n\nFor more details on these dependencies read links below :\n- yocto-logger : lab.yocto.digital:yocto-node-modules/yocto-logger.git\n- Lodash : https://lodash.com/\n- path : https://nodejs.org/api/path.html\n- joi : https://github.com/hapijs/joi\n- fs : https://nodejs.org/api/fs.html\n- glob : https://www.npmjs.com/package/glob",
+            "description": "Yocto config controller. <br/>\nManage your configuration file (all / common / env  & specific file)\n\nConfig file has priority. And priority is defined like a php ini system.\n(Other file).json < all.json < common.json < development.json < stagging.json < production.json\n\nAll specific data must be configured on a each correct file.\n\nall.json : contains general data (speci\nal keys, app name, etc) => not env data\ncommon.json : must containt all common data between each env\ndevelopment.json : must contains development data for development environnement\nstaging.json : must contains stagging data for staging environnement\nproduction.json : must contains production data for production environnement \n\nFor more details on these dependencies read links below :\n- yocto-logger : lab.yocto.digital:yocto-node-modules/yocto-logger.git\n- Lodash : https://lodash.com/\n- path : https://nodejs.org/api/path.html\n- joi : https://github.com/hapijs/joi\n- fs : https://nodejs.org/api/fs.html\n- glob : https://www.npmjs.com/package/glob",
             "date": ": 12/05/2015",
             "author": ": ROBERT Mathieu <mathieu@yocto.re>",
             "copyright": ": Yocto SAS, All right reserved"
@@ -37,7 +37,7 @@
     "classitems": [
         {
             "file": "src/index.js",
-            "line": 40,
+            "line": 41,
             "description": "Default config value",
             "itemtype": "property",
             "name": "config",
@@ -47,13 +47,13 @@
         },
         {
             "file": "src/index.js",
-            "line": 49,
+            "line": 50,
             "description": "Default state value, true if config state is or false otherwise",
             "class": "Config"
         },
         {
             "file": "src/index.js",
-            "line": 53,
+            "line": 54,
             "description": "Default env value",
             "itemtype": "property",
             "name": "env",
@@ -63,7 +63,7 @@
         },
         {
             "file": "src/index.js",
-            "line": 62,
+            "line": 63,
             "description": "Default base path",
             "itemtype": "property",
             "name": "base",
@@ -72,7 +72,7 @@
         },
         {
             "file": "src/index.js",
-            "line": 70,
+            "line": 71,
             "description": "Default logger instance. can be override by set function",
             "itemtype": "property",
             "name": "logger",
@@ -81,7 +81,7 @@
         },
         {
             "file": "src/index.js",
-            "line": 78,
+            "line": 79,
             "description": "Default schema validation for config validator",
             "itemtype": "property",
             "name": "schema",
@@ -90,7 +90,7 @@
         },
         {
             "file": "src/index.js",
-            "line": 147,
+            "line": 159,
             "description": "Default set function, a value to a specific params",
             "itemtype": "method",
             "name": "set",
@@ -115,7 +115,7 @@
         },
         {
             "file": "src/index.js",
-            "line": 177,
+            "line": 189,
             "description": "Return correct property from given name",
             "itemtype": "method",
             "name": "get",
@@ -134,7 +134,7 @@
         },
         {
             "file": "src/index.js",
-            "line": 188,
+            "line": 200,
             "description": "Reload data",
             "itemtype": "method",
             "name": "reload",
@@ -153,7 +153,7 @@
         },
         {
             "file": "src/index.js",
-            "line": 205,
+            "line": 217,
             "description": "Default load function, load data from all.js constant file",
             "itemtype": "method",
             "name": "load",
@@ -165,7 +165,7 @@
         },
         {
             "file": "src/index.js",
-            "line": 300,
+            "line": 312,
             "description": "Export the ConfController",
             "class": "Config"
         }
@@ -181,11 +181,11 @@
         },
         {
             "message": "Missing item type\nDefault state value, true if config state is or false otherwise",
-            "line": " src/index.js:49"
+            "line": " src/index.js:50"
         },
         {
             "message": "Missing item type\nExport the ConfController",
-            "line": " src/index.js:300"
+            "line": " src/index.js:312"
         }
     ]
 }

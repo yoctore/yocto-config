@@ -1,7 +1,6 @@
 {
   "app" : {
     "name" : "myAppName",
-    "stackError" : true,
     "session" : {
       "timeout" : 30
     }
@@ -14,17 +13,13 @@
       "by"    : "Content-Type",
       "level" : 9
     },
+    "cookieParser" : true,
+    "json" : true,
+    "multipart" : true,
     "viewEngine" : "jade",
     "session" : {
-      "enable" : true,
       "options" : {
-        "secret" : "15Octobre2014",
-        "name" : "mySessionName",
-        "secure" : true,
-        "genuuid" : true,
-        "proxy" : true,
-        "resave" : true,
-        "saveUninitialized" : true
+        "cookie" : {}
       }
     },
     "vhost" : {

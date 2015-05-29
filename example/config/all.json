@@ -6,7 +6,8 @@
     { "controllers" : "./my/path/to/controllers" },    
     { "views"       : "./my/path/to/views" },    
     { "public"      : "./my/path/to/public" },    
-    { "icons"       : "./my/path/to/public/icons" }            
+    { "icons"       : "./my/path/to/public/icons" },
+    { "test"        : "/test" }            
   ],
   "encrypt_key" : {
     "key"   : "6e67ae372ad6d85cfad1abc366823e28",

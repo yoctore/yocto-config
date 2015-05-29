@@ -17,7 +17,8 @@ var util     = require('util');
  *
  * All specific data must be configured on a each correct file.
  * 
- * all.json : contains general data (special keys, app name, etc) => not env data
+ * all.json : contains general data (speci
+ al keys, app name, etc) => not env data
  * common.json : must containt all common data between each env
  * development.json : must contains development data for development environnement
  * staging.json : must contains stagging data for staging environnement
@@ -65,7 +66,7 @@ function Config() {
      * @property base
      * @type string
      */
-    this.base = path.normalize([ './', __dirname ].join(''));
+    this.base = path.normalize([ process.cwd(), __dirname ].join(''));
     
     /**
      * Default logger instance. can be override by set function
@@ -84,62 +85,73 @@ function Config() {
     this.schema = joi.object().min(1).keys({
       app : joi.object().required().keys({
         name        : joi.string().required().empty().min(3),
-        stackError  : joi.boolean().required(),
-        session     : joi.object().required().keys({
-          timeout : joi.number().required()
+        stackError  : joi.boolean().default(true),
+        session     : joi.object().default({ timeout : 50000 }).keys({
+          timeout : joi.number().default(500000)
         }).allow('timeout')        
       }).allow('name', 'stackError', 'session'),
       express : joi.object().required().keys({
-        jsonp       : joi.boolean().required(),
-        prettyHtml  : joi.boolean().required(),
-        viewEngine  : joi.string().required().allow('jade'),
-        filter      : joi.object().required().keys({
-          rules : joi.string().required().empty(),
-          by    : joi.string().required().allow('Content-Type'), // for the moment only allow content type
-          level : joi.number().required().min(0).max(9)
+        jsonp       : joi.boolean().default(false),
+        prettyHtml  : joi.boolean().default(true),
+        viewEngine  : joi.string().empty().default('jade').allow('jade'),
+        filter      : joi.object().default({ rules : 'json|text|javascript|css|html', by : 'Content-type', level : 9 }).keys({
+          rules : joi.string().default('json|text|javascript|css|html').empty(),
+          by    : joi.string().default('Content-Type').allow('Content-Type'), // for the moment only allow content type
+          level : joi.number().default(9).min(0).max(9)
         }).allow('rules', 'by', 'level'),
-        session :  joi.object().required().keys({
-          enable : joi.boolean().required(),
+        cookieParser  : joi.boolean().required().default(false),
+        json          : joi.boolean().required().default(false),
+        multipart     : joi.boolean().required().default(false),        
+        session :  joi.object().default({ enable : false }).keys({
+          enable : joi.boolean().default(true),
           options : joi.object().optional().keys({
-            secret  : joi.string().required().min(8),
-            name              : joi.string().required().min(5),
-            secure            : joi.boolean().required(),
-            genuuid           : joi.boolean().required(),            
-            proxy             : joi.boolean().required(),
-            resave            : joi.boolean().required(),
-            saveUninitialized : joi.boolean().required()                        
-          }).allow('secret', 'name', 'secure', 'genuuid', 'proxy', 'resave', 'saveUninitialized')
+            cookie : joi.object().default({ path : '/', httpOnly : false, secure : true, maxAge : null }).keys({
+              path      : joi.string().optional().default('/'),
+              httpOnly  : joi.boolean().optional().default(false),              
+            	secure    : joi.boolean().optional().default(true),
+              maxAge    : joi.number().optional().default(null)
+            }).allow('path', 'httpOnly', 'secure', 'maxAge'),
+            secret            : joi.string().optional().min(8).default('yocto-config-secret-key'),
+            name              : joi.string().optional().min(5).default('connect.sid'),
+            genuuid           : joi.boolean().optional().default(false),            
+            proxy             : joi.boolean().optional().default(undefined),
+            resave            : joi.boolean().optional().default(false),
+            saveUninitialized : joi.boolean().optional().default(true),
+            rolling           : joi.boolean().optional().default(false),
+          }).allow('cookie', 'secret', 'name', 'genuuid', 'proxy', 'resave', 'saveUninitialized', 'rolling')
         }).allow('enable', 'options'),
-        vhost : joi.object().required().keys({
-          enable : joi.boolean().required(),
+        // TODO : if we need to integrate vhost, we must to complete these rules
+        vhost : joi.object().optional().keys({
+          enable : joi.boolean().required().default(false),
           options : joi.object().optional().keys({
-            url     : joi.string().required(),
+            url     : joi.string().required().default('/'),
             aliases : joi.array().items(
               joi.string().required().empty()
             ),
-            subdomains : joi.boolean().required(),
-            http : joi.object().required().keys({
+            subdomains : joi.boolean().required().default(false),
+            http : joi.object().optional().keys({
               redirect : joi.object().required().keys({
                 type     : joi.number(),
                 url      : joi.string().required().empty(),
                 port     : joi.number().required()
               }).allow('type', 'url', 'port')
-            }).allow('redirect') 
+            }).allow('redirect')
           }).allow('url', 'aliases', 'subdomains', 'http')
         }).allow('enable', 'options')
       }),
-      env       : joi.string().required().valid([ 'development', 'staging', 'production' ]),
-      port      : joi.number().required(),
-      directory : joi.array().required().items([
-        joi.object().required().keys({ models       :  joi.string().required().empty().min(3) }),
-        joi.object().required().keys({ controllers  :  joi.string().required().empty().min(3) }),
-        joi.object().required().keys({ views        :  joi.string().required().empty().min(3) }),
-        joi.object().required().keys({ public       :  joi.string().required().empty().min(3) }),
-        joi.object().required().keys({ icons        :  joi.string().required().empty().min(3) })                                
+      env       : joi.string().default('development').empty().valid([ 'development', 'staging', 'production' ]),
+      port      : joi.number().default(3000),
+      directory : joi.array().min(1).unique().default([ { models : '/' }, { controllers : '/' }, { views : '/' }, { public : '/' }, { icons : '/' } ]).items([
+        joi.object().required().keys({ models       :  joi.string().empty().min(2).default('/') }),
+        joi.object().required().keys({ controllers  :  joi.string().empty().min(2).default('/') }),
+        joi.object().required().keys({ views        :  joi.string().empty().min(2).default('/') }),
+        joi.object().required().keys({ public       :  joi.string().empty().min(2).default('/') }),
+        joi.object().required().keys({ icons        :  joi.string().empty().min(2).default('/') }),
+        joi.object().empty()
       ]),
-      encrypt_key : joi.object().required().keys({
-        key   : joi.string().required(),
-        type  : joi.string().required().valid([ 'ascii', 'utf8', 'utf16le', 'ucs2', 'base64', 'binary', 'hex' ])
+      encrypt_key : joi.object().default({ key : 'MyAppKey', type : 'hex' }).keys({
+        key   : joi.string().default('MyAppKey').empty(),
+        type  : joi.string().default('hex').valid([ 'ascii', 'utf8', 'utf16le', 'ucs2', 'base64', 'binary', 'hex' ])
       })
     }).unknown(true);
 }
@@ -285,7 +297,7 @@ Config.prototype.load = function() {
     this.state = true;
 
     // valid so assign config
-    this.config = config;
+    this.config = result.value;
     this.logger.info([ '[ Config.load ] - Success - Config file was changed with files based on :', this.base ].join(' '));
   } catch (e) {
       this.logger.error([ '[ Config.load ] - an error occured during load config file. Error is :', e ].join(' '));
