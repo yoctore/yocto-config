@@ -6,6 +6,8 @@
     }
   },
   "express" : {
+    "cookieParser" : {
+    },
     "jsonp"       : true,       
     "prettyHtml"  : true,
     "filter"      : {

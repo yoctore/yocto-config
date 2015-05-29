@@ -1,6 +1,6 @@
 # [yocto-config]( http://www.yocto.re )
 
-**Version:** `0.2.0`
+**Version:** `0.2.1`
 
 > Config manager for a yocto stack usage
 
@@ -10,9 +10,9 @@
 
 ## src/index.js
 
--  [ ] **TODO** `(line 123)`  : if we need to integrate vhost, we must to complete these rules
+-  [ ] **TODO** `(line 134)`  : if we need to integrate vhost, we must to complete these rules
 
 
 * * *
 
-Last generated: Fri May 29 2015 14:31:50 by [grunt-todo](https://github.com/leny/grunt-todo).
+Last generated: Fri May 29 2015 17:00:49 by [grunt-todo](https://github.com/leny/grunt-todo).

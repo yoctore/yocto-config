@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="yocto-config" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.2.0</em>
+            <em>API Docs for: 0.2.1</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -180,7 +180,18 @@ function Config() {
           by    : joi.string().default(&#x27;Content-Type&#x27;).allow(&#x27;Content-Type&#x27;), // for the moment only allow content type
           level : joi.number().default(9).min(0).max(9)
         }).allow(&#x27;rules&#x27;, &#x27;by&#x27;, &#x27;level&#x27;),
-        cookieParser  : joi.boolean().default(false),
+        cookieParser  : joi.object().default({ enable : true, secret : &#x27;yocto-cookie-parser-secret-key&#x27;, options : {} }).keys({
+          enable  : joi.boolean().default(true),
+          secret  : joi.string().empty().default(&#x27;yocto-cookie-parser-secret-key&#x27;),
+          options : joi.object().default({ path : &#x27;/&#x27;, expires : &#x27;Fri, 31 Dec 9999 23:59:59 GMT&#x27;, maxAge : 0, domain : null, secure : true, httpOnly : true }).keys({
+            path      : joi.string().empty().optional().default(&#x27;/&#x27;),
+            expires   : joi.string().empty().optional().default(&#x27;Fri, 31 Dec 9999 23:59:59 GMT&#x27;),
+            maxAge    : joi.number().optional().default(0),
+            domain    : joi.string().empty().optional().default(null),
+            secure    : joi.boolean().optional().default(true),
+            httpOnly  : joi.boolean().optional().default(false),          
+          }).allow(&#x27;path&#x27;, &#x27;expires&#x27;, &#x27;maxAge&#x27;, &#x27;domain&#x27;, &#x27;secure&#x27;, &#x27;httpOnly&#x27;)
+        }).allow(&#x27;enable&#x27;, &#x27;secret&#x27;, &#x27;options&#x27;),
         json          : joi.boolean().default(false),
         multipart     : joi.boolean().default(false),        
         session :  joi.object().default({ enable : false }).keys({

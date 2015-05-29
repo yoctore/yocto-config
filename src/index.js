@@ -99,7 +99,18 @@ function Config() {
           by    : joi.string().default('Content-Type').allow('Content-Type'), // for the moment only allow content type
           level : joi.number().default(9).min(0).max(9)
         }).allow('rules', 'by', 'level'),
-        cookieParser  : joi.boolean().default(false),
+        cookieParser  : joi.object().default({ enable : true, secret : 'yocto-cookie-parser-secret-key', options : {} }).keys({
+          enable  : joi.boolean().default(true),
+          secret  : joi.string().empty().default('yocto-cookie-parser-secret-key'),
+          options : joi.object().default({ path : '/', expires : 'Fri, 31 Dec 9999 23:59:59 GMT', maxAge : 0, domain : null, secure : true, httpOnly : true }).keys({
+            path      : joi.string().empty().optional().default('/'),
+            expires   : joi.string().empty().optional().default('Fri, 31 Dec 9999 23:59:59 GMT'),
+            maxAge    : joi.number().optional().default(0),
+            domain    : joi.string().empty().optional().default(null),
+            secure    : joi.boolean().optional().default(true),
+            httpOnly  : joi.boolean().optional().default(false),          
+          }).allow('path', 'expires', 'maxAge', 'domain', 'secure', 'httpOnly')
+        }).allow('enable', 'secret', 'options'),
         json          : joi.boolean().default(false),
         multipart     : joi.boolean().default(false),        
         session :  joi.object().default({ enable : false }).keys({
