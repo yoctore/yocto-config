@@ -90,7 +90,7 @@
         },
         {
             "file": "src/index.js",
-            "line": 170,
+            "line": 182,
             "description": "Default set function, a value to a specific params",
             "itemtype": "method",
             "name": "set",
@@ -115,7 +115,7 @@
         },
         {
             "file": "src/index.js",
-            "line": 200,
+            "line": 212,
             "description": "Return correct property from given name",
             "itemtype": "method",
             "name": "get",
@@ -134,7 +134,7 @@
         },
         {
             "file": "src/index.js",
-            "line": 211,
+            "line": 223,
             "description": "Reload data",
             "itemtype": "method",
             "name": "reload",
@@ -153,7 +153,7 @@
         },
         {
             "file": "src/index.js",
-            "line": 228,
+            "line": 240,
             "description": "Default load function, load data from all.js constant file",
             "itemtype": "method",
             "name": "load",
@@ -165,7 +165,7 @@
         },
         {
             "file": "src/index.js",
-            "line": 323,
+            "line": 335,
             "description": "Export the ConfController",
             "class": "Config"
         }
@@ -185,7 +185,7 @@
         },
         {
             "message": "Missing item type\nExport the ConfController",
-            "line": " src/index.js:323"
+            "line": " src/index.js:335"
         }
     ]
 }

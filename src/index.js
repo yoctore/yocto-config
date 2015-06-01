@@ -99,7 +99,20 @@ function Config() {
           by    : joi.string().default('Content-Type').allow('Content-Type'), // for the moment only allow content type
           level : joi.number().default(9).min(0).max(9)
         }).allow('rules', 'by', 'level'),
-        cookieParser  : joi.object().default({ enable : true, secret : 'yocto-cookie-parser-secret-key', options : {} }).keys({
+        json : joi.object().default({ inflate : true, limit : '100kb', strict : true, type : 'json' }).keys({
+          inflate : joi.boolean().optional().default(true),
+          limit   : joi.string().optional().empty().default('100kb'),
+          strict  : joi.boolean().optional().default(true),
+          type    : joi.string().optional().empty().default('json').valid('json')
+        }).allow('inflate', 'limit', 'strict', 'type'),
+        urlencoded : joi.object().default({ extended : true,  inflate : true, limit : '100kb',  parameterLimit : 1000, type : 'urlencoded' }).keys({
+          extended        : joi.boolean().optional().default(true),
+          inflate         : joi.boolean().optional().default(true),
+          limit           : joi.string().optional().empty().default('100kb'),
+          parameterLimit  : joi.number().default(1000).min(1000),
+          type    : joi.string().optional().empty().default('urlencoded').valid('urlencoded')          
+        }).allow('extended', 'inflate', 'limit', 'parameterLimit', 'type', 'verify'),
+        cookieParser  : joi.object().default({ enable : false, secret : 'yocto-cookie-parser-secret-key', options : {} }).keys({
           enable  : joi.boolean().default(true),
           secret  : joi.string().empty().default('yocto-cookie-parser-secret-key'),
           options : joi.object().default({ path : '/', expires : 'Fri, 31 Dec 9999 23:59:59 GMT', maxAge : 0, domain : null, secure : true, httpOnly : true }).keys({
@@ -111,7 +124,6 @@ function Config() {
             httpOnly  : joi.boolean().optional().default(false),          
           }).allow('path', 'expires', 'maxAge', 'domain', 'secure', 'httpOnly')
         }).allow('enable', 'secret', 'options'),
-        json          : joi.boolean().default(false),
         multipart     : joi.boolean().default(false),        
         session :  joi.object().default({ enable : false }).keys({
           enable : joi.boolean().default(true),

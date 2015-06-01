@@ -6,6 +6,11 @@
     }
   },
   "express" : {
+    "json" : {
+    },
+    "urlencoded" : {
+      "extended" : false
+    },
     "cookieParser" : {
     },
     "jsonp"       : true,       
