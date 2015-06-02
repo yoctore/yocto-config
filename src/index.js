@@ -66,7 +66,7 @@ function Config() {
      * @property base
      * @type string
      */
-    this.base = path.normalize([ process.cwd(), __dirname ].join(''));
+    this.base = path.normalize(process.cwd());
     
     /**
      * Default logger instance. can be override by set function
