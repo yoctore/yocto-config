@@ -112,6 +112,9 @@ function Config() {
           parameterLimit  : joi.number().default(1000).min(1000),
           type    : joi.string().optional().empty().default('urlencoded').valid('urlencoded')          
         }).allow('extended', 'inflate', 'limit', 'parameterLimit', 'type', 'verify'),
+        methodOverride : joi.array().min(1).unique().default([ '_method' ]).items([
+         joi.string().empty().default('_method').valid('_method', 'X-HTTP-Method', 'X-HTTP-Method-Override', 'X-Method-Override')
+        ]),
         cookieParser  : joi.object().default({ enable : false, secret : 'yocto-cookie-parser-secret-key', options : {} }).keys({
           enable  : joi.boolean().default(true),
           secret  : joi.string().empty().default('yocto-cookie-parser-secret-key'),
