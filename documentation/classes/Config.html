@@ -93,8 +93,7 @@ Manage your configuration file (all / common / env  &amp; specific file)</p>
 <p>Config file has priority. And priority is defined like a php ini system.
 (Other file).json &lt; all.json &lt; common.json &lt; development.json &lt; stagging.json &lt; production.json</p>
 <p>All specific data must be configured on a each correct file.</p>
-<p>all.json : contains general data (speci
-al keys, app name, etc) =&gt; not env data
+<p>all.json : contains general data
 common.json : must containt all common data between each env
 development.json : must contains development data for development environnement
 staging.json : must contains stagging data for staging environnement
@@ -107,6 +106,16 @@ production.json : must contains production data for production environnement </p
 <li>joi : <a href="https://github.com/hapijs/joi">https://github.com/hapijs/joi</a></li>
 <li>fs : <a href="https://nodejs.org/api/fs.html">https://nodejs.org/api/fs.html</a></li>
 <li>glob : <a href="https://www.npmjs.com/package/glob">https://www.npmjs.com/package/glob</a></li>
+</ul>
+<p>This Module use some security format rules based on Lusca NPM module : <a href="https://www.npmjs.com/package/lusca">https://www.npmjs.com/package/lusca</a></p>
+<ul>
+<li>Cross Site Request Forgery (CSRF) headers : <a href="https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF">https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF</a>)</li>
+<li>Content Security Policy (CSP) headers : <a href="https://www.owasp.org/index.php/Content_Security_Policy">https://www.owasp.org/index.php/Content_Security_Policy</a></li>
+<li>MDN CSP usage : <a href="https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Using_Content_Security_Policy">https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Using_Content_Security_Policy</a></li>
+<li>X-FRAME-OPTIONS : <a href="https://www.owasp.org/index.php/Clickjacking">https://www.owasp.org/index.php/Clickjacking</a></li>
+<li>Platform for Privacy Preferences Project (P3P) headers : <a href="http://support.microsoft.com/kb/290333">http://support.microsoft.com/kb/290333</a></li>
+<li>HTTP Strict Transport Security (HSTS &amp; Chrome HSTS preload) : <a href="https://www.owasp.org/index.php/HTTP_Strict_Transport_Security">https://www.owasp.org/index.php/HTTP_Strict_Transport_Security</a> &amp; <a href="https://hstspreload.appspot.com/">https://hstspreload.appspot.com/</a></li>
+<li>XssProtection : <a href="http://blogs.msdn.com/b/ie/archive/2008/07/02/ie8-security-part-iv-the-xss-filter.aspx">http://blogs.msdn.com/b/ie/archive/2008/07/02/ie8-security-part-iv-the-xss-filter.aspx</a></li>
 </ul>
 
 </div>
@@ -204,7 +213,7 @@ production.json : must contains production data for production environnement </p
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_index.js.html#l215"><code>src&#x2F;index.js:215</code></a>
+        <a href="../files/src_index.js.html#l266"><code>src&#x2F;index.js:266</code></a>
         </p>
 
 
@@ -264,7 +273,7 @@ production.json : must contains production data for production environnement </p
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_index.js.html#l243"><code>src&#x2F;index.js:243</code></a>
+        <a href="../files/src_index.js.html#l294"><code>src&#x2F;index.js:294</code></a>
         </p>
 
 
@@ -313,7 +322,7 @@ production.json : must contains production data for production environnement </p
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_index.js.html#l226"><code>src&#x2F;index.js:226</code></a>
+        <a href="../files/src_index.js.html#l277"><code>src&#x2F;index.js:277</code></a>
         </p>
 
 
@@ -382,7 +391,7 @@ production.json : must contains production data for production environnement </p
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_index.js.html#l185"><code>src&#x2F;index.js:185</code></a>
+        <a href="../files/src_index.js.html#l236"><code>src&#x2F;index.js:236</code></a>
         </p>
 
 
@@ -453,7 +462,7 @@ production.json : must contains production data for production environnement </p
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/src_index.js.html#l63"><code>src&#x2F;index.js:63</code></a>
+                            <a href="../files/src_index.js.html#l71"><code>src&#x2F;index.js:71</code></a>
                             </p>
                     
                     
@@ -478,7 +487,7 @@ production.json : must contains production data for production environnement </p
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/src_index.js.html#l41"><code>src&#x2F;index.js:41</code></a>
+                            <a href="../files/src_index.js.html#l49"><code>src&#x2F;index.js:49</code></a>
                             </p>
                     
                     
@@ -504,7 +513,7 @@ production.json : must contains production data for production environnement </p
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/src_index.js.html#l54"><code>src&#x2F;index.js:54</code></a>
+                            <a href="../files/src_index.js.html#l62"><code>src&#x2F;index.js:62</code></a>
                             </p>
                     
                     
@@ -530,7 +539,7 @@ production.json : must contains production data for production environnement </p
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/src_index.js.html#l71"><code>src&#x2F;index.js:71</code></a>
+                            <a href="../files/src_index.js.html#l79"><code>src&#x2F;index.js:79</code></a>
                             </p>
                     
                     
@@ -555,7 +564,7 @@ production.json : must contains production data for production environnement </p
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/src_index.js.html#l79"><code>src&#x2F;index.js:79</code></a>
+                            <a href="../files/src_index.js.html#l87"><code>src&#x2F;index.js:87</code></a>
                             </p>
                     
                     

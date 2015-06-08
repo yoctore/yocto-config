@@ -17,8 +17,7 @@ var util     = require('util');
  *
  * All specific data must be configured on a each correct file.
  * 
- * all.json : contains general data (speci
- al keys, app name, etc) => not env data
+ * all.json : contains general data
  * common.json : must containt all common data between each env
  * development.json : must contains development data for development environnement
  * staging.json : must contains stagging data for staging environnement
@@ -32,6 +31,15 @@ var util     = require('util');
  * - fs : https://nodejs.org/api/fs.html
  * - glob : https://www.npmjs.com/package/glob
  * 
+ * This Module use some security format rules based on Lusca NPM module : https://www.npmjs.com/package/lusca
+ * - Cross Site Request Forgery (CSRF) headers : https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)
+ * - Content Security Policy (CSP) headers : https://www.owasp.org/index.php/Content_Security_Policy
+ * - MDN CSP usage : https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Using_Content_Security_Policy
+ * - X-FRAME-OPTIONS : https://www.owasp.org/index.php/Clickjacking
+ * - Platform for Privacy Preferences Project (P3P) headers : http://support.microsoft.com/kb/290333
+ * - HTTP Strict Transport Security (HSTS & Chrome HSTS preload) : https://www.owasp.org/index.php/HTTP_Strict_Transport_Security & https://hstspreload.appspot.com/
+ * - XssProtection : http://blogs.msdn.com/b/ie/archive/2008/07/02/ie8-security-part-iv-the-xss-filter.aspx
+ *
  * @date : 12/05/2015
  * @author : ROBERT Mathieu <mathieu@yocto.re>
  * @copyright : Yocto SAS, All right reserved
@@ -83,6 +91,7 @@ function Config() {
      * @type Object
      */
     this.schema = joi.object().min(1).keys({
+      // default app rules
       app : joi.object().required().keys({
         name        : joi.string().required().empty().min(3),
         stackError  : joi.boolean().default(true),
@@ -90,6 +99,7 @@ function Config() {
           timeout : joi.number().default(500000)
         }).allow('timeout')        
       }).allow('name', 'stackError', 'session'),
+      // express rules
       express : joi.object().required().keys({
         jsonp       : joi.boolean().default(false),
         prettyHtml  : joi.boolean().default(true),
@@ -99,12 +109,14 @@ function Config() {
           by    : joi.string().default('Content-Type').allow('Content-Type'), // for the moment only allow content type
           level : joi.number().default(9).min(0).max(9)
         }).allow('rules', 'by', 'level'),
+        // json mode rules
         json : joi.object().default({ inflate : true, limit : '100kb', strict : true, type : 'json' }).keys({
           inflate : joi.boolean().optional().default(true),
           limit   : joi.string().optional().empty().default('100kb'),
           strict  : joi.boolean().optional().default(true),
           type    : joi.string().optional().empty().default('json').valid('json')
         }).allow('inflate', 'limit', 'strict', 'type'),
+        // url encoded rules
         urlencoded : joi.object().default({ extended : true,  inflate : true, limit : '100kb',  parameterLimit : 1000, type : 'urlencoded' }).keys({
           extended        : joi.boolean().optional().default(true),
           inflate         : joi.boolean().optional().default(true),
@@ -115,6 +127,7 @@ function Config() {
         methodOverride : joi.array().min(1).unique().default([ '_method' ]).items([
          joi.string().empty().default('_method').valid('_method', 'X-HTTP-Method', 'X-HTTP-Method-Override', 'X-Method-Override')
         ]),
+        // cookie parser rules
         cookieParser  : joi.object().default({ enable : false, secret : 'yocto-cookie-parser-secret-key', options : {} }).keys({
           enable  : joi.boolean().default(true),
           secret  : joi.string().empty().default('yocto-cookie-parser-secret-key'),
@@ -127,7 +140,9 @@ function Config() {
             httpOnly  : joi.boolean().optional().default(false),          
           }).allow('path', 'expires', 'maxAge', 'domain', 'secure', 'httpOnly')
         }).allow('enable', 'secret', 'options'),
+        // upload rules
         multipart     : joi.boolean().default(false),        
+        // session rules
         session :  joi.object().default({ enable : false }).keys({
           enable : joi.boolean().default(true),
           options : joi.object().optional().keys({
@@ -146,6 +161,42 @@ function Config() {
             rolling           : joi.boolean().optional().default(false),
           }).allow('cookie', 'secret', 'name', 'genuuid', 'proxy', 'resave', 'saveUninitialized', 'rolling')
         }).allow('enable', 'options'),
+        // security rules see : https://www.npmjs.com/package/lusca
+        security : joi.object().default({ csrf : { key : '_csrf', secret : 'yocto-csrf-secret-key' }, csp : {}, xframe : 'SAMEORIGIN', p3p : '_p3p', hsts : {}, xssProtection : true }).keys({
+          csrf : joi.object().default({ key : '_csrf', secret : 'yocto-csrf-secret-key' }).keys({
+            key : joi.string().empty().default('_csrf'),
+            secret : joi.string().empty().default('yocto-csrf-secret-key')
+          }),
+          csp : joi.object().default({}).keys({
+            policy     : joi.object().default({}).keys({
+              'default-src'   : joi.string().empty(),
+              'script-src'    : joi.string().empty(),
+              'object-src'    : joi.string().empty(),
+              'style-src'     : joi.string().empty(),
+              'img-src'       : joi.string().empty(),
+              'media-src'     : joi.string().empty(),
+              'frame-src'     : joi.string().empty(),
+              'font-src'      : joi.string().empty(),
+              'connect-src'   : joi.string().empty(),
+              'form-action '  : joi.string().empty(),
+              'sandbox'       : joi.string().empty(),
+              'script-nonce'  : joi.string().empty(),
+              'plugin-types'  : joi.string().empty(),
+              'reflected-xss' : joi.string().empty(),
+              'report-uri'    : joi.string().empty(),
+            }).allow('default-src', 'script-src', 'object-src', 'style-src', 'img-src', 'media-src', 'frame-src', 'font-src', 'connect-src', 'form-action', 'sandbox', 'script-nonce', 'plugin-types', 'reflected-xss', 'report-uri'),
+            reportOnly : joi.boolean().default(false),
+            reportUri  : joi.string()
+          }).allow('policy', 'reportOnly', 'reportUri'),
+          xframe : joi.string().empty().default('SAMEORIGIN').valid('DENY', 'SAMEORIGIN', 'ALLOW-FROM'),
+          p3p : joi.string().empty().default('_p3p'),
+          hsts : joi.object().default({ maxAge : 0, includeSubDomains : true, preload : true }).keys({
+            maxAge : joi.number().optional().default(null),
+            includeSubDomains : joi.boolean().default(true),
+            preload : joi.boolean().default(true),            
+          }),
+          xssProtection : joi.boolean().default(true)
+        }).allow('csrf', 'csp', 'xframe', 'p3p', 'hsts', 'xssProtection'), 
         // TODO : if we need to integrate vhost, we must to complete these rules
         vhost : joi.object().optional().keys({
           enable : joi.boolean().required().default(false),
