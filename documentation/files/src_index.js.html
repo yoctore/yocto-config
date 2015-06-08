@@ -178,8 +178,9 @@ function Config() {
         stackError  : joi.boolean().default(true),
         session     : joi.object().default({ timeout : 50000 }).keys({
           timeout : joi.number().default(500000)
-        }).allow(&#x27;timeout&#x27;)        
-      }).allow(&#x27;name&#x27;, &#x27;stackError&#x27;, &#x27;session&#x27;),
+        }).allow(&#x27;timeout&#x27;),
+        host : joi.string().empty().min(7).default(&#x27;127.0.0.1&#x27;)
+      }).allow(&#x27;name&#x27;, &#x27;stackError&#x27;, &#x27;session&#x27;, &#x27;host&#x27;),
       // express rules
       express : joi.object().required().keys({
         jsonp       : joi.boolean().default(false),

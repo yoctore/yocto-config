@@ -97,8 +97,9 @@ function Config() {
         stackError  : joi.boolean().default(true),
         session     : joi.object().default({ timeout : 50000 }).keys({
           timeout : joi.number().default(500000)
-        }).allow('timeout')        
-      }).allow('name', 'stackError', 'session'),
+        }).allow('timeout'),
+        host : joi.string().empty().min(7).default('127.0.0.1')
+      }).allow('name', 'stackError', 'session', 'host'),
       // express rules
       express : joi.object().required().keys({
         jsonp       : joi.boolean().default(false),
