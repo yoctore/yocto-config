@@ -178,9 +178,8 @@ function Config() {
         stackError  : joi.boolean().default(true),
         session     : joi.object().default({ timeout : 50000 }).keys({
           timeout : joi.number().default(500000)
-        }).allow(&#x27;timeout&#x27;),
-        host : joi.string().empty().min(7).default(&#x27;127.0.0.1&#x27;)
-      }).allow(&#x27;name&#x27;, &#x27;stackError&#x27;, &#x27;session&#x27;, &#x27;host&#x27;),
+        }).allow(&#x27;timeout&#x27;)
+      }).allow(&#x27;name&#x27;, &#x27;stackError&#x27;, &#x27;session&#x27;),
       // express rules
       express : joi.object().required().keys({
         jsonp       : joi.boolean().default(false),
@@ -300,6 +299,7 @@ function Config() {
       }),
       env       : joi.string().default(&#x27;development&#x27;).empty().valid([ &#x27;development&#x27;, &#x27;staging&#x27;, &#x27;production&#x27; ]),
       port      : joi.number().default(3000),
+      host      : joi.string().default(&#x27;127.0.0.1&#x27;).empty().min(7),
       directory : joi.array().min(1).unique().default([ { models : &#x27;/&#x27; }, { controllers : &#x27;/&#x27; }, { views : &#x27;/&#x27; }, { public : &#x27;/&#x27; }, { icons : &#x27;/&#x27; } ]).items([
         joi.object().required().keys({ models       :  joi.string().empty().min(2).default(&#x27;/&#x27;) }),
         joi.object().required().keys({ controllers  :  joi.string().empty().min(2).default(&#x27;/&#x27;) }),
