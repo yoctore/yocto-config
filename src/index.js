@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * Required dependencies
+ */
 var path     = require('path');
 var _        = require('lodash');
 var logger   = require('yocto-logger');
@@ -248,7 +251,7 @@ Config.prototype.set = function(name, value) {
     // need to normalize path ?
     if (name == 'base') {
       // is relative path ?
-      if (value.charAt(0) == '.') {
+      if (!path.isAbsolute(value)) {
         // normalize
         value = path.normalize([ process.cwd(), value ].join('/'));
       }
@@ -360,7 +363,7 @@ Config.prototype.load = function() {
       var p = _.first(_.values(dir));
 
       // is relative path ?
-      if (p.charAt(0) == '.') {
+      if (!path.isAbsolute(p)) {
         p = path.normalize([ process.cwd(), p ].join('/'));              
       }
 
