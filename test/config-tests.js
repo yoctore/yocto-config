@@ -1,8 +1,9 @@
 /**
  * Unit tests
  */
-var config = require('../src/index.js');
-var assert = require('assert');
+var config = require('../src/index.js')();
+var assert = require('chai').assert;
+var should = require('chai').should;
 var util   = require('util');
 
 config.logger.enableConsole(false);
@@ -10,7 +11,7 @@ config.logger.enableConsole(false);
 // start unit tests
 describe('Config()', function() {
 
-  describe('load() must return false with invalid config path', function() {    
+  describe('load() must Invalid with invalid config path', function() {    
     var paths = [
       './example/myinvlidpath',
       './example/myinvlidpath2',
@@ -22,12 +23,16 @@ describe('Config()', function() {
     paths.forEach(function(path) {
       it('Using path on current config : ' + util.inspect(path, { depth : null }), function() {    
         config.set('base', path);
-        assert.equal(config.load(), false);      
+        config.load().then(function(success) {
+          should.not.exist(success);
+        }).catch(function(error) {
+          error.should.be.an('string');
+        });
       });
     });
   });
 
-  describe('load() must return true with a valid config path AND valid config file', function() {    
+  describe('load() must OK with a valid config path AND valid config file', function() {    
     var paths = [
       './example/config',
       '/Users/yocto/Documents/Yocto/projets/yocto-node-modules/yocto-config/example/config'
@@ -36,22 +41,12 @@ describe('Config()', function() {
     paths.forEach(function(path) {
       it('Using path on current config : ' + util.inspect(path, { depth : null }), function() {    
         config.set('base', path);
-        assert.equal(config.load(), true);      
+        config.load().then(function(success) {
+          success.should.be.an('object');
+        }).catch(function(error) {
+          should.not.exist(error);
+        });
       });
     });
   });
-
-  describe('load() must return false with an invalid config file', function() {    
-    var paths = [
-      '/Users/yocto/Documents/Yocto/projets/yocto-node-modules/yocto-config/example/invalid-config'
-    ];
-    
-    paths.forEach(function(path) {
-      it('Using path on current config : ' + util.inspect(path, { depth : null }), function() {    
-        config.set('base', path);
-        assert.equal(config.load(), false);      
-      });
-    });
-  });
-
 });

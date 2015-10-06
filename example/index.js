@@ -1,4 +1,4 @@
-var config = require('../src/index.js');
+var config = require('../src/index.js')();
 var util = require('util');
 
 config.logger.enableConsole(true);
