@@ -84,7 +84,7 @@ All of these function was replaced by default an already defined configuration.
 
 If you want to enable a new configuration and keep safe the previous configuration, just pass `true` on enable function, for example :
 
-```javasccript
+```javascript
 var config  = require('yocto-config')();
 
 // defined base config
