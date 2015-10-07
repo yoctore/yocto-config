@@ -1,12 +1,14 @@
 /**
  * Unit tests
  */
-var config = require('../src/index.js')();
+var logger = require('yocto-logger');
+logger.enableConsole(false);
+var config = require('../src/index.js')(logger);
 var assert = require('chai').assert;
 var should = require('chai').should;
 var util   = require('util');
 
-config.logger.enableConsole(false);
+
 
 // start unit tests
 describe('Config()', function() {

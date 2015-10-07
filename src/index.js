@@ -1,16 +1,19 @@
 'use strict';
 
-var path     = require('path');
-var _        = require('lodash');
-var logger   = require('yocto-logger');
-var joi      = require('joi');
-var fs       = require('fs');
-var glob     = require('glob');
-var utils    = require('yocto-utils');
-var Q        = require('q');
+var path            = require('path');
+var _               = require('lodash');
+var logger          = require('yocto-logger');
+var joi             = require('joi');
+var fs              = require('fs');
+var glob            = require('glob');
+var utils           = require('yocto-utils');
+var Q               = require('q');
+var configExpress   = require('./modules/express');
+var configMongoose  = require('./modules/mongoose');
+var configPassport  = require('./modules/passportjs');
 
 /**
- * Yocto config controller.
+ * Yocto config manager.
  * Manage your configuration file (all / common / env  & specific file)
  *
  * Config file has priority. And priority is defined like a php ini system.
@@ -59,7 +62,7 @@ function Config (logger) {
    * @type {String}
    * @default development
    */
-  this.env    = 'development';
+  this.env    = process.NODE_ENV || 'development';
 
   /**
    * Default base path
@@ -83,227 +86,151 @@ function Config (logger) {
    * @property schema
    * @type Object
    */
-  this.schema = joi.object().min(1).keys({
-    // default app rules
-    app       : joi.object().required().keys({
-      name        : joi.string().required().empty().min(3),
-      stackError  : joi.boolean().default(true),
-      session     : joi.object().default({ timeout : 50000 }).keys({
-        timeout : joi.number().default(500000)
-      }).allow('timeout')
-    }).allow([ 'name', 'stackError', 'session' ]),
-    // express rules
-    express   : joi.object().required().keys({
-      jsonp           : joi.boolean().default(false),
-      prettyHtml      : joi.boolean().default(true),
-      viewEngine      : joi.string().empty().default('jade').allow('jade'),
-      filter          : joi.object().default({
-        rules : 'json|text|javascript|css|html',
-        by    : 'Content-type',
-        level : 9
-      }).keys({
-        rules : joi.string().default('json|text|javascript|css|html').empty(),
-        // for the moment only allow content type
-        by    : joi.string().default('Content-Type').allow('Content-Type'),
-        level : joi.number().default(9).min(0).max(9)
-      }).allow([ 'rules', 'by', 'level' ]),
-      // json mode rules
-      json            : joi.object().default({
-        inflate : true,
-        limit   : '100kb',
-        strict  : true,
-        type    : 'json'
-      }).keys({
-        inflate : joi.boolean().optional().default(true),
-        limit   : joi.string().optional().empty().default('100kb'),
-        strict  : joi.boolean().optional().default(true),
-        type    : joi.string().optional().empty().default('json').valid('json')
-      }).allow([ 'inflate', 'limit', 'strict', 'type' ]),
-      // url encoded rules
-      urlencoded      : joi.object().default({
-        extended        : true,
-        inflate         : true,
-        limit           : '100kb',
-        parameterLimit  : 1000,
-        type            : 'urlencoded'
-      }).keys({
-        extended        : joi.boolean().optional().default(true),
-        inflate         : joi.boolean().optional().default(true),
-        limit           : joi.string().optional().empty().default('100kb'),
-        parameterLimit  : joi.number().default(1000).min(1000),
-        type            : joi.string().optional().empty().default('urlencoded').valid('urlencoded')
-      }).allow([ 'extended', 'inflate', 'limit', 'parameterLimit', 'type', 'verify' ]),
-      methodOverride  : joi.array().min(1).unique().default([ '_method' ]).items([
-        joi.string().empty().default('_method').valid([
-          '_method',
-          'X-HTTP-Method',
-          'X-HTTP-Method-Override',
-          'X-Method-Override'
-        ])
-      ]),
-      // cookie parser rules
-      cookieParser    : joi.object().default({
-        enable  : false,
-        secret  : 'yocto-cookie-parser-secret-key',
-        options : {}
-      }).keys({
-        enable  : joi.boolean().default(true),
-        secret  : joi.string().empty().default('yocto-cookie-parser-secret-key'),
-        options : joi.object().default({
-          path      : '/',
-          expires   : 'Fri, 31 Dec 9999 23:59:59 GMT',
-          maxAge    : 0,
-          domain    : null,
-          secure    : true,
-          httpOnly  : true
-        }).keys({
-          path      : joi.string().empty().optional().default('/'),
-          expires   : joi.string().empty().optional().default('Fri, 31 Dec 9999 23:59:59 GMT'),
-          maxAge    : joi.number().optional().default(0),
-          domain    : joi.string().empty().optional().default(null),
-          secure    : joi.boolean().optional().default(true),
-          httpOnly  : joi.boolean().optional().default(false),
-        }).allow([ 'path', 'expires', 'maxAge', 'domain', 'secure', 'httpOnly' ])
-      }).allow([ 'enable', 'secret', 'options' ]),
-      // upload rules
-      multipart       : joi.boolean().default(false),
-      // session rules
-      session         :  joi.object().default({ enable : false }).keys({
-        enable  : joi.boolean().default(true),
-        options : joi.object().optional().keys({
-          cookie            : joi.object().default({
-            path      : '/',
-            httpOnly  : false,
-            secure    : true,
-            maxAge    : null
-          }).keys({
-            path      : joi.string().optional().default('/'),
-            httpOnly  : joi.boolean().optional().default(false),
-            secure    : joi.boolean().optional().default(true),
-            maxAge    : joi.number().optional().default(null)
-          }).allow([ 'path', 'httpOnly', 'secure', 'maxAge' ]),
-          secret            : joi.string().optional().min(8).default('yocto-config-secret-key'),
-          name              : joi.string().optional().min(5).default('connect.sid'),
-          genuuid           : joi.boolean().optional().default(false),
-          proxy             : joi.boolean().optional().default(undefined),
-          resave            : joi.boolean().optional().default(false),
-          saveUninitialized : joi.boolean().optional().default(true),
-          rolling           : joi.boolean().optional().default(false),
-        }).allow([ 'cookie', 'secret', 'name', 'genuuid',
-                   'proxy', 'resave', 'saveUninitialized', 'rolling' ])
-      }).allow([ 'enable', 'options' ]),
-      // security rules see : https://www.npmjs.com/package/lusca
-      security        : joi.object().default({
-        csrf          : {
-          key     : '_csrf',
-          secret  : 'yocto-csrf-secret-key'
-        },
-        csp           : {},
-        xframe        : 'SAMEORIGIN',
-        p3p           : '_p3p',
-        hsts          : {},
-        xssProtection : true
-      }).keys({
-        csrf          : joi.object().default({
-          key     : '_csrf',
-          secret  : 'yocto-csrf-secret-key'
-        }).keys({
-          key     : joi.string().empty().default('_csrf'),
-          secret  : joi.string().empty().default('yocto-csrf-secret-key')
-        }),
-        csp           : joi.object().default({}).keys({
-          policy     : joi.object().default({}).keys({
-            'default-src'   : joi.string().empty(),
-            'script-src'    : joi.string().empty(),
-            'object-src'    : joi.string().empty(),
-            'style-src'     : joi.string().empty(),
-            'img-src'       : joi.string().empty(),
-            'media-src'     : joi.string().empty(),
-            'frame-src'     : joi.string().empty(),
-            'font-src'      : joi.string().empty(),
-            'connect-src'   : joi.string().empty(),
-            'form-action '  : joi.string().empty(),
-            'sandbox'       : joi.string().empty(),
-            'script-nonce'  : joi.string().empty(),
-            'plugin-types'  : joi.string().empty(),
-            'reflected-xss' : joi.string().empty(),
-            'report-uri'    : joi.string().empty(),
-          }).allow([ 'default-src', 'script-src', 'object-src', 'style-src',
-                     'img-src', 'media-src', 'frame-src', 'font-src', 'connect-src',
-                     'form-action', 'sandbox', 'script-nonce', 'plugin-types',
-                     'reflected-xss', 'report-uri' ]),
-          reportOnly : joi.boolean().default(false),
-          reportUri  : joi.string()
-        }).allow('policy', 'reportOnly', 'reportUri'),
-        xframe        : joi.string().empty().default('SAMEORIGIN').valid([
-          'DENY',
-          'SAMEORIGIN',
-          'ALLOW-FROM'
-        ]),
-        p3p           : joi.string().empty().default('_p3p'),
-        hsts          : joi.object().default({
-          maxAge            : 0,
-          includeSubDomains : true,
-          preload           : true
-        }).keys({
-          maxAge            : joi.number().optional().default(null),
-          includeSubDomains : joi.boolean().default(true),
-          preload           : joi.boolean().default(true)
-        }),
-        xssProtection : joi.boolean().default(true)
-      }).allow([ 'csrf', 'csp', 'xframe', 'p3p', 'hsts', 'xssProtection' ]),
-      // TODO : if we need to integrate vhost, we must to complete these rules
-      vhost           : joi.object().optional().keys({
-        enable  : joi.boolean().required().default(false),
-        options : joi.object().optional().keys({
-          url         : joi.string().required().default('/'),
-          aliases     : joi.array().items(joi.string().required().empty()),
-          subdomains  : joi.boolean().required().default(false),
-          http        : joi.object().optional().keys({
-            redirect : joi.object().required().keys({
-              type     : joi.number(),
-              url      : joi.string().required().empty(),
-              port     : joi.number().required()
-            }).allow([ 'type', 'url', 'port' ])
-          }).allow('redirect')
-        }).allow([ 'url', 'aliases', 'subdomains', 'http' ])
-      }).allow([ 'enable', 'options' ])
-    }),
-    env       : joi.string().default('development').empty().valid([
-      'development',
-      'staging',
-      'production'
-    ]),
-    port      : joi.number().default(3000),
-    host      : joi.string().default('127.0.0.1').empty().min(7),
-    directory : joi.array().min(1).unique().default([
-      { models      : '/' },
-      { controllers : '/' },
-      { views       : '/' },
-      { public      : '/' },
-      { icons       : '/' }
-    ]).items([
-      joi.object().required().keys({ models       :  joi.string().empty().min(2).default('/') }),
-      joi.object().required().keys({ controllers  :  joi.string().empty().min(2).default('/') }),
-      joi.object().required().keys({ views        :  joi.string().empty().min(2).default('/') }),
-      joi.object().required().keys({ public       :  joi.string().empty().min(2).default('/') }),
-      joi.object().required().keys({ icons        :  joi.string().empty().min(2).default('/') }),
-      joi.object().empty()
-    ]),
-    encrypt   : joi.object().default({ key : 'MyAppKey', type : 'hex' }).keys({
-      key   : joi.string().default('MyAppKey').empty(),
-      type  : joi.string().default('hex').valid([
-        'ascii',
-        'utf8',
-        'utf16le',
-        'ucs2',
-        'base64',
-        'binary',
-        'hex'
-      ])
-    })
-  }).unknown(true);
+  this.schemaList = {
+    express     : configExpress.getSchema(),
+    mongoose    : configMongoose.getSchema(),
+    passportjs  : configPassport.getSchema()
+  };
+
+  this.schema = {};
 }
+
+/**
+ * Default find function, retreive a config from given name
+ *
+ * @param {String} name wanted config
+ * @param {String} complete true if we need to complete existing config with new
+ * @return {Boolean} true if all is ok falser otherwise
+ */
+Config.prototype.find = function (name, complete) {
+  // message
+  this.logger.info([ '[ Config.find ] - Try to enable config for', name].join(' '));
+
+  // search item
+  var item = _.has(this.schemaList, name);
+
+  // has item ?
+  if (item) {
+    // get value
+    item = this.schemaList[name];
+
+    // create default object
+    var obj = _.set({}, name, item);
+
+    // add item at the end of list ?
+    if (_.isBoolean(complete) && complete) {
+      // express item ??
+      if (name === 'express' && _.has(obj, 'express')) {
+        // change depth assign
+        obj = obj.express;
+      }
+
+      // mongoose or sequelize item ?? transform to db
+      if (name === 'mongoose' || name === 'sequelize') {
+        // change object name for db
+        obj = {
+          db : obj[name]
+        };
+      }
+
+      // not extend but merge current object
+      _.merge(this.schema, obj);
+    } else {
+      // simple assignation
+      this.schema = obj;
+    }
+    // message
+    this.logger.info(['[ Config.find ] -', name, 'config was correcty activated.'].join(' '));
+    // valid statement
+    return true;
+  }
+  // default statement
+  return false;
+};
+
+/**
+ * Enable Express config
+ *
+ * @param {Boolean} complete true if we need to add new config after existing
+ * @return {Boolean} true if all is ok falser otherwise
+ */
+Config.prototype.enableExpress =  function (complete) {
+  // force complete to be a boolean
+  complete = _.isBoolean(complete) ? complete : false;
+  // process
+  return this.enableSchema('express', complete);
+};
+
+/**
+ * Enable Mongoose config
+ *
+ * @param {Boolean} complete true if we need to add new config after existing
+ * @return {Boolean} true if all is ok falser otherwise
+ */
+Config.prototype.enableMongoose = function (complete) {
+  // force complete to be a boolean
+  complete = _.isBoolean(complete) ? complete : false;
+  // process
+  return this.enableSchema('mongoose', complete);
+};
+
+/**
+ * Enable PassportJs config
+ *
+ * @param {Boolean} complete true if we need to add new config after existing
+ * @return {Boolean} true if all is ok falser otherwise
+ */
+Config.prototype.enablePassportJs = function (complete) {
+  // force complete to be a boolean
+  complete = _.isBoolean(complete) ? complete : false;
+  // process
+  return this.enableSchema('passportjs', complete);
+};
+
+/**
+ * Enable Specific schema config
+ *
+ * @param {String} name default name to find in schema
+ * @param {Boolean} complete true if we need to add new config after existing
+ * @return {Boolean} true if all is ok falser otherwise
+ */
+Config.prototype.enableSchema = function (name, complete) {
+  // force complete to be a boolean
+  complete = _.isBoolean(complete) ? complete : false;
+  // process
+  return this.find(name, complete);
+};
+
+/**
+ * Add a custom schema on config
+ *
+ * @param {String} name config name to add in schema
+ * @param {Object} value config value to add in schema
+ * @param {Boolean} enable true if we need to add auto enable of config
+ * @param {Boolean} complete true if we need to add new config after existing
+ */
+Config.prototype.addCustomSchema = function (name, value, enable, complete) {
+  // schema already exists ?
+  if (_.has(this.schemaList, name) || !_.isObject(value)) {
+    // error schema already exists
+    this.logger.error([ '[ Config.addCustomerSchema ] - Cannot add new custom schema. Schema :',
+                        name, 'already exist, or given value is invalid.' ].join(' '));
+    // invalid schema
+    return false;
+  }
+
+  // add new schema
+  _.extend(this.schemaList, _.set({}, name, value));
+
+  // auto enable ?
+  if (_.isBoolean(enable) && enable) {
+    // enable schema
+    return this.enableSchema(name, complete);
+  }
+
+  // valid statement
+  return _.has(this.schemaList, name);
+};
 
 /**
  * Default set function, a value to a specific params
@@ -356,6 +283,7 @@ Config.prototype.get = function (name) {
 Config.prototype.reload = function (base) {
   // check base before load for conditional assignation
   if (_.isString(base) && !_.isEmpty(base)) {
+    // change base
     this.base = base;
   }
 
@@ -424,6 +352,9 @@ Config.prototype.load = function () {
       // has current env ? if test return false stop env was founded
       return penv !== path;
     });
+
+    // build schema
+    this.schema = joi.object().required().keys(this.schema).unknown(true);
 
     // validate !!!
     var result = joi.validate(config, this.schema, { abortEarly : false });
