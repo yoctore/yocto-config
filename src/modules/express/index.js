@@ -227,18 +227,18 @@ ConfigExpressJs.prototype.getSchema = function () {
     }),
     port      : joi.number().default(3000),
     host      : joi.string().default('127.0.0.1').empty().min(7),
-    directory : joi.array().min(1).unique().default([
+    directory : joi.array().optional().min(1).unique().default([
       { models      : '/' },
       { controllers : '/' },
       { views       : '/' },
       { public      : '/' },
       { icons       : '/' }
     ]).items([
-      joi.object().required().keys({ models       :  joi.string().empty().min(1).default('/') }),
-      joi.object().required().keys({ controllers  :  joi.string().empty().min(1).default('/') }),
-      joi.object().required().keys({ views        :  joi.string().empty().min(1).default('/') }),
-      joi.object().required().keys({ public       :  joi.string().empty().min(1).default('/') }),
-      joi.object().required().keys({ icons        :  joi.string().empty().min(1).default('/') }),
+      joi.object().keys({ models       :  joi.string().empty().min(1).default('/') }),
+      joi.object().keys({ controllers  :  joi.string().empty().min(1).default('/') }),
+      joi.object().keys({ views        :  joi.string().empty().min(1).default('/') }),
+      joi.object().keys({ public       :  joi.string().empty().min(1).default('/') }),
+      joi.object().keys({ icons        :  joi.string().empty().min(1).default('/') }),
       joi.object().empty()
     ]),
     encrypt   : joi.object().default({ key : this.secretKey, type : 'hex' }).keys({
