@@ -26,6 +26,7 @@ config.enablePassportJs(true);
 //config.enableSchema('test');
 console.log(config.schema);
 config.set('base', './example/config');
+config.setConfigPath('base', './example/config');
 config.load().then(function(data) {
   console.log(utils.obj.inspect(data));
 }).catch(function(error) {

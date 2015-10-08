@@ -22,7 +22,7 @@ var configPassport  = require('./modules/passportjs');
  * All specific data must be configured on a each correct file.
  *
  * all.json : contains general data
- * common.json : must containt all common data between each env
+ * common.json : must contains all common data between each env
  * development.json : must contains development data for development environnement
  * staging.json : must contains stagging data for staging environnement
  * production.json : must contains production data for production environnement
@@ -237,7 +237,7 @@ Config.prototype.addCustomSchema = function (name, value, enable, complete) {
  *
  * @param {String} name current name to use
  * @param {String} value current value to assign on params name
- * @return {Object} current instance
+ * @return {Boolean} true if all is ok false otherwise
  */
 Config.prototype.set = function (name, value) {
   // check requirements
@@ -253,14 +253,37 @@ Config.prototype.set = function (name, value) {
 
     // assign value
     this[name] = value;
+    // valid statement
+    return true;
   } else {
     // warn message
     this.logger.warning([ '[ Core.set ] - Invalid value given.',
                           'name must be a string and not empty. Operation aborted !' ].join(' '));
   }
 
-  // retuning current instance
-  return this;
+  // invalid statement
+  return false;
+};
+
+/**
+ * Retreive default configuration
+ *
+ * @return {Object} loaded object
+ */
+Config.prototype.getConfig = function () {
+  // default statement
+  return this.config;
+};
+
+/**
+ * Set config path
+ *
+ * @param {String} path default path to use
+ * @return {Boolean} true if all is ok false otherwise
+ */
+Config.prototype.setConfigPath = function (path) {
+  // default statement
+  return this.set('base', path);
 };
 
 /**

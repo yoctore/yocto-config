@@ -132,6 +132,29 @@ config.addCustomSchema('test', schema);
 config.enableSchema('test');
 ```
 
+## How to use
+
+```javascript
+
+var config  = require('../src/index.js')();
+
+// enable defined config
+config.enableExpress(true);
+config.enableMongoose(true);
+config.enablePassportJs(true);
+
+// Set config path
+config.setConfigPath('./example/config');
+
+// Load and retreive data from callback
+config.load().then(function(data) {
+  // your code here
+}).catch(function(error) {
+  // your code here
+});
+
+```
+
 ## Logging in tool
 
 By Default this module include [yocto-logger](https://www.npmjs.com/package/yocto-logger) for logging.
