@@ -117,22 +117,22 @@ Config.prototype.find = function (name, complete) {
     // create default object
     var obj = _.set({}, name, item);
 
+    // express item ??
+    if (name === 'express' && _.has(obj, 'express')) {
+      // change depth assign
+      obj = obj.express;
+    }
+
+    // mongoose or sequelize item ?? transform to db
+    if (name === 'mongoose' || name === 'sequelize') {
+      // change object name for db
+      obj = {
+        db : obj[name]
+      };
+    }
+
     // add item at the end of list ?
     if (_.isBoolean(complete) && complete) {
-      // express item ??
-      if (name === 'express' && _.has(obj, 'express')) {
-        // change depth assign
-        obj = obj.express;
-      }
-
-      // mongoose or sequelize item ?? transform to db
-      if (name === 'mongoose' || name === 'sequelize') {
-        // change object name for db
-        obj = {
-          db : obj[name]
-        };
-      }
-
       // not extend but merge current object
       _.merge(this.schema, obj);
     } else {
@@ -272,7 +272,7 @@ Config.prototype.set = function (name, value) {
  */
 Config.prototype.getConfig = function () {
   // default statement
-  return this.config;
+  return this.get('config');
 };
 
 /**

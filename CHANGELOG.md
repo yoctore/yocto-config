@@ -1,6 +1,7 @@
-## 0.3.0 -> 1.0.1 (2015-10-08)
+## 1.0.1 && 1.0.2 (2015-10-08)
 
 - Change readme.md content & add new setConfigPath method
+- Minor fixes
 
 ## 0.3.0 -> 1.0.0 (2015-10-06 <-> 2015-10-07)
 

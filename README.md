@@ -149,6 +149,9 @@ config.setConfigPath('./example/config');
 // Load and retreive data from callback
 config.load().then(function(data) {
   // your code here
+  // you can also get data with a method
+  var c = config.getConfig();
+  console.log(c);
 }).catch(function(error) {
   // your code here
 });

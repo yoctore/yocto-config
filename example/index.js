@@ -18,15 +18,16 @@ var schema = joi.object().required().keys({
   }).allow([ 'daemon', 'mailer' ])
 }).unknown();
 
-config.enableExpress(true);
+config.enableExpress();
 config.enableMongoose(true);
 config.enablePassportJs(true);
 //config.addCustomSchema('test', schema, true, true);
 
 //config.enableSchema('test');
-console.log(config.schema);
-config.set('base', './example/config');
-config.setConfigPath('base', './example/config');
+//console.log(config.schema);
+//config.set('base', './example/config');
+config.setConfigPath('./example/config');
+
 config.load().then(function(data) {
   console.log(utils.obj.inspect(data));
 }).catch(function(error) {
