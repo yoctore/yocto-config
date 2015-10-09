@@ -162,6 +162,7 @@ config.load().then(function(data) {
 
 - Mongoose schema can be find [here](https://gitlab.com/yocto-node-modules/yocto-config/blob/master/documentation/markdown/schema/Mongoose.md)
 - Express schema can be find [here](https://gitlab.com/yocto-node-modules/yocto-config/blob/master/documentation/markdown/schema/Express.md)
+
 ## Logging in tool
 
 By Default this module include [yocto-logger](https://www.npmjs.com/package/yocto-logger) for logging.
