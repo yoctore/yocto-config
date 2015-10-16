@@ -1,3 +1,7 @@
+## 1.0.4  (2015-10-16)
+
+- Add jwt rules on default express config format
+
 ## 1.0.1 && 1.0.2 && 1.0.3 (2015-10-08)
 
 - Change readme.md content & add new setConfigPath method

@@ -220,6 +220,10 @@
       'binary',
       'hex'
     ])
+  }),
+  jwt       : joi.object().default({ enable : false, key : this.secretKey }).keys({
+    enable : joi.boolean().default(false),
+    key    : joi.string().default(this.secretKey)
   })
 };
 

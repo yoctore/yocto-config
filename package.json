@@ -1,12 +1,12 @@
 {
   "name": "yocto-config",
   "description": "A simple config manager for node app",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": true,
   "scripts": {},
   "author": {
-    "name": "ROBERT Mathieu",
-    "email": "mathieu@yocto.re",
+    "name": "Yocto SAS",
+    "email": "technique@yocto.re",
     "url": "http://www.yocto.re"
   },
   "contributors": [],
@@ -31,7 +31,8 @@
   "files": [
     "dist",
     "README.md",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "LICENSE-2.0.txt"
   ],
   "keywords": [
     "config",
