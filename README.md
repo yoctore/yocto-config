@@ -136,7 +136,7 @@ config.enableSchema('test');
 
 ```javascript
 
-var config  = require('../src/index.js')();
+var config  = require('yocto-config')();
 
 // enable defined config
 config.enableExpress(true);
