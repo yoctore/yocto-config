@@ -38,7 +38,7 @@ production.json : place in this file all production property for production envi
 // a development.json file with these property
 {
 "test" : {
-  "db : {
+  "db" : {
     "uri" : "http://test.com/123456"
   }
 }
@@ -48,7 +48,7 @@ production.json : place in this file all production property for production envi
 // a production.json file with these property
 {
 "test" : {
-  "db : {
+  "db" : {
     "options" : {
         "op1" : "my-value1",
         "op2" : "my-value2"
@@ -62,7 +62,7 @@ Will produce on production this config data :
 // generated config in production env
 {
 "test" : {
-  "db : {
+  "db" : {
     "uri" : "http://test.com/123456",
     "options" : {
         "op1" : "my-value1",
