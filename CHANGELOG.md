@@ -1,4 +1,8 @@
-## 1.0.4  (2015-10-16)
+## 1.0.6 (2015-10-22)
+
+- Change message when no files was found.
+
+## 1.0.4 (2015-10-16)
 
 - Add jwt rules on default express config format
 

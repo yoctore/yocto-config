@@ -349,7 +349,7 @@ Config.prototype.load = function () {
 
     // has a valid path ? no ? stop process
     if (_.isEmpty(paths)) {
-      throw 'No path was found. operation aborted !';
+      throw 'No files was found. operation aborted !';
     }
 
     // sort path
