@@ -4,7 +4,7 @@ var joi   = require('joi');
 var _     = require('lodash');
 
 /**
- * Passwport Config Schema
+ * Passport Config Schema
  *
  * @date : 07/10/2015
  * @author : ROBERT Mathieu <mathieu@yocto.re>
@@ -14,7 +14,7 @@ var _     = require('lodash');
 function ConfigPassportJs () {}
 
 /**
- * Return current express js schema defintion
+ * Return current passport js schema defintion
  *
  * @return {Object} default schema for passport configuration
  */

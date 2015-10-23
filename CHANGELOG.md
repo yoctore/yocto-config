@@ -1,3 +1,8 @@
+## 1.1.1 (2015-10-23)
+
+- Change level of log for find method
+- Change use of logger on auto enable method
+
 ## 1.1.0 (2015-10-23)
 
 - Change `passportjs` config key to `passportJs` (camelCase).

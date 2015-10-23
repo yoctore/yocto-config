@@ -87,11 +87,17 @@ function Config (logger) {
    * @type Object
    */
   this.schemaList = {
-    express     : configExpress.getSchema(),
-    mongoose    : configMongoose.getSchema(),
-    passportJs  : configPassport.getSchema()
+    express       : configExpress.getSchema(),
+    mongoose      : configMongoose.getSchema(),
+    passportJs    : configPassport.getSchema()
   };
 
+  /**
+   * Current schema to use for validation
+   *
+   * @property {Object}
+   * @default {}
+   */
   this.schema = {};
 }
 
@@ -104,7 +110,7 @@ function Config (logger) {
  */
 Config.prototype.find = function (name, complete) {
   // message
-  this.logger.info([ '[ Config.find ] - Try to enable config for', name].join(' '));
+  this.logger.debug([ '[ Config.find ] - Try to enable config for', name].join(' '));
 
   // search item
   var item = _.has(this.schemaList, name);
@@ -347,11 +353,11 @@ Config.prototype.autoEnableValidators = function (items) {
     // schema exists ?
     if (_.has(this.schemaList, item)) {
       // enable succeed ?
-      var state = this.enableSchema(item, true);
-      // success or error ?
-      this.logger[ state ? 'info' : 'error' ]([ '[ Config.autoEnableValidator ] - Auto enable [',
-                                                item, ']',
-                                                (state ? 'succeed.' : 'failed') ].join(' '));
+      if (!this.enableSchema(item, true)) {
+        // success or error ?
+        this.logger.error([ '[ Config.autoEnableValidator ] - Auto enable [',
+                            item, '] failed' ].join(' '));
+      }
     } else {
       // warning
       this.logger.warning([ '[ Config.autoEnableValidator ] - Cannot enable [',
