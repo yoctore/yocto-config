@@ -41,6 +41,7 @@ ConfigMongoose.prototype.getSchema = function () {
 
   // default schema
   var schema = joi.object().required().keys({
+    type    : joi.string().default('mongoose').allow([ 'mongoose' ]),
     uri     : joi.string().required().empty(),
     options : joi.object().default({}).keys({
       db          : joi.object().optional().keys(dbOptions),

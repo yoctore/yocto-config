@@ -18,9 +18,12 @@ var schema = joi.object().required().keys({
   }).allow([ 'daemon', 'mailer' ])
 }).unknown();
 
-config.enableExpress();
-config.enableMongoose(true);
-config.enablePassportJs(true);
+
+config.autoEnableValidators([ 'express', 'test', 'passportJs', 'passport', 'mongoose' ]);
+//return;
+//config.enableExpress();
+//config.enableMongoose(true);
+//config.enablePassportJs(true);
 //config.addCustomSchema('test', schema, true, true);
 
 //config.enableSchema('test');

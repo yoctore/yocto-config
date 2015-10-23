@@ -34,7 +34,7 @@
   "db" : {
     "uri" : "localhost:27051"
   },
-  "passportjs" : {
+  "passportJs" : {
     "facebook" : {
       "identifier" : "fsddfs",
       "secret" : "fdsfsdfd",

@@ -89,7 +89,7 @@ function Config (logger) {
   this.schemaList = {
     express     : configExpress.getSchema(),
     mongoose    : configMongoose.getSchema(),
-    passportjs  : configPassport.getSchema()
+    passportJs  : configPassport.getSchema()
   };
 
   this.schema = {};
@@ -184,7 +184,7 @@ Config.prototype.enablePassportJs = function (complete) {
   // force complete to be a boolean
   complete = _.isBoolean(complete) ? complete : false;
   // process
-  return this.enableSchema('passportjs', complete);
+  return this.enableSchema('passportJs', complete);
 };
 
 /**
@@ -324,6 +324,43 @@ Config.prototype.loadPassport = function () {
   // this.schema = this.passport.get();
   // default statement
   return this.load();
+};
+
+/**
+ * Auto enable validators schema for given list
+ *
+ * @param {Array} items array of items to enable
+ * @return {Boolean} true if all is ok false otherwise
+ */
+Config.prototype.autoEnableValidators = function (items) {
+  // is valid format ?
+  if (!_.isArray(items) || _.isEmpty(items)) {
+    // warn message invalid data
+    this.logger.warning([ '[ Config.autoEnableValidator ] - Cannot check items.',
+                          'Is not an array or is empty.' ].join(' '));
+    // invalid statement
+    return false;
+  }
+
+  // parse item and check
+  _.each(items, function (item) {
+    // schema exists ?
+    if (_.has(this.schemaList, item)) {
+      // enable succeed ?
+      var state = this.enableSchema(item, true);
+      // success or error ?
+      this.logger[ state ? 'info' : 'error' ]([ '[ Config.autoEnableValidator ] - Auto enable [',
+                                                item, ']',
+                                                (state ? 'succeed.' : 'failed') ].join(' '));
+    } else {
+      // warning
+      this.logger.warning([ '[ Config.autoEnableValidator ] - Cannot enable [',
+                            item, '] schema does not exists' ].join(' '));
+    }
+  }, this);
+
+  // default statement
+  return true;
 };
 
 /**

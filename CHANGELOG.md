@@ -1,3 +1,9 @@
+## 1.1.0 (2015-10-23)
+
+- Change `passportjs` config key to `passportJs` (camelCase).
+- Add a new method to auto enable method from given key
+- Add a `type` property on mongoose schema.
+
 ## 1.0.6 (2015-10-22)
 
 - Change message when no files was found.
