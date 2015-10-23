@@ -41,5 +41,12 @@
         }
       }
     }
+  },
+  "render" : {
+    
+  },
+  "router" : {
+    "routes" : "./routes",
+    "controllers": "./controllers"
   }
 }

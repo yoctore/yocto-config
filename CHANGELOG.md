@@ -1,3 +1,8 @@
+## 1.2.0 (2015-10-23)
+
+- Add [yocto-render](https://www.npmjs.com/package/yocto-render) config rules and `enableRender` method to enable this config
+- Add [yocto-router](https://www.npmjs.com/package/yocto-router) config rules and `enableRouter` method to enable this config
+
 ## 1.1.1 (2015-10-23)
 
 - Change level of log for find method

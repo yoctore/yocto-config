@@ -79,6 +79,8 @@ Predefined configuration schema was already defined. To use them see methods bel
 - enableExpress(complete) : add to default schema an express configuration
 - enableMongoose(complete) : add to default schema a mongoose configuration
 - enablePassportJs(complete) : add to default schema a passportjs configuration for (facebook, twitter, google, active-directory, standard login)
+- enableRender(complete) : add to default schema a [yocto-render](https://www.npmjs.com/package/yocto-render) configuration
+- enableRouter(complete) : add to default schema a [yocto-router](https://www.npmjs.com/package/yocto-router) configuration
 
 All of these function was replaced by default an already defined configuration.
 
@@ -178,6 +180,8 @@ config.autoEnableValidators([ 'express', 'passportJs', 'mongoose' ]);
 
 - Mongoose schema can be find [here](https://gitlab.com/yocto-node-modules/yocto-config/blob/master/documentation/markdown/schema/Mongoose.md)
 - Express schema can be find [here](https://gitlab.com/yocto-node-modules/yocto-config/blob/master/documentation/markdown/schema/Express.md)
+- Yocto Render schema can be find [here](https://gitlab.com/yocto-node-modules/yocto-config/blob/master/documentation/markdown/schema/YRender.md)
+- Yocto Router schema can be find [here](https://gitlab.com/yocto-node-modules/yocto-config/blob/master/documentation/markdown/schema/YRouter.md)
 
 ## Logging in tool
 

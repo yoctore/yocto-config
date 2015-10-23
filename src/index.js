@@ -11,6 +11,8 @@ var Q               = require('q');
 var configExpress   = require('./modules/express');
 var configMongoose  = require('./modules/mongoose');
 var configPassport  = require('./modules/passportjs');
+var configRender    = require('./modules/render');
+var configRouter    = require('./modules/router');
 
 /**
  * Yocto config manager.
@@ -89,7 +91,9 @@ function Config (logger) {
   this.schemaList = {
     express       : configExpress.getSchema(),
     mongoose      : configMongoose.getSchema(),
-    passportJs    : configPassport.getSchema()
+    passportJs    : configPassport.getSchema(),
+    render        : configRender.getSchema(),
+    router        : configRouter.getSchema()
   };
 
   /**
@@ -165,6 +169,32 @@ Config.prototype.enableExpress =  function (complete) {
   complete = _.isBoolean(complete) ? complete : false;
   // process
   return this.enableSchema('express', complete);
+};
+
+/**
+ * Enable Yocto Render config
+ *
+ * @param {Boolean} complete true if we need to add new config after existing
+ * @return {Boolean} true if all is ok falser otherwise
+ */
+Config.prototype.enableRender =  function (complete) {
+  // force complete to be a boolean
+  complete = _.isBoolean(complete) ? complete : false;
+  // process
+  return this.enableSchema('render', complete);
+};
+
+/**
+ * Enable Yocto Router config
+ *
+ * @param {Boolean} complete true if we need to add new config after existing
+ * @return {Boolean} true if all is ok falser otherwise
+ */
+Config.prototype.enableRouter =  function (complete) {
+  // force complete to be a boolean
+  complete = _.isBoolean(complete) ? complete : false;
+  // process
+  return this.enableSchema('router', complete);
 };
 
 /**

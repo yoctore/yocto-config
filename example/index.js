@@ -19,7 +19,7 @@ var schema = joi.object().required().keys({
 }).unknown();
 
 
-config.autoEnableValidators([ 'express', 'test', 'passportJs', 'passport', 'mongoose' ]);
+config.autoEnableValidators([ 'express', 'test', 'passportJs', 'passport', 'mongoose', 'render', 'router' ]);
 //return;
 //config.enableExpress();
 //config.enableMongoose(true);
