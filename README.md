@@ -158,6 +158,22 @@ config.load().then(function(data) {
 
 ```
 
+## Tricks
+
+You can also use a utility method `autoEnableValidators` to enable your validator. See below key associated with schema : 
+
+- express : for express schema
+- passportJs : for passportJs schema
+- mongoose : for mongoose schema
+
+Example : 
+
+```javascript
+var config  = require('yocto-config')();
+config.autoEnableValidators([ 'express', 'passportJs', 'mongoose' ]);
+// Extra process
+```
+
 ## Default configuration rules
 
 - Mongoose schema can be find [here](https://gitlab.com/yocto-node-modules/yocto-config/blob/master/documentation/markdown/schema/Mongoose.md)
