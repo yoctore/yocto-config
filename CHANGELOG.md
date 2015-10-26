@@ -1,3 +1,7 @@
+## 1.3.0 (2015-10-23)
+
+- Add cors rules on default express schema.
+
 ## 1.2.0 (2015-10-23)
 
 - Add [yocto-render](https://www.npmjs.com/package/yocto-render) config rules and `enableRender` method to enable this config
