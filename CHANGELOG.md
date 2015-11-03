@@ -1,3 +1,7 @@
+## 1.3.1 (2015-11-03)
+
+- Update package and jump to v7.0.0 for joi.
+
 ## 1.3.0 (2015-10-23)
 
 - Add cors rules on default express schema.
