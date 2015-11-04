@@ -92,7 +92,7 @@ ConfigRender.prototype.getSchema = function () {
       ),
       social      : joi.object().optional().min(1).keys(socialRules)
     })
-  });
+  }).allow([ 'app', 'property' ]);
 };
 
 // Default export

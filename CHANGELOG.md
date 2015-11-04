@@ -1,3 +1,7 @@
+## 1.3.5 (2015-11-04)
+
+- Add an allow filter on new render rules
+
 ## 1.3.4 (2015-11-04)
 
 - Add rules for social item on render config
