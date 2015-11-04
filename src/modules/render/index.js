@@ -51,18 +51,46 @@ ConfigRender.prototype.getSchema = function () {
     footer : joi.object().optional().min(1).keys(mediaTypeRules)
   };
 
+  // facebook twitter keys
+  var facebookTwitterKeys = {
+    property  : joi.string().required().empty(),
+    content   : joi.string().required().empty()
+  };
+
+  // google keys
+  var googleKeys = {
+    rel   : joi.string().required().empty(),
+    href  : joi.string().required().empty()
+  };
+
+  // setting up social keys
+  var socialRules = {
+    facebook  : joi.array().optional().items(facebookTwitterKeys).default([]),
+    twitter   : joi.array().optional().items(facebookTwitterKeys).default([]),
+    google    : joi.array().optional().items(googleKeys).default([])
+  };
+
   // default statement
   return joi.object().required().keys({
-    app     : joi.object().optional().min(1).keys({
+    app       : joi.object().optional().min(1).keys({
       name : joi.string().required().min(3).not(null).empty()
     }),
 
-    render  : joi.object().optional().min(1).keys({
-      title     : joi.string().optional().min(3).not(null),
-      language  : joi.string().optional().length(2).not(null),
-      meta      : joi.array().optional().min(1).items(metaHttpEquivRules),
-      httpEquiv : joi.array().optional().min(1).items(metaHttpEquivRules),
-      assets    : joi.object().optional().min(1).keys(assetsRules)
+    // property list
+    property  : joi.object().optional().min(1).keys({
+      title       : joi.string().optional().min(3).not(null),
+      language    : joi.string().optional().length(2).not(null),
+      meta        : joi.array().optional().min(1).items(metaHttpEquivRules),
+      httpEquiv   : joi.array().optional().min(1).items(metaHttpEquivRules),
+      assets      : joi.object().optional().min(1).keys(assetsRules),
+      mobileIcons : joi.array().optional().min(1).items(
+        joi.object().required().keys({
+          rel   : joi.string().required().empty(),
+          sizes : joi.string().required().empty(),
+          href  : joi.string().required().empty()
+        })
+      ),
+      social      : joi.object().optional().min(1).keys(socialRules)
     })
   });
 };

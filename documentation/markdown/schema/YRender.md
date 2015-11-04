@@ -45,6 +45,27 @@ var schema = joi.object().required().keys({
           async : joi.string().optional().allow('async').not(null)
         }))
       })
+    }),
+    mobileIcons : joi.array().optional().min(1).items(
+      joi.object().required().keys({
+        rel   : joi.string().required().empty(),
+        sizes : joi.string().required().empty(),
+        href  : joi.string().required().empty()
+      })
+    ),
+    social      : joi.object().optional().min(1).keys({
+      facebook  : joi.array().optional().items({
+        property  : joi.string().required().empty(),
+        content   : joi.string().required().empty()
+      }).default([]),
+      twitter   : joi.array().optional().items({
+        property  : joi.string().required().empty(),
+        content   : joi.string().required().empty()
+      }).default([]),
+      google    : joi.array().optional().items({
+        rel   : joi.string().required().empty(),
+        href  : joi.string().required().empty()
+      }).default([])
     })
   })
 });

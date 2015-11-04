@@ -30,7 +30,7 @@
       "enable"      : false,
       "options" : {
         "url"         : "myhosturl.url",
-        "aliases"     : [ "alias.myhosturl.url" ],      
+        "aliases"     : [ "alias.myhosturl.url" ],
         "subdomains"  : true,
         "http"        : {
           "redirect" : {
@@ -43,7 +43,29 @@
     }
   },
   "render" : {
-    
+    "property" : {
+      "mobileIcons" : [
+        {
+          "rel" : "a",
+          "sizes" : "fsdfsd",
+          "href" : "fsdfds"
+        }
+      ],
+      "social" : {
+        "facebook" : [
+          {
+            "property" : "fdsfsd",
+            "content"  : "fsdfds"
+          }
+        ],
+        "google"  : [
+          {
+            "rel" : "fdsfsd",
+            "href"  : "fsdfds"
+          }
+        ]
+      }
+    }
   },
   "router" : {
     "routes" : "./routes",

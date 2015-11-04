@@ -1,4 +1,8 @@
-## 1.3.2 (2015-11-04)
+## 1.3.4 (2015-11-04)
+
+- Add rules for social item on render config
+
+## 1.3.2 <-> 1.3.3 (2015-11-04)
 
 - Update yocto dependencies package
 
