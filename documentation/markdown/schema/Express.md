@@ -120,7 +120,8 @@
     security        : joi.object().default({
       csrf          : {
         key     : '_csrf',
-        secret  : 'yocto-secret-key'
+        secret  : 'yocto-secret-key',
+        angular : true
       },
       csp           : {},
       xframe        : 'SAMEORIGIN',
@@ -130,10 +131,12 @@
     }).keys({
       csrf          : joi.object().default({
         key     : '_csrf',
-        secret  : 'yocto-secret-key'
+        secret  : 'yocto-secret-key',
+        angular : true
       }).keys({
         key     : joi.string().empty().default('_csrf'),
-        secret  : joi.string().empty().default('yocto-secret-key')
+        secret  : joi.string().empty().default('yocto-secret-key'),
+        angular : joi.boolean().default(true)
       }),
       csp           : joi.object().default({}).keys({
         policy     : joi.object().default({}).keys({

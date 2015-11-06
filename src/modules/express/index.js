@@ -152,7 +152,8 @@ ConfigExpressJs.prototype.getSchema = function () {
       security        : joi.object().default({
         csrf          : {
           key     : '_csrf',
-          secret  : this.secretKey
+          secret  : this.secretKey,
+          angular : true
         },
         csp           : {},
         xframe        : 'SAMEORIGIN',
@@ -162,10 +163,12 @@ ConfigExpressJs.prototype.getSchema = function () {
       }).keys({
         csrf          : joi.object().default({
           key     : '_csrf',
-          secret  : this.secretKey
+          secret  : this.secretKey,
+          angular : true
         }).keys({
           key     : joi.string().empty().default('_csrf'),
-          secret  : joi.string().empty().default(this.secretKey)
+          secret  : joi.string().empty().default(this.secretKey),
+          angular : joi.boolean().default(true)
         }),
         csp           : joi.object().default({}).keys({
           policy     : joi.object().default({}).keys({
