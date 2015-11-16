@@ -126,13 +126,15 @@ ConfigExpressJs.prototype.getSchema = function () {
             path      : '/',
             httpOnly  : false,
             secure    : true,
-            maxAge    : null
+            maxAge    : null,
+            domain    : null
           }).keys({
             path      : joi.string().optional().default('/'),
             httpOnly  : joi.boolean().optional().default(false),
             secure    : joi.boolean().optional().default(true),
-            maxAge    : joi.number().optional().default(null)
-          }).allow([ 'path', 'httpOnly', 'secure', 'maxAge' ]),
+            maxAge    : joi.number().optional().default(null),
+            domain    : joi.string().optional().default(null)
+          }).allow([ 'path', 'httpOnly', 'secure', 'maxAge', 'domain' ]),
           secret            : joi.string().optional().min(8).default(this.secretKey),
           name              : joi.string().optional().min(5).default('connect.sid'),
           genuuid           : joi.boolean().optional().default(false),

@@ -99,8 +99,9 @@
           path      : joi.string().optional().default('/'),
           httpOnly  : joi.boolean().optional().default(false),
           secure    : joi.boolean().optional().default(true),
-          maxAge    : joi.number().optional().default(null)
-        }).allow([ 'path', 'httpOnly', 'secure', 'maxAge' ]),
+          maxAge    : joi.number().optional().default(null),
+          domain    : joi.string().optional()
+        }).allow([ 'path', 'httpOnly', 'secure', 'maxAge', 'domain' ]),
         secret            : joi.string().optional().min(8).default('yocto-secret-key'),
         name              : joi.string().optional().min(5).default('connect.sid'),
         genuuid           : joi.boolean().optional().default(false),
