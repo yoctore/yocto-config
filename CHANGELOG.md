@@ -1,3 +1,7 @@
+## 1.3.9 (2015-11-27)
+
+- Fix a bug with allow-from xframe rules
+
 ## 1.3.6 (2015-11-04)
 
 - Adding angular rules on lusca for csrf rules

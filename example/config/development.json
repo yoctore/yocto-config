@@ -20,6 +20,9 @@
         }
       }
     },
+    "security" : {
+      "xframe" : "ALLOW-FROM http://www.yocto.re"
+    },
     "session" : {
       "enable" : true,
       "options" : {

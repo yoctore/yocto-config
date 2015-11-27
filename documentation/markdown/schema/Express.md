@@ -163,11 +163,7 @@
         reportOnly : joi.boolean().default(false),
         reportUri  : joi.string()
       }).allow('policy', 'reportOnly', 'reportUri'),
-      xframe        : joi.string().empty().default('SAMEORIGIN').valid([
-        'DENY',
-        'SAMEORIGIN',
-        'ALLOW-FROM'
-      ]),
+      xframe        : joi.string().empty().default('SAMEORIGIN'),
       p3p           : joi.string().empty().default('_p3p'),
       hsts          : joi.object().default({
         maxAge            : 0,
@@ -198,7 +194,7 @@
     }).allow([ 'enable', 'options' ])
   }),
   port      : joi.number().default(3000),
-  host      : joi.string().default('127.0.0.1').empty().min(7),
+  host      : joi.string().default('127.0.0.1').empty(),
   directory : joi.array().optional().min(1).unique().default([
     { models      : '/' },
     { controllers : '/' },
