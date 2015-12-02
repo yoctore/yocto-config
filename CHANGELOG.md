@@ -1,3 +1,7 @@
+## 1.4.0 (2015-12-02)
+
+- Add jwt ips filter on config file
+
 ## 1.3.9 (2015-11-27)
 
 - Fix a bug with allow-from xframe rules

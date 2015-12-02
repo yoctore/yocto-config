@@ -221,9 +221,10 @@
       'hex'
     ])
   }),
-  jwt       : joi.object().default({ enable : false, key : this.secretKey }).keys({
+  jwt       : joi.object().default({ enable : false, key : 'yocto-secret-key', ips : [] }).keys({
     enable : joi.boolean().default(false),
-    key    : joi.string().default(this.secretKey)
+    key    : joi.string().default('yocto-secret-key'),
+    ips    : joi.array().items(joi.string().required().empty())
   }),
   cors      : joi.boolean().default(false)
 };

@@ -254,9 +254,10 @@ ConfigExpressJs.prototype.getSchema = function () {
         'hex'
       ])
     }),
-    jwt       : joi.object().default({ enable : false, key : this.secretKey }).keys({
+    jwt       : joi.object().default({ enable : false, key : this.secretKey, ips : [] }).keys({
       enable : joi.boolean().default(false),
-      key    : joi.string().default(this.secretKey)
+      key    : joi.string().default(this.secretKey),
+      ips    : joi.array().items(joi.string().required().empty())
     }),
     cors      : joi.boolean().default(false)
   };
