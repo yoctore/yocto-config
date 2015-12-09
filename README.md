@@ -182,6 +182,7 @@ config.autoEnableValidators([ 'express', 'passportJs', 'mongoose' ]);
 - Express schema can be find [here](https://gitlab.com/yocto-node-modules/yocto-config/blob/master/documentation/markdown/schema/Express.md)
 - Yocto Render schema can be find [here](https://gitlab.com/yocto-node-modules/yocto-config/blob/master/documentation/markdown/schema/YRender.md)
 - Yocto Router schema can be find [here](https://gitlab.com/yocto-node-modules/yocto-config/blob/master/documentation/markdown/schema/YRouter.md)
+- Yocto PassportJS schema can be find [here](https://gitlab.com/yocto-node-modules/yocto-config/blob/master/documentation/markdown/schema/PassportJs.md)
 
 ## Logging in tool
 

@@ -75,7 +75,7 @@
         "fdfsdfdfsdfd"
       ]
     },
-    "activeDirectory" : {
+    "activeDirectory" : [ {
       "urls" : {
         "connect"  : "fsdfds",
         "callback" : "fsdfds"
@@ -90,8 +90,8 @@
       "db" : {
         "method" : "fsdfds"
       }
-    },
-    "standard" : {
+    }],
+    "standard" : [{
       "urls" : {
         "connect"  : "fsdfds",
         "callback" : "fsdfds"
@@ -99,7 +99,7 @@
       "db" : {
         "method" : "fsdfdsfds"
       }
-    }
+    }]
   },
   "test" : {
     

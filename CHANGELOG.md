@@ -1,3 +1,8 @@
+## 1.5.0 (2015-12-09)
+
+- Change passportjs schema for activeDirectory and standard connection. move from object to an array of object. See doc for more details.
+- Add documentation for passportJs usage
+
 ## 1.4.0 (2015-12-02)
 
 - Add jwt ips filter on config file

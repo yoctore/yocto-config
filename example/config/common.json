@@ -42,6 +42,9 @@
       }
     }
   },
+  "passportJs" : {
+    "internalUrlRedirect" : "/toto"
+  },
   "render" : {
     "property" : {
       "mobileIcons" : [

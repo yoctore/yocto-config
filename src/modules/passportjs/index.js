@@ -65,11 +65,12 @@ ConfigPassportJs.prototype.getSchema = function () {
 
   // default schema
   var schema = joi.object().required().keys({
-    facebook        : joi.object().optional().keys(facebookKeys),
-    twitter         : joi.object().optional().keys(twitterKeys),
-    google          : joi.object().optional().keys(googleKeys),
-    activeDirectory : joi.object().optional().keys(activeDirectoryKeys),
-    standard        : joi.object().optional().keys(standardAuthKeys)
+    internalUrlRedirect : joi.string().required().empty(),
+    facebook            : joi.object().optional().keys(facebookKeys),
+    twitter             : joi.object().optional().keys(twitterKeys),
+    google              : joi.object().optional().keys(googleKeys),
+    activeDirectory     : joi.array().optional().items(activeDirectoryKeys),
+    standard            : joi.array().optional().items(standardAuthKeys)
   }).unknown();
 
   // default statement
