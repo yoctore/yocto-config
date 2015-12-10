@@ -1,4 +1,11 @@
 {
+  "protocol" : {
+    "type" : "https",
+    "cert" : {
+      "key"  : "./toto/fsdfsddf",
+      "cert" : "./toto/fdsfdsfd"
+    }
+  },
   "app" : {
     "name" : "my AP DEV"
   },

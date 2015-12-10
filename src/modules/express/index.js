@@ -228,6 +228,17 @@ ConfigExpressJs.prototype.getSchema = function () {
     }),
     port      : joi.number().default(3000),
     host      : joi.string().default('127.0.0.1').empty(),
+    protocol  : joi.object().default({ type : 'http' }).keys({
+      type  : joi.string().default('http').valid([ 'http', 'https' ]),
+      cert  : joi.object().when('type', {
+        is        : 'http',
+        then      : joi.optional(),
+        otherwise : joi.object().required().keys({
+          key   : joi.string().required().empty(),
+          cert  : joi.string().required().empty()
+        }),
+      })
+    }),
     directory : joi.array().optional().min(1).unique().default([
       { models      : '/' },
       { controllers : '/' },
