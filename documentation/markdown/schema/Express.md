@@ -193,11 +193,15 @@
       }).allow([ 'url', 'aliases', 'subdomains', 'http' ])
     }).allow([ 'enable', 'options' ])
   }),
-  port      : joi.number().default(3000),
   host      : joi.string().default('127.0.0.1').empty(),
   protocol  : joi.object().default({ type : 'http' }).keys({
-    type  : joi.string().default('http').valid([ 'http', 'https' ]),
-    cert  : joi.object().when('type', {
+    type          : joi.string().default('http').valid([ 'http', 'https' ]),
+    port          : joi.number().when('type', {
+      is        : 'http',
+      then      : joi.number().default(3000),
+      otherwise : joi.number().default(443)
+    }),
+    certificate   : joi.object().when('type', {
       is        : 'http',
       then      : joi.optional(),
       otherwise : joi.object().required().keys({

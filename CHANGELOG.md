@@ -1,7 +1,8 @@
-## 1.6.0 (2015-12-10)
+## 1.6.0 && 1.6.1 (2015-12-10)
 
 - add support for HTTPS
 - add new rules on express schema to manage protocol and cert files
+- move port rule on protocol object rules
 
 ## 1.5.0 (2015-12-09)
 

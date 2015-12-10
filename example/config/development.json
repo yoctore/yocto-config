@@ -1,7 +1,7 @@
 {
   "protocol" : {
-    "type" : "https",
-    "cert" : {
+    "type" : "http",
+    "certificate" : {
       "key"  : "./toto/fsdfsddf",
       "cert" : "./toto/fdsfdsfd"
     }
