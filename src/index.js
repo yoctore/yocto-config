@@ -64,7 +64,7 @@ function Config (logger) {
    * @type {String}
    * @default development
    */
-  this.env    = process.NODE_ENV || 'development';
+  this.env    = process.env.NODE_ENV || 'development';
 
   /**
    * Default base path
@@ -437,11 +437,9 @@ Config.prototype.load = function () {
       return [ p === production, p === staging,
                p === development, p === common, p === all, p === p ].join('|');
     }, this);
-
     // parse all and merge if no error
     _.each(paths, function (path) {
       var item = JSON.parse(fs.readFileSync(path, 'utf-8'));
-
       // merge data
       _.merge(config, item);
 

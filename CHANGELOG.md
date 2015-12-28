@@ -1,3 +1,7 @@
+## 1.6.2 (2015-12-28)
+
+- Fix a bug on NODE_ENV usage
+
 ## 1.6.0 && 1.6.1 (2015-12-10)
 
 - add support for HTTPS
