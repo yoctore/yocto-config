@@ -1,7 +1,7 @@
 {
   "name": "yocto-config",
   "description": "A simple config manager for node app",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "scripts": {},
   "author": {
     "name": "Yocto SAS",
@@ -18,10 +18,10 @@
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/yocto-node-modules/yocto-config.git"
+    "url": "https://github.com/yoctore/yocto-config.git"
   },
   "bugs": {
-    "url": "https://gitlab.com/yocto-node-modules/yocto-config/issues"
+    "url": "https://github.com/yoctore/yocto-config/issues"
   },
   "license": "Apache-2.0",
   "engines": {

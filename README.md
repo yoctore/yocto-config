@@ -1,3 +1,5 @@
+![alt text](https://david-dm.org/yoctore/yocto-config.svg "Dependencies Status")
+
 ## Overview
 
 This module is a part of yocto node modules for NodeJS.
@@ -178,11 +180,11 @@ config.autoEnableValidators([ 'express', 'passportJs', 'mongoose' ]);
 
 ## Default configuration rules
 
-- Mongoose schema can be find [here](https://gitlab.com/yocto-node-modules/yocto-config/blob/master/documentation/markdown/schema/Mongoose.md)
-- Express schema can be find [here](https://gitlab.com/yocto-node-modules/yocto-config/blob/master/documentation/markdown/schema/Express.md)
-- Yocto Render schema can be find [here](https://gitlab.com/yocto-node-modules/yocto-config/blob/master/documentation/markdown/schema/YRender.md)
-- Yocto Router schema can be find [here](https://gitlab.com/yocto-node-modules/yocto-config/blob/master/documentation/markdown/schema/YRouter.md)
-- Yocto PassportJS schema can be find [here](https://gitlab.com/yocto-node-modules/yocto-config/blob/master/documentation/markdown/schema/PassportJs.md)
+- Mongoose schema can be find [here](https://github.com/yoctore/yocto-config/blob/master/documentation/markdown/schema/Mongoose.md)
+- Express schema can be find [here](https://github.com/yoctore/yocto-config/blob/master/documentation/markdown/schema/Express.md)
+- Yocto Render schema can be find [here](https://github.com/yoctore/yocto-config/blob/master/documentation/markdown/schema/YRender.md)
+- Yocto Router schema can be find [here](https://github.com/yoctore/yocto-config/blob/master/documentation/markdown/schema/YRouter.md)
+- Yocto PassportJS schema can be find [here](https://github.com/yoctore/yocto-config/blob/master/documentation/markdown/schema/PassportJs.md)
 
 ## Logging in tool
 
@@ -191,4 +193,4 @@ It's possible to inject in your mailer instance your current logger instance if 
 
 ## Changelog
 
-All history is [here](https://gitlab.com/yocto-node-modules/yocto-config/blob/master/CHANGELOG.md)
+All history is [here](https://github.com/yoctore/yocto-config/blob/master/CHANGELOG.md)
