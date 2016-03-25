@@ -1,8 +1,10 @@
 {
   "name": "yocto-config",
   "description": "A simple config manager for node app",
-  "version": "1.6.6",
-  "scripts": {},
+  "version": "1.6.7",
+  "scripts": {
+    "test" : "grunt test"
+  },
   "author": {
     "name": "Yocto SAS",
     "email": "technique@yocto.re",
