@@ -1,7 +1,7 @@
 {
   "name": "yocto-config",
   "description": "A simple config manager for node app",
-  "version": "1.6.8",
+  "version": "1.6.9",
   "scripts": {
     "test": "grunt test"
   },
@@ -27,7 +27,7 @@
   },
   "license": "Apache-2.0",
   "engines": {
-    "node": ">=0.12.2"
+    "node": ">=4.3.1"
   },
   "files": [
     "dist",
