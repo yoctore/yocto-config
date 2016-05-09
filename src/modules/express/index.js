@@ -157,11 +157,18 @@ ConfigExpressJs.prototype.getSchema = function () {
           secret  : this.secretKey,
           angular : true
         },
-        csp           : {},
+        csp           : {
+          reportOnly : false
+        },
         xframe        : 'SAMEORIGIN',
         p3p           : '_p3p',
-        hsts          : {},
-        xssProtection : true
+        hsts          : {
+          maxAge            : 0,
+          includeSubDomains : true,
+          preload           : true
+        },
+        xssProtection : true,
+        nosniff       : true
       }).keys({
         csrf          : joi.object().default({
           key     : '_csrf',
@@ -207,8 +214,9 @@ ConfigExpressJs.prototype.getSchema = function () {
           includeSubDomains : joi.boolean().default(true),
           preload           : joi.boolean().default(true)
         }),
-        xssProtection : joi.boolean().default(true)
-      }).allow([ 'csrf', 'csp', 'xframe', 'p3p', 'hsts', 'xssProtection' ]),
+        xssProtection : joi.boolean().default(true),
+        nosniff       : joi.boolean().default(true)
+      }).allow([ 'csrf', 'csp', 'xframe', 'p3p', 'hsts', 'xssProtection', 'nosniff' ]),
       // TODO : if we need to integrate vhost, we must to complete these rules
       vhost           : joi.object().optional().keys({
         enable  : joi.boolean().required().default(false),
