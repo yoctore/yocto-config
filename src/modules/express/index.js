@@ -158,7 +158,24 @@ ConfigExpressJs.prototype.getSchema = function () {
           angular : true
         },
         csp           : {
-          reportOnly : false
+          policy        : {
+            'default-src'   : 'self',
+            'script-src'    : 'self',
+            'object-src'    : 'self',
+            'style-src'     : 'self',
+            'img-src'       : 'self',
+            'media-src'     : 'self',
+            'frame-src'     : 'self',
+            'font-src'      : 'self',
+            'connect-src'   : 'self',
+            'form-action '  : 'self',
+            'sandbox'       : 'self',
+            'script-nonce'  : 'self',
+            'plugin-types'  : 'self',
+            'reflected-xss' : 'self',
+            'report-uri'    : 'self'
+          },
+          reportOnly    : false
         },
         xframe        : 'SAMEORIGIN',
         p3p           : '_p3p',
