@@ -1,7 +1,7 @@
 {
   "name": "yocto-config",
   "description": "A simple config manager for node app",
-  "version": "1.7.2",
+  "version": "1.7.3",
   "scripts": {
     "test": "grunt test"
   },

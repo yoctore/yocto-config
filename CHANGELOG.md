@@ -1,3 +1,7 @@
+## 1.7.3 (2016-03-23)
+
+- Add options rules on session for SSL/TLS connexion.
+
 ## 1.6.2 (2015-12-28)
 
 - Fix a bug on NODE_ENV usage

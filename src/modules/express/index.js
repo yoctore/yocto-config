@@ -144,8 +144,16 @@ ConfigExpressJs.prototype.getSchema = function () {
           store             : joi.object().optional().keys({
             instance  : joi.string().required().empty().valid('mongo'),
             uri       : joi.string().required().empty(),
-            type      : joi.string().required().empty().valid([ 'mongoose', 'native', 'uri' ])
-          }).allow([ 'db', 'uri', 'type' ]),
+            type      : joi.string().required().empty().valid([ 'mongoose', 'native', 'uri' ]),
+            options   : joi.object().optional().keys({
+              ssl                 : joi.boolean().optional(),
+              sslValidate         : joi.boolean().optional(),
+              sslCA               : joi.string().optional().empty(),
+              sslKey              : joi.string().optional().empty(),
+              sslCert             : joi.string().optional().empty(),
+              checkServerIdentity : joi.boolean().optional()
+            }).unknown()
+          }).allow([ 'db', 'uri', 'type', 'options' ]),
           rolling           : joi.boolean().optional().default(false),
         }).allow([ 'cookie', 'secret', 'name', 'genuuid',
                    'proxy', 'resave', 'saveUninitialized', 'rolling' ])
