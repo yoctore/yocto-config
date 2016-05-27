@@ -1,3 +1,7 @@
+## 1.7.4 (2016-05-27)
+
+- Add property <allowedRoute> into JWT object
+
 ## 1.7.3 (2016-03-23)
 
 - Add options rules on session for SSL/TLS connexion.

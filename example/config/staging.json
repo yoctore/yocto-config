@@ -13,7 +13,7 @@
       "enable" : true,
       "options" : {
         "url"         : "myhosturl.url-stagging",
-        "aliases"     : [ "alias.myhosturl.url" ],      
+        "aliases"     : [ "alias.myhosturl.url" ],
         "subdomains"  : true,
         "http"        : {
           "redirect" : {

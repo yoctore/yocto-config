@@ -338,9 +338,10 @@ ConfigExpressJs.prototype.getSchema = function () {
       ])
     }),
     jwt       : joi.object().default({ enable : false, key : this.secretKey, ips : [] }).keys({
-      enable : joi.boolean().default(false),
-      key    : joi.string().default(this.secretKey),
-      ips    : joi.array().items(joi.string().required().empty())
+      enable        : joi.boolean().default(false),
+      key           : joi.string().default(this.secretKey),
+      ips           : joi.array().items(joi.string().required().empty()),
+      allowedRoutes : joi.array().optional().items(joi.string().required().empty())
     }),
     cors      : joi.boolean().default(false)
   };
