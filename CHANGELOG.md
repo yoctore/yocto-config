@@ -1,3 +1,8 @@
+## 1.7.5 (2016-06-28)
+
+- Add property <autoEncryptRequest> into JWT object
+- Add property <autoDecryptRequest> into JWT object
+
 ## 1.7.4 (2016-05-27)
 
 - Add property <allowedRoute> into JWT object
