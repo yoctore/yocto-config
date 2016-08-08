@@ -28,6 +28,7 @@
       }
     },
     "security" : {
+      "enable" : false,
       "xframe" : "ALLOW-FROM http://www.yocto.re"
     },
     "session" : {

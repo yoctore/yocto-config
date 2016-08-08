@@ -160,6 +160,7 @@ ConfigExpressJs.prototype.getSchema = function () {
       }).allow([ 'enable', 'options' ]),
       // security rules see : https://www.npmjs.com/package/lusca
       security        : joi.object().default({
+        enable        : true,
         csrf          : {
           key     : '_csrf',
           secret  : this.secretKey,
@@ -195,6 +196,7 @@ ConfigExpressJs.prototype.getSchema = function () {
         xssProtection : true,
         nosniff       : true
       }).keys({
+        enable        : joi.boolean().default(true),
         csrf          : joi.object().default({
           key     : '_csrf',
           secret  : this.secretKey,

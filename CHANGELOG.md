@@ -1,3 +1,6 @@
+## 1.7.6 (2016-08-08)
+- Can enable or disable security
+
 ## 1.7.5 (2016-06-28)
 
 - Add property <autoEncryptRequest> into JWT object
