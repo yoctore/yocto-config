@@ -218,7 +218,8 @@ ConfigExpressJs.prototype.getSchema = function () {
             'font-src'      : '\'self\'',
             'connect-src'   : '\'self\'',
             'form-action'   : '\'self\'',
-            'sandbox'       : 'allow-forms allow-scripts',
+            // NOTE DISABLE THIS FOR CHROME ISSUE WITH FLASH
+            // 'sandbox'       : 'allow-forms allow-scripts',
             'script-nonce'  : '\'self\'',
             'plugin-types'  : '\'self\'',
             'reflected-xss' : '\'self\'',
@@ -237,7 +238,8 @@ ConfigExpressJs.prototype.getSchema = function () {
             'font-src'      : '\'self\'',
             'connect-src'   : '\'self\'',
             'form-action'   : '\'self\'',
-            'sandbox'       : 'allow-forms allow-scripts',
+            // NOTE DISABLE THIS FOR CHROME ISSUE WITH FLASH
+            // 'sandbox'       : 'allow-forms allow-scripts',
             'script-nonce'  : '\'self\'',
             'plugin-types'  : '\'self\'',
             'reflected-xss' : '\'self\'',
@@ -253,7 +255,9 @@ ConfigExpressJs.prototype.getSchema = function () {
             'font-src'      : joi.string().empty().default('\'self\''),
             'connect-src'   : joi.string().empty().default('\'self\''),
             'form-action'   : joi.string().empty().default('\'self\''),
-            'sandbox'       : joi.string().empty().default('allow-forms allow-scripts'),
+            //  NOTE DISABLE THIS FOR CHROME ISSUE WITH FLASH
+            //  'sandbox'       : joi.string().empty().default('allow-forms allow-scripts'),
+            'sandbox'       : joi.string().optional().empty(),
             'script-nonce'  : joi.string().empty().default('\'self\''),
             'plugin-types'  : joi.string().empty().default('\'self\''),
             'reflected-xss' : joi.string().empty().default('\'self\''),
@@ -347,7 +351,23 @@ ConfigExpressJs.prototype.getSchema = function () {
       autoEncryptRequest  : joi.boolean().optional().default(true),
       autoDecryptRequest  : joi.boolean().optional().default(true)
     }),
-    cors      : joi.boolean().default(false)
+    cors      : joi.boolean().default(false),
+    corsCfg   : joi.object().optional().keys({
+      origin            : joi.array().optional().items(
+        joi.string().required().empty()
+      ),
+      methods           : joi.array().optional().items(
+        joi.string().required().empty().valid([
+          'GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'
+        ])
+      ),
+      allowedHeaders    : joi.array().optional().items(joi.string().required().empty()),
+      exposedHeaders    : joi.array().optional().items(joi.string().required().empty()),
+      credentials       : joi.boolean().optional(),
+      maxAge            : joi.number().optional(),
+      preflightContinue : joi.boolean().optional()
+    }).allow([ 'origin', 'methods', 'allowedHeaders',
+               'exposedHeaders', 'credentials', 'maxAge', 'preflightContinue' ])
   };
 
   // default statement

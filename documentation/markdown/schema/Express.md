@@ -67,17 +67,17 @@
       options : {}
     }).keys({
       enable  : joi.boolean().default(true),
-      secret  : joi.string().empty().default('yocto-secret-key'),
+      secret  : joi.string().empty().default(this.secretKey),
       options : joi.object().default({
         path      : '/',
-        expires   : new Date(),
+        expires   : this.date,
         maxAge    : 0,
         domain    : null,
         secure    : true,
         httpOnly  : true
       }).keys({
         path      : joi.string().empty().optional().default('/'),
-        expires   : joi.string().empty().optional().default(new Date()),
+        expires   : joi.string().empty().optional().default(this.date),
         maxAge    : joi.number().optional().default(0),
         domain    : joi.string().empty().optional().default(null),
         secure    : joi.boolean().optional().default(true),
@@ -94,15 +94,16 @@
           path      : '/',
           httpOnly  : false,
           secure    : true,
-          maxAge    : null
+          maxAge    : null,
+          domain    : null
         }).keys({
           path      : joi.string().optional().default('/'),
           httpOnly  : joi.boolean().optional().default(false),
           secure    : joi.boolean().optional().default(true),
           maxAge    : joi.number().optional().default(null),
-          domain    : joi.string().optional()
+          domain    : joi.string().optional().default(null)
         }).allow([ 'path', 'httpOnly', 'secure', 'maxAge', 'domain' ]),
-        secret            : joi.string().optional().min(8).default('yocto-secret-key'),
+        secret            : joi.string().optional().min(8).default(this.secretKey),
         name              : joi.string().optional().min(5).default('connect.sid'),
         genuuid           : joi.boolean().optional().default(false),
         proxy             : joi.boolean().optional().default(undefined),
@@ -111,53 +112,126 @@
         store             : joi.object().optional().keys({
           instance  : joi.string().required().empty().valid('mongo'),
           uri       : joi.string().required().empty(),
-          type      : joi.string().required().empty().valid([ 'mongoose', 'native', 'uri' ])
-        }).allow([ 'db', 'uri', 'type' ]),
+          type      : joi.string().required().empty().valid([ 'mongoose', 'native', 'uri' ]),
+          options   : joi.object().optional().keys({
+            ssl                 : joi.boolean().optional(),
+            sslValidate         : joi.boolean().optional(),
+            sslCA               : joi.string().optional().empty(),
+            sslKey              : joi.string().optional().empty(),
+            sslCert             : joi.string().optional().empty(),
+            checkServerIdentity : joi.boolean().optional()
+          }).unknown()
+        }).allow([ 'db', 'uri', 'type', 'options' ]),
         rolling           : joi.boolean().optional().default(false),
       }).allow([ 'cookie', 'secret', 'name', 'genuuid',
                  'proxy', 'resave', 'saveUninitialized', 'rolling' ])
     }).allow([ 'enable', 'options' ]),
     // security rules see : https://www.npmjs.com/package/lusca
     security        : joi.object().default({
+      enable        : true,
       csrf          : {
         key     : '_csrf',
-        secret  : 'yocto-secret-key',
+        secret  : this.secretKey,
         angular : true
       },
-      csp           : {},
+      csp           : {
+        policy        : {
+          'default-src'   : 'none',
+          'script-src'    : '\'self\'',
+          'object-src'    : '\'self\'',
+          'style-src'     : '\'self\'',
+          'img-src'       : '\'self\'',
+          'media-src'     : '\'self\'',
+          'child-src'     : '\'self\'',
+          'font-src'      : '\'self\'',
+          'connect-src'   : '\'self\'',
+          'form-action'   : '\'self\'',
+          'sandbox'       : 'allow-forms allow-scripts',
+          'script-nonce'  : '\'self\'',
+          'plugin-types'  : '\'self\'',
+          'reflected-xss' : '\'self\'',
+          'report-uri'    : '\'self\''
+        },
+        reportOnly    : false
+      },
       xframe        : 'SAMEORIGIN',
       p3p           : '_p3p',
-      hsts          : {},
-      xssProtection : true
+      hsts          : {
+        maxAge            : 0,
+        includeSubDomains : true,
+        preload           : true
+      },
+      xssProtection : true,
+      nosniff       : true
     }).keys({
+      enable        : joi.boolean().default(true),
       csrf          : joi.object().default({
         key     : '_csrf',
-        secret  : 'yocto-secret-key',
+        secret  : this.secretKey,
         angular : true
       }).keys({
         key     : joi.string().empty().default('_csrf'),
-        secret  : joi.string().empty().default('yocto-secret-key'),
+        secret  : joi.string().empty().default(this.secretKey),
         angular : joi.boolean().default(true)
       }),
-      csp           : joi.object().default({}).keys({
-        policy     : joi.object().default({}).keys({
-          'default-src'   : joi.string().empty(),
-          'script-src'    : joi.string().empty(),
-          'object-src'    : joi.string().empty(),
-          'style-src'     : joi.string().empty(),
-          'img-src'       : joi.string().empty(),
-          'media-src'     : joi.string().empty(),
-          'frame-src'     : joi.string().empty(),
-          'font-src'      : joi.string().empty(),
-          'connect-src'   : joi.string().empty(),
-          'form-action '  : joi.string().empty(),
-          'sandbox'       : joi.string().empty(),
-          'script-nonce'  : joi.string().empty(),
-          'plugin-types'  : joi.string().empty(),
-          'reflected-xss' : joi.string().empty(),
-          'report-uri'    : joi.string().empty(),
+      csp           : joi.object().default({
+        policy        : {
+          'default-src'   : 'none',
+          'script-src'    : '\'self\'',
+          'object-src'    : '\'self\'',
+          'style-src'     : '\'self\'',
+          'img-src'       : '\'self\'',
+          'media-src'     : '\'self\'',
+          'child-src'     : '\'self\'',
+          'font-src'      : '\'self\'',
+          'connect-src'   : '\'self\'',
+          'form-action'   : '\'self\'',
+          // NOTE DISABLE THIS FOR CHROME ISSUE WITH FLASH
+          // 'sandbox'       : 'allow-forms allow-scripts',
+          'script-nonce'  : '\'self\'',
+          'plugin-types'  : '\'self\'',
+          'reflected-xss' : '\'self\'',
+          'report-uri'    : '\'self\''
+        },
+        reportOnly    : false
+      }).keys({
+        policy     : joi.object().default({
+          'default-src'   : 'none',
+          'script-src'    : '\'self\'',
+          'object-src'    : '\'self\'',
+          'style-src'     : '\'self\'',
+          'img-src'       : '\'self\'',
+          'media-src'     : '\'self\'',
+          'child-src'     : '\'self\'',
+          'font-src'      : '\'self\'',
+          'connect-src'   : '\'self\'',
+          'form-action'   : '\'self\'',
+          // NOTE DISABLE THIS FOR CHROME ISSUE WITH FLASH
+          // 'sandbox'       : 'allow-forms allow-scripts',
+          'script-nonce'  : '\'self\'',
+          'plugin-types'  : '\'self\'',
+          'reflected-xss' : '\'self\'',
+          'report-uri'    : '\'self\''
+        }).keys({
+          'default-src'   : joi.string().empty().default('none'),
+          'script-src'    : joi.string().empty().default('\'self\''),
+          'object-src'    : joi.string().empty().default('\'self\''),
+          'style-src'     : joi.string().empty().default('\'self\''),
+          'img-src'       : joi.string().empty().default('\'self\''),
+          'media-src'     : joi.string().empty().default('\'self\''),
+          'child-src'     : joi.string().empty().default('\'self\''),
+          'font-src'      : joi.string().empty().default('\'self\''),
+          'connect-src'   : joi.string().empty().default('\'self\''),
+          'form-action'   : joi.string().empty().default('\'self\''),
+          //  NOTE DISABLE THIS FOR CHROME ISSUE WITH FLASH
+          //  'sandbox'       : joi.string().empty().default('allow-forms allow-scripts'),
+          'sandbox'       : joi.string().optional().empty(),
+          'script-nonce'  : joi.string().empty().default('\'self\''),
+          'plugin-types'  : joi.string().empty().default('\'self\''),
+          'reflected-xss' : joi.string().empty().default('\'self\''),
+          'report-uri'    : joi.string().empty().default('\'self\''),
         }).allow([ 'default-src', 'script-src', 'object-src', 'style-src',
-                   'img-src', 'media-src', 'frame-src', 'font-src', 'connect-src',
+                   'img-src', 'media-src', 'child-src', 'font-src', 'connect-src',
                    'form-action', 'sandbox', 'script-nonce', 'plugin-types',
                    'reflected-xss', 'report-uri' ]),
         reportOnly : joi.boolean().default(false),
@@ -174,8 +248,9 @@
         includeSubDomains : joi.boolean().default(true),
         preload           : joi.boolean().default(true)
       }),
-      xssProtection : joi.boolean().default(true)
-    }).allow([ 'csrf', 'csp', 'xframe', 'p3p', 'hsts', 'xssProtection' ]),
+      xssProtection : joi.boolean().default(true),
+      nosniff       : joi.boolean().default(true)
+    }).allow([ 'csrf', 'csp', 'xframe', 'p3p', 'hsts', 'xssProtection', 'nosniff' ]),
     // TODO : if we need to integrate vhost, we must to complete these rules
     vhost           : joi.object().optional().keys({
       enable  : joi.boolean().required().default(false),
@@ -224,8 +299,8 @@
     joi.object().keys({ icons        :  joi.string().empty().min(1).default('/') }),
     joi.object().empty()
   ]),
-  encrypt   : joi.object().default({ key : 'yocto-secret-key', type : 'hex' }).keys({
-    key   : joi.string().default('yocto-secret-key').empty(),
+  encrypt   : joi.object().default({ key : this.secretKey, type : 'hex' }).keys({
+    key   : joi.string().default(this.secretKey).empty(),
     type  : joi.string().default('hex').valid([
       'ascii',
       'utf8',
@@ -236,13 +311,32 @@
       'hex'
     ])
   }),
-  jwt       : joi.object().default({ enable : false, key : 'yocto-secret-key', ips : [] }).keys({
-    enable : joi.boolean().default(false),
-    key    : joi.string().default('yocto-secret-key'),
-    ips    : joi.array().items(joi.string().required().empty())
+  jwt       : joi.object().default({ enable : false, key : this.secretKey, ips : [] }).keys({
+    enable              : joi.boolean().default(false),
+    key                 : joi.string().default(this.secretKey),
+    ips                 : joi.array().items(joi.string().required().empty()),
+    allowedRoutes       : joi.array().optional().items(joi.string().required().empty()),
+    autoEncryptRequest  : joi.boolean().optional().default(true),
+    autoDecryptRequest  : joi.boolean().optional().default(true)
   }),
-  cors      : joi.boolean().default(false)
-};
+  cors      : joi.boolean().default(false),
+  corsCfg   : joi.object().optional().keys({
+    origin            : joi.array().optional().items(
+      joi.string().required().empty()
+    ),
+    methods           : joi.array().optional().items(
+      joi.string().required().empty().valid([
+        'GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'
+      ])
+    ),
+    allowedHeaders    : joi.array().optional().items(joi.string().required().empty()),
+    exposedHeaders    : joi.array().optional().items(joi.string().required().empty()),
+    credentials       : joi.boolean().optional(),
+    maxAge            : joi.number().optional(),
+    preflightContinue : joi.boolean().optional()
+  }).allow([ 'origin', 'methods', 'allowedHeaders',
+             'exposedHeaders', 'credentials', 'maxAge', 'preflightContinue' ])
+}
 
 ```
 

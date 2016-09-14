@@ -1,3 +1,8 @@
+## 1.8.0 (2016-09-14)
+
+- Add sandbox rules optional for chrome compatibility
+- Add cors config from a `corsCfg` property
+
 ## 1.7.6 (2016-08-08)
 - Can enable or disable security
 

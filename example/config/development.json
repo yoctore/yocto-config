@@ -122,5 +122,16 @@
     "allowedRoutes" : [
       "/auth\/connect/"
     ]
+  },
+  "cors"    : true,
+  "corsCfg" : {
+    "toto" : "",
+    "origin"  : [ "toto" ],
+    "methods" : [ "GET", "PATCH" ],
+    "allowedHeaders"    : [ "fdsfds" ],
+    "exposedHeaders"    : [ "fsdfdsfds" ],
+    "credentials"       : false,
+    "maxAge"            : 202002,
+    "preflightContinue" : false
   }
 }
