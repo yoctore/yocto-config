@@ -1,3 +1,7 @@
+## 1.8.1 (2016-09-14)
+
+- Update version for github and npm
+
 ## 1.8.0 (2016-09-14)
 
 - Add sandbox rules optional for chrome compatibility
