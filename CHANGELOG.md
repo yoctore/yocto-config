@@ -1,3 +1,7 @@
+## 1.8.2 (2016-09-27)
+
+- Update config and add new rules for seo redirection and www redirection process
+
 ## 1.8.1 (2016-09-14)
 
 - Update version for github and npm

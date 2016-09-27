@@ -367,7 +367,16 @@ ConfigExpressJs.prototype.getSchema = function () {
       maxAge            : joi.number().optional(),
       preflightContinue : joi.boolean().optional()
     }).allow([ 'origin', 'methods', 'allowedHeaders',
-               'exposedHeaders', 'credentials', 'maxAge', 'preflightContinue' ])
+               'exposedHeaders', 'credentials', 'maxAge', 'preflightContinue' ]),
+    redirect  : joi.object().optional().keys({
+      www : joi.boolean().optional(),
+      seo : joi.array().optional().items(joi.object().required().keys({
+        code          : joi.number().required(),
+        fromUrl       : joi.string().required().empty(),
+        toUrl         : joi.string().required().empty(),
+        queryString   : joi.boolean().optional()
+      }))
+    })
   };
 
   // default statement

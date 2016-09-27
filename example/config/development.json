@@ -125,7 +125,6 @@
   },
   "cors"    : true,
   "corsCfg" : {
-    "toto" : "",
     "origin"  : [ "toto" ],
     "methods" : [ "GET", "PATCH" ],
     "allowedHeaders"    : [ "fdsfds" ],
@@ -133,5 +132,14 @@
     "credentials"       : false,
     "maxAge"            : 202002,
     "preflightContinue" : false
+  },
+  "redirect" : {
+    "www" : true,
+    "seo" : [ {
+      "code" : 301,
+      "fromUrl" : "fdfdfdfd",
+      "toUrl"   : "trrrere",
+      "queryString" : false
+    }]
   }
 }
