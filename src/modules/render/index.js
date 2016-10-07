@@ -26,17 +26,31 @@ ConfigRender.prototype.getSchema = function () {
 
   // setting css media rules
   var cssMediaRules = joi.object().keys({
-    link  : joi.string().required().not(null),
-    media : joi.string().required().not(null),
-    defer : joi.string().optional().allow('defer').not(null),
-    async : joi.string().optional().allow('async').not(null),
+    link        : joi.string().required().not(null),
+    media       : joi.string().required().not(null),
+    defer       : joi.string().optional().allow('defer').not(null),
+    async       : joi.string().optional().allow('async').not(null),
+    fingerprint : joi.object().optional().keys({
+      enable      : joi.boolean().required().default(false),
+      key         : joi.string().optional().default(this.uuid),
+      dateFormat  : joi.string().optional().default('DD/MM/YYYY'),
+      qs          : joi.string().optional().empty().default('v'),
+      limit       : joi.number().optional().min(1)
+    })
   });
 
   // setting js media rules
   var jsMediaRules = joi.object().keys({
-    link  : joi.string().required().not(null),
-    defer : joi.string().optional().allow('defer').not(null),
-    async : joi.string().optional().allow('async').not(null)
+    link        : joi.string().required().not(null),
+    defer       : joi.string().optional().allow('defer').not(null),
+    async       : joi.string().optional().allow('async').not(null),
+    fingerprint : joi.object().optional().keys({
+      enable      : joi.boolean().required().default(false),
+      key         : joi.string().optional().default(this.uuid),
+      dateFormat  : joi.string().optional().default('DD/MM/YYYY'),
+      qs          : joi.string().optional().empty().default('v'),
+      limit       : joi.number().optional().min(1)
+    })
   });
 
   // setting up media type rules

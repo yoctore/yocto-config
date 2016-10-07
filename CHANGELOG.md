@@ -1,3 +1,7 @@
+## 1.8.2 (2016-10-07)
+
+- Add config for fingerprint for render part
+
 ## 1.8.2 (2016-09-27)
 
 - Update config and add new rules for seo redirection and www redirection process
