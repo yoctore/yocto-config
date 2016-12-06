@@ -24,6 +24,13 @@ Default validation schema was build with [joi](https://www.npmjs.com/package/joi
 
 During load process given files was auto validated with associated schema.
 
+
+## Installation
+
+```bash
+npm install --save yocto-config
+```
+
 ## Config files priority
 
 **Priority** : `(Other file).json` < `all.json` < `common.json` < `development.json` < `stagging.json` < `production.json`

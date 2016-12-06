@@ -65,7 +65,7 @@
 <h2>Motivation</h2><p>Our main motivation for this module is, create and provide a single, simple and custom config manager (with validation) for each part of our program in the same place.</p>
 <h2>How validation schema works ?</h2><p>Default validation schema was build with <a href="https://www.npmjs.com/package/joi">joi</a> package manager, and all custom all schema must be associate with a <strong>joi rules too</strong>.</p>
 <p>During load process given files was auto validated with associated schema.</p>
-<h2>Config files priority</h2><p><strong>Priority</strong> : <code>(Other file).json</code> &lt; <code>all.json</code> &lt; <code>common.json</code> &lt; <code>development.json</code> &lt; <code>stagging.json</code> &lt; <code>production.json</code></p>
+<h2>Installation</h2><pre class="prettyprint source lang-bash"><code>npm install --save yocto-config</code></pre><h2>Config files priority</h2><p><strong>Priority</strong> : <code>(Other file).json</code> &lt; <code>all.json</code> &lt; <code>common.json</code> &lt; <code>development.json</code> &lt; <code>stagging.json</code> &lt; <code>production.json</code></p>
 <p>all.json : place in this file all general property (shared key, node port, etc) </p>
 <p>common.json : place in this file all common data between each env (app name, express config, etc) </p>
 <p>development.json : place in this file all development property for development environnement</p>
@@ -180,11 +180,11 @@ To use it run during start your app use these params <code>CONFIG_SUFFIX_PATH</c
 <pre class="prettyprint source lang-javascript"><code>var config  = require('yocto-config')();
 config.autoEnableValidators([ 'express', 'passportJs', 'mongoose' ]);
 // Extra process</code></pre><h2>Default configuration rules</h2><ul>
-<li>Mongoose schema can be find <a href="https://yoctore.github.re/yocto-config/schema.js.html#line741">here</a></li>
-<li>Express schema can be find <a href="https://yoctore.github.re/yocto-config/schema.js.html#line383">here</a></li>
-<li>Yocto Render schema can be find <a href="https://yoctore.github.re/yocto-config/schema.js.html#line869">here</a></li>
-<li>Yocto Router schema can be find <a href="https://yoctore.github.re/yocto-config/schema.js.html#line966">here</a></li>
-<li>Yocto PassportJS schema can be find <a href="https://yoctore.github.re/yocto-config/schema.js.html#line805">here</a></li>
+<li>Mongoose schema can be find <a href="https://yoctore.github.io/yocto-config/schema.js.html#line741">here</a></li>
+<li>Express schema can be find <a href="https://yoctore.github.io/yocto-config/schema.js.html#line383">here</a></li>
+<li>Yocto Render schema can be find <a href="https://yoctore.github.io/yocto-config/schema.js.html#line869">here</a></li>
+<li>Yocto Router schema can be find <a href="https://yoctore.github.io/yocto-config/schema.js.html#line966">here</a></li>
+<li>Yocto PassportJS schema can be find <a href="https://yoctore.github.io/yocto-config/schema.js.html#line805">here</a></li>
 </ul>
 <h2>Logging in tool</h2><p>By Default this module include <a href="https://www.npmjs.com/package/yocto-logger">yocto-logger</a> for logging.
 It's possible to inject in your config instance your current logger instance if is another <code>yocto-logger</code> instance.</p>
@@ -201,7 +201,7 @@ It's possible to inject in your config instance your current logger instance if 
 
 <br class="clear">
 
-<footer>Documentation for application <b>yocto-config<b> was generated at Tue Dec 06 2016 17:31:56 GMT+0400 (RET) with <a href='https://www.npmjs.com/package/yoctodoc'>yocto-doc</a> module - Copyright Yocto © 2016</footer>
+<footer>Documentation for application <b>yocto-config<b> was generated at Tue Dec 06 2016 17:41:39 GMT+0400 (RET) with <a href='https://www.npmjs.com/package/yoctodoc'>yocto-doc</a> module - Copyright Yocto © 2016</footer>
 
 <script>prettyPrint();</script>
 <script src="scripts/linenumber.js"></script>
