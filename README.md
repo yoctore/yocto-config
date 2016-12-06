@@ -198,11 +198,11 @@ config.autoEnableValidators([ 'express', 'passportJs', 'mongoose' ]);
 
 ## Default configuration rules
 
-- Mongoose schema can be find [here](https://yoctore.github.re/yocto-config/schema.js.html#line741)
-- Express schema can be find [here](https://yoctore.github.re/yocto-config/schema.js.html#line383)
-- Yocto Render schema can be find [here](https://yoctore.github.re/yocto-config/schema.js.html#line869)
-- Yocto Router schema can be find [here](https://yoctore.github.re/yocto-config/schema.js.html#line966)
-- Yocto PassportJS schema can be find [here](https://yoctore.github.re/yocto-config/schema.js.html#line805)
+- Mongoose schema can be find [here](https://yoctore.github.io/yocto-config/schema.js.html#line741)
+- Express schema can be find [here](https://yoctore.github.io/yocto-config/schema.js.html#line383)
+- Yocto Render schema can be find [here](https://yoctore.github.io/yocto-config/schema.js.html#line869)
+- Yocto Router schema can be find [here](https://yoctore.github.io/yocto-config/schema.js.html#line966)
+- Yocto PassportJS schema can be find [here](https://yoctore.github.io/yocto-config/schema.js.html#line805)
 
 ## Logging in tool
 
