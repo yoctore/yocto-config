@@ -1,3 +1,5 @@
+[![NPM](https://nodei.co/npm/yocto-config.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/yocto-config/)
+
 ![alt text](https://david-dm.org/yoctore/yocto-config.svg "Dependencies Status")
 [![Code Climate](https://codeclimate.com/github/yoctore/yocto-config/badges/gpa.svg)](https://codeclimate.com/github/yoctore/yocto-config)
 [![Test Coverage](https://codeclimate.com/github/yoctore/yocto-config/badges/coverage.svg)](https://codeclimate.com/github/yoctore/yocto-config/coverage)
@@ -10,11 +12,11 @@ This module is a part of yocto node modules for NodeJS.
 
 Please see [our NPM repository](https://www.npmjs.com/~yocto) for complete list of available tools (completed day after day).
 
-This module provide a simple config validator tools for your node app.
+This module provide a simple config validator tools for a node app.
 
 ## Motivation
 
-Our main motivation for this module is, create and provide a single, simple and custom config manager (with validation) for each of our program.
+Our main motivation for this module is, create and provide a single, simple and custom config manager (with validation) for each part of our program in the same place.
 
 ## How validation schema works ?
 
@@ -36,7 +38,7 @@ stagging.json : place in this file all stagging property for stagging environnem
 
 production.json : place in this file all production property for production environnement
 
-**IMPORTANT** : file was merged with previous defined priority, so it should be understood that we dont need to define multiple times the same property if we doesn't need to replace it.
+**IMPORTANT** : file was merged with previous defined priority, so it should be understood that we dont need to define multiple times the same property if we doesn't need to replace it. **JUST PLACE IN CORRECT ENV WHAT YOU NEED**
 
 *For example :* 
 
@@ -80,24 +82,24 @@ Will produce on production this config data :
 
 ## Pre-defined configuration
 
-Predefined configuration schema was already defined. To use them see methods below : 
+Predefined configuration schema was availabe. To use them see methods below : 
 
-- enableExpress(complete) : add to default schema an express configuration
-- enableMongoose(complete) : add to default schema a mongoose configuration
-- enablePassportJs(complete) : add to default schema a passportjs configuration for (facebook, twitter, google, active-directory, standard login)
-- enableRender(complete) : add to default schema a [yocto-render](https://www.npmjs.com/package/yocto-render) configuration
-- enableRouter(complete) : add to default schema a [yocto-router](https://www.npmjs.com/package/yocto-router) configuration
+- [enableExpress]() : add to default schema an express configuration
+- [enableMongoose]() : add to default schema a mongoose configuration
+- [enablePassportJs]() : add to default schema a passportjs configuration for (facebook, twitter, google, active-directory, standard login)
+- [enableRender]() : add to default schema a [yocto-render](https://www.npmjs.com/package/yocto-render) configuration
+- [enableRouter]() : add to default schema a [yocto-router](https://www.npmjs.com/package/yocto-router) configuration
 
 All of these function was replaced by default an already defined configuration.
 
-If you want to enable a new configuration and keep safe the previous configuration, just pass `true` on enable function, for example :
+If you want to enable a new configuration and keep safe the previous configuration, just pass `true` on enable function, and the new config will be append on the previous content, for example :
 
 ```javascript
 var config  = require('yocto-config')();
 
 // defined base config
 config.enableExpress();
-// add new config ofr mongoose and keep safe previous defined config
+// add new config for mongoose and keep safe previous defined config
 config.enableMongoose(true); 
 ```
 
@@ -166,13 +168,25 @@ config.load().then(function(data) {
 
 ```
 
+## How to change config on the fly ?
+
+In some case we need to use same core app for different apps. 
+To change the config path for each app during run it's possible to use `process.env`.
+To use it run during start your app use these params `CONFIG_SUFFIX_PATH`.
+
+```bash
+CONFIG_SUFFIX_PATH='suffix/base/path' node app
+```
+
 ## Tricks
 
 You can also use a utility method `autoEnableValidators` to enable your validator. See below key associated with schema : 
 
-- express : for express schema
-- passportJs : for passportJs schema
-- mongoose : for mongoose schema
+- `express` for express schema
+- `passportJs` for passportJs schema
+- `mongoose` for mongoose schema
+- `render` for yocto-render module schema
+- `router` for yocto-router module schema
 
 Example : 
 
@@ -184,17 +198,21 @@ config.autoEnableValidators([ 'express', 'passportJs', 'mongoose' ]);
 
 ## Default configuration rules
 
-- Mongoose schema can be find [here](https://github.com/yoctore/yocto-config/blob/master/documentation/markdown/schema/Mongoose.md)
-- Express schema can be find [here](https://github.com/yoctore/yocto-config/blob/master/documentation/markdown/schema/Express.md)
-- Yocto Render schema can be find [here](https://github.com/yoctore/yocto-config/blob/master/documentation/markdown/schema/YRender.md)
-- Yocto Router schema can be find [here](https://github.com/yoctore/yocto-config/blob/master/documentation/markdown/schema/YRouter.md)
-- Yocto PassportJS schema can be find [here](https://github.com/yoctore/yocto-config/blob/master/documentation/markdown/schema/PassportJs.md)
+- Mongoose schema can be find [here](https://yoctore.github.re/yocto-config/schema.js.html#line741)
+- Express schema can be find [here](https://yoctore.github.re/yocto-config/schema.js.html#line383)
+- Yocto Render schema can be find [here](https://yoctore.github.re/yocto-config/schema.js.html#line869)
+- Yocto Router schema can be find [here](https://yoctore.github.re/yocto-config/schema.js.html#line966)
+- Yocto PassportJS schema can be find [here](https://yoctore.github.re/yocto-config/schema.js.html#line805)
 
 ## Logging in tool
 
 By Default this module include [yocto-logger](https://www.npmjs.com/package/yocto-logger) for logging.
-It's possible to inject in your mailer instance your current logger instance if is another `yocto-logger` instance.
+It's possible to inject in your config instance your current logger instance if is another `yocto-logger` instance.
 
 ## Changelog
 
 All history is [here](https://github.com/yoctore/yocto-config/blob/master/CHANGELOG.md)
+
+## Full Documenation
+
+You can find full online documentation [here](https://yoctore.github.io/yocto-config)

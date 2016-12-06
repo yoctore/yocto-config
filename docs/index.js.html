@@ -1,4 +1,50 @@
-'use strict';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>index.js - yocto-config</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/custom.css"/>
+    <link type="text/css" rel="stylesheet" href="styles/tomorrow-night.min.css"/>
+    <script type="text/javascript" src="scripts/lodash.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="scripts/search.js"></script>
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+  <a href="http://www.yocto.re" target="_blank"><img class="logo" src="./extras/logo-yocto.png" alt="logo-yocto"/></a>
+    <h2><a href="index.html">Home</a><span class="version">v2.0.0</span></h2><input class="search" placeholder="Type your search here ...." /><h3>Classes</h3><ul><li><a href="Config.html">Config</a><ul class='methods'><li data-type='method'><a href="Config.html#addCustomSchema">addCustomSchema</a></li><li data-type='method'><a href="Config.html#autoEnableValidators">autoEnableValidators</a></li><li data-type='method'><a href="Config.html#enableExpress">enableExpress</a></li><li data-type='method'><a href="Config.html#enableMongoose">enableMongoose</a></li><li data-type='method'><a href="Config.html#enablePassportJs">enablePassportJs</a></li><li data-type='method'><a href="Config.html#enableRender">enableRender</a></li><li data-type='method'><a href="Config.html#enableRouter">enableRouter</a></li><li data-type='method'><a href="Config.html#enableSchema">enableSchema</a></li><li data-type='method'><a href="Config.html#find">find</a></li><li data-type='method'><a href="Config.html#get">get</a></li><li data-type='method'><a href="Config.html#getConfig">getConfig</a></li><li data-type='method'><a href="Config.html#load">load</a></li><li data-type='method'><a href="Config.html#loadPassport">loadPassport</a></li><li data-type='method'><a href="Config.html#reload">reload</a></li><li data-type='method'><a href="Config.html#set">set</a></li><li data-type='method'><a href="Config.html#setConfigPath">setConfigPath</a></li></ul></li><li><a href="Schema.html">Schema</a><ul class='methods'><li data-type='method'><a href="Schema.html#getExpress">getExpress</a></li><li data-type='method'><a href="Schema.html#getMongoose">getMongoose</a></li><li data-type='method'><a href="Schema.html#getPassportJs">getPassportJs</a></li><li data-type='method'><a href="Schema.html#getRender">getRender</a></li><li data-type='method'><a href="Schema.html#getRouter">getRouter</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">index.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
 
 var path    = require('path');
 var _       = require('lodash');
@@ -12,10 +58,10 @@ var schema  = require('./schema');
 
 /**
  * Yocto config manager.
- * Manage your configuration file (all / common / env  & specific file)
+ * Manage your configuration file (all / common / env  &amp; specific file)
  *
  * Config file has priority. And priority is defined like a php ini system.
- * `(Other file).json` < `all.json` < `common.json` < `development.json` < `stagging.json` < `production.json`
+ * `(Other file).json` &lt; `all.json` &lt; `common.json` &lt; `development.json` &lt; `stagging.json` &lt; `production.json`
  *
  * All specific data must be configured on a each correct file.
  *
@@ -31,11 +77,11 @@ var schema  = require('./schema');
  * - MDN CSP usage : {@link https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Using_Content_Security_Policy}
  * - X-FRAME-OPTIONS : {@link https://www.owasp.org/index.php/Clickjacking}
  * - Platform for Privacy Preferences Project (P3P) headers : {@link http://support.microsoft.com/kb/290333}
- * - HTTP Strict Transport Security (HSTS & Chrome HSTS preload) : {@link https://www.owasp.org/index.php/HTTP_Strict_Transport_Security} & {@link https://hstspreload.appspot.com/}
+ * - HTTP Strict Transport Security (HSTS &amp; Chrome HSTS preload) : {@link https://www.owasp.org/index.php/HTTP_Strict_Transport_Security} &amp; {@link https://hstspreload.appspot.com/}
  * - XssProtection : {@link http://blogs.msdn.com/b/ie/archive/2008/07/02/ie8-security-part-iv-the-xss-filter.aspx}
  *
  * @date : 12/05/2015
- * @author : ROBERT Mathieu <mathieu@yocto.re>
+ * @author : ROBERT Mathieu &lt;mathieu@yocto.re>
  * @copyright : Yocto SAS, All right reserved
  * @class Config
  */
@@ -154,7 +200,7 @@ Config.prototype.find = function (name, complete) {
     var obj = _.set({}, name, item);
 
     // express item ??
-    if (name === 'express' && _.has(obj, 'express')) {
+    if (name === 'express' &amp;&amp; _.has(obj, 'express')) {
       // change depth assign
       obj = obj.express;
     }
@@ -168,7 +214,7 @@ Config.prototype.find = function (name, complete) {
     }
 
     // add item at the end of list ?
-    if (_.isBoolean(complete) && complete) {
+    if (_.isBoolean(complete) &amp;&amp; complete) {
       // not extend but merge current object
       _.merge(this.schema, obj);
     } else {
@@ -275,7 +321,7 @@ Config.prototype.addCustomSchema = function (name, value, enable, complete) {
   _.extend(this.schemaList, _.set({}, name, value));
 
   // auto enable ?
-  if (_.isBoolean(enable) && enable) {
+  if (_.isBoolean(enable) &amp;&amp; enable) {
     // enable schema
     return this.enableSchema(name, complete);
   }
@@ -293,7 +339,7 @@ Config.prototype.addCustomSchema = function (name, value, enable, complete) {
  */
 Config.prototype.set = function (name, value) {
   // check requirements
-  if (!_.isUndefined(name) && _.isString(name) && !_.isEmpty(name)) {
+  if (!_.isUndefined(name) &amp;&amp; _.isString(name) &amp;&amp; !_.isEmpty(name)) {
     // need to normalize path ?
     if (name === 'base') {
       // is relative path ?
@@ -357,7 +403,7 @@ Config.prototype.get = function (name) {
  */
 Config.prototype.reload = function (base) {
   // check base before load for conditional assignation
-  if (_.isString(base) && !_.isEmpty(base)) {
+  if (_.isString(base) &amp;&amp; !_.isEmpty(base)) {
     // change base
     this.base = base;
   }
@@ -535,3 +581,20 @@ module.exports = function (l) {
   // default statement
   return new (Config)(l);
 };
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>Documentation for application <b>yocto-config<b> was generated at Tue Dec 06 2016 17:31:56 GMT+0400 (RET) with <a href='https://www.npmjs.com/package/yoctodoc'>yocto-doc</a> module - Copyright Yocto © 2016</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

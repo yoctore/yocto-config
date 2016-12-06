@@ -1,0 +1,145 @@
+{
+  "protocol" : {
+    "type" : "http",
+    "certificate" : {
+      "key"  : "./toto/fsdfsddf",
+      "cert" : "./toto/fdsfdsfd"
+    }
+  },
+  "app" : {
+    "name" : "my AP DEV"
+  },
+  "express" : {
+    "jsonp"       : false,
+    "viewEngine" : "jade",
+    "vhost" : {
+      "enable"      : true,
+      "options" : {
+        "url"         : "myhosturl.url",
+        "aliases"     : [ "alias.myhosturl.url" ],
+        "subdomains"  : true,
+        "http"        : {
+          "redirect" : {
+            "type" : 301,
+            "url"  : "www.myurl.url",
+            "port" : 80
+          }
+        }
+      }
+    },
+    "security" : {
+      "enable" : false,
+      "xframe" : "ALLOW-FROM http://www.yocto.re"
+    },
+    "session" : {
+      "enable" : true,
+      "options" : {
+        "store" : {
+          "instance" : "mongo",
+          "uri" : "fsd",
+          "type" : "uri"
+        }
+      }
+    }
+  },
+  "db" : {
+    "uri" : "localhost:27051"
+  },
+  "passportJs" : {
+    "facebook" : {
+      "identifier" : "fsddfs",
+      "secret" : "fdsfsdfd",
+      "urls" : {
+        "connect"  : "fsdfds",
+        "callback" : "fsdfds"
+      },
+      "db" : {
+        "method" : "fsdfds"
+      },
+      "fields" : []
+    },
+    "twitter" : {
+      "identifier" : "fsddfs",
+      "secret" : "fdsfsdfd",
+      "urls" : {
+        "connect"  : "fsdfds",
+        "callback" : "fsdfds"
+      },
+      "db" : {
+        "method" : "fsdfds"
+      }
+    },
+    "google" : {
+      "identifier" : "fsddfs",
+      "secret" : "fdsfsdfd",
+      "urls" : {
+        "connect"  : "fsdfds",
+        "callback" : "fsdfds"
+      },
+      "db" : {
+        "method" : "fsdfds"
+      },
+      "scope" : [
+        "fdfsdfdfsdfd"
+      ]
+    },
+    "activeDirectory" : [ {
+      "urls" : {
+        "connect"  : "fsdfds",
+        "callback" : "fsdfds"
+      },
+      "server" : {
+        "bindDn" : "toto",
+        "bindCredentials" : "dqsds",
+        "url" : "ddqsdqsdsq myurl",
+        "searchBase" : "fsdfdsfds",
+        "searchFilter" : "fsdfdsfds"
+      },
+      "db" : {
+        "method" : "fsdfds"
+      }
+    }],
+    "standard" : [{
+      "urls" : {
+        "connect"  : "fsdfds",
+        "callback" : "fsdfds"
+      },
+      "db" : {
+        "method" : "fsdfdsfds"
+      }
+    }]
+  },
+  "test" : {
+
+  },
+  "jwt" : {
+    "enable" : true,
+    "key" : "EZEAZEZAEZA",
+    "ips" : [
+      "127.0.0.1",
+      "127.0.0.1/26"
+    ],
+    "allowedRoutes" : [
+      "/auth\/connect/"
+    ]
+  },
+  "cors"    : true,
+  "corsCfg" : {
+    "origin"  : [ "toto" ],
+    "methods" : [ "GET", "PATCH" ],
+    "allowedHeaders"    : [ "fdsfds" ],
+    "exposedHeaders"    : [ "fsdfdsfds" ],
+    "credentials"       : false,
+    "maxAge"            : 202002,
+    "preflightContinue" : false
+  },
+  "redirect" : {
+    "www" : true,
+    "seo" : [ {
+      "code" : 301,
+      "fromUrl" : "fdfdfdfd",
+      "toUrl"   : "trrrere",
+      "queryString" : false
+    }]
+  }
+}

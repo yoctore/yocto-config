@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Home - yocto-config</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/custom.css"/>
+    <link type="text/css" rel="stylesheet" href="styles/tomorrow-night.min.css"/>
+    <script type="text/javascript" src="scripts/lodash.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="scripts/search.js"></script>
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+  <a href="http://www.yocto.re" target="_blank"><img class="logo" src="./extras/logo-yocto.png" alt="logo-yocto"/></a>
+    <h2><a href="index.html">Home</a><span class="version">v2.0.0</span></h2><input class="search" placeholder="Type your search here ...." /><h3>Classes</h3><ul><li><a href="Config.html">Config</a><ul class='methods'><li data-type='method'><a href="Config.html#addCustomSchema">addCustomSchema</a></li><li data-type='method'><a href="Config.html#autoEnableValidators">autoEnableValidators</a></li><li data-type='method'><a href="Config.html#enableExpress">enableExpress</a></li><li data-type='method'><a href="Config.html#enableMongoose">enableMongoose</a></li><li data-type='method'><a href="Config.html#enablePassportJs">enablePassportJs</a></li><li data-type='method'><a href="Config.html#enableRender">enableRender</a></li><li data-type='method'><a href="Config.html#enableRouter">enableRouter</a></li><li data-type='method'><a href="Config.html#enableSchema">enableSchema</a></li><li data-type='method'><a href="Config.html#find">find</a></li><li data-type='method'><a href="Config.html#get">get</a></li><li data-type='method'><a href="Config.html#getConfig">getConfig</a></li><li data-type='method'><a href="Config.html#load">load</a></li><li data-type='method'><a href="Config.html#loadPassport">loadPassport</a></li><li data-type='method'><a href="Config.html#reload">reload</a></li><li data-type='method'><a href="Config.html#set">set</a></li><li data-type='method'><a href="Config.html#setConfigPath">setConfigPath</a></li></ul></li><li><a href="Schema.html">Schema</a><ul class='methods'><li data-type='method'><a href="Schema.html#getExpress">getExpress</a></li><li data-type='method'><a href="Schema.html#getMongoose">getMongoose</a></li><li data-type='method'><a href="Schema.html#getPassportJs">getPassportJs</a></li><li data-type='method'><a href="Schema.html#getRender">getRender</a></li><li data-type='method'><a href="Schema.html#getRouter">getRouter</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+    <section class="readme">
+        <article><p><a href="https://nodei.co/npm/yocto-config/"><img src="https://nodei.co/npm/yocto-config.png?downloads=true&amp;downloadRank=true&amp;stars=true" alt="NPM"></a></p>
+<p><img src="https://david-dm.org/yoctore/yocto-config.svg" alt="alt text" title="Dependencies Status">
+<a href="https://codeclimate.com/github/yoctore/yocto-config"><img src="https://codeclimate.com/github/yoctore/yocto-config/badges/gpa.svg" alt="Code Climate"></a>
+<a href="https://codeclimate.com/github/yoctore/yocto-config/coverage"><img src="https://codeclimate.com/github/yoctore/yocto-config/badges/coverage.svg" alt="Test Coverage"></a>
+<a href="https://codeclimate.com/github/yoctore/yocto-config"><img src="https://codeclimate.com/github/yoctore/yocto-config/badges/issue_count.svg" alt="Issue Count"></a>
+<a href="https://travis-ci.org/yoctore/yocto-config"><img src="https://travis-ci.org/yoctore/yocto-config.svg?branch=master" alt="Build Status"></a></p>
+<h2>Overview</h2><p>This module is a part of yocto node modules for NodeJS.</p>
+<p>Please see <a href="https://www.npmjs.com/~yocto">our NPM repository</a> for complete list of available tools (completed day after day).</p>
+<p>This module provide a simple config validator tools for a node app.</p>
+<h2>Motivation</h2><p>Our main motivation for this module is, create and provide a single, simple and custom config manager (with validation) for each part of our program in the same place.</p>
+<h2>How validation schema works ?</h2><p>Default validation schema was build with <a href="https://www.npmjs.com/package/joi">joi</a> package manager, and all custom all schema must be associate with a <strong>joi rules too</strong>.</p>
+<p>During load process given files was auto validated with associated schema.</p>
+<h2>Config files priority</h2><p><strong>Priority</strong> : <code>(Other file).json</code> &lt; <code>all.json</code> &lt; <code>common.json</code> &lt; <code>development.json</code> &lt; <code>stagging.json</code> &lt; <code>production.json</code></p>
+<p>all.json : place in this file all general property (shared key, node port, etc) </p>
+<p>common.json : place in this file all common data between each env (app name, express config, etc) </p>
+<p>development.json : place in this file all development property for development environnement</p>
+<p>stagging.json : place in this file all stagging property for stagging environnement</p>
+<p>production.json : place in this file all production property for production environnement</p>
+<p><strong>IMPORTANT</strong> : file was merged with previous defined priority, so it should be understood that we dont need to define multiple times the same property if we doesn't need to replace it. <strong>JUST PLACE IN CORRECT ENV WHAT YOU NEED</strong></p>
+<p><em>For example :</em> </p>
+<pre class="prettyprint source lang-javascript"><code>// a development.json file with these property
+{
+&quot;test&quot; : {
+  &quot;db&quot; : {
+    &quot;uri&quot; : &quot;http://test.com/123456&quot;
+  }
+}</code></pre><pre class="prettyprint source lang-javascript"><code>// a production.json file with these property
+{
+&quot;test&quot; : {
+  &quot;db&quot; : {
+    &quot;options&quot; : {
+        &quot;op1&quot; : &quot;my-value1&quot;,
+        &quot;op2&quot; : &quot;my-value2&quot;
+    }
+  }
+}</code></pre><p>Will produce on production this config data :</p>
+<pre class="prettyprint source lang-javascript"><code>// generated config in production env
+{
+&quot;test&quot; : {
+  &quot;db&quot; : {
+    &quot;uri&quot; : &quot;http://test.com/123456&quot;,
+    &quot;options&quot; : {
+        &quot;op1&quot; : &quot;my-value1&quot;,
+        &quot;op2&quot; : &quot;my-value2&quot;
+    }
+  }
+}</code></pre><h2>Pre-defined configuration</h2><p>Predefined configuration schema was availabe. To use them see methods below : </p>
+<ul>
+<li><a href="">enableExpress</a> : add to default schema an express configuration</li>
+<li><a href="">enableMongoose</a> : add to default schema a mongoose configuration</li>
+<li><a href="">enablePassportJs</a> : add to default schema a passportjs configuration for (facebook, twitter, google, active-directory, standard login)</li>
+<li><a href="">enableRender</a> : add to default schema a <a href="https://www.npmjs.com/package/yocto-render">yocto-render</a> configuration</li>
+<li><a href="">enableRouter</a> : add to default schema a <a href="https://www.npmjs.com/package/yocto-router">yocto-router</a> configuration</li>
+</ul>
+<p>All of these function was replaced by default an already defined configuration.</p>
+<p>If you want to enable a new configuration and keep safe the previous configuration, just pass <code>true</code> on enable function, and the new config will be append on the previous content, for example :</p>
+<pre class="prettyprint source lang-javascript"><code>var config  = require('yocto-config')();
+
+// defined base config
+config.enableExpress();
+// add new config for mongoose and keep safe previous defined config
+config.enableMongoose(true);</code></pre><h2>Adding custom config schema</h2><p>You can add your custom config schema for custom validation, two methods was available for these action : </p>
+<ul>
+<li>addCustomSchema(name, schema, autoenable, keepSafePreviousSchema) : add new schema with given name</li>
+<li>enableSchema(name, keepSafePreviousSchema) : enable a schema with given name</li>
+</ul>
+<p>Example :</p>
+<pre class="prettyprint source lang-javascript"><code>var config  = require('yocto-config')();
+var joi     = require('joi');
+
+// define your schema
+var schema = joi.object().required().keys({
+  mailer  : joi.object().required(),
+  daemon  : joi.object().required(),
+  core    : joi.object().keys({
+    daemon : joi.object().default({ delay : 10, retry : 10 }).keys({
+      delay : joi.number().min(0).default(10),
+      retry : joi.number().min(0).default(10)
+    }).allow([ 'delay', 'retry' ]),
+    mailer : joi.object().default({ limit : 1, sort : 'ascending' }).keys({
+      limit : joi.number().min(1).default(1),
+      sort  : joi.string().empty().default('ascending').allow([ 'ascending', 'descending' ]),
+    }).allow([ 'limit', 'sort' ])
+  }).allow([ 'daemon', 'mailer' ])
+}).unknown();
+
+// add custom schema named 'test'
+// third parameter enable given schema (optional, by default to false)
+// fourth parameter keep safe all predefined schema (optional, by default to false)
+config.addCustomSchema('test', schema, true, true);
+
+// OR classic process
+config.addCustomSchema('test', schema);
+config.enableSchema('test');</code></pre><h2>How to use</h2><pre class="prettyprint source lang-javascript"><code>
+var config  = require('yocto-config')();
+
+// enable defined config
+config.enableExpress(true);
+config.enableMongoose(true);
+config.enablePassportJs(true);
+
+// Set config path
+config.setConfigPath('./example/config');
+
+// Load and retreive data from callback
+config.load().then(function(data) {
+  // your code here
+  // you can also get data with a method
+  var c = config.getConfig();
+  console.log(c);
+}).catch(function(error) {
+  // your code here
+});</code></pre><h2>How to change config on the fly ?</h2><p>In some case we need to use same core app for different apps. 
+To change the config path for each app during run it's possible to use <code>process.env</code>.
+To use it run during start your app use these params <code>CONFIG_SUFFIX_PATH</code>.</p>
+<pre class="prettyprint source lang-bash"><code>CONFIG_SUFFIX_PATH='suffix/base/path' node app</code></pre><h2>Tricks</h2><p>You can also use a utility method <code>autoEnableValidators</code> to enable your validator. See below key associated with schema : </p>
+<ul>
+<li><code>express</code> for express schema</li>
+<li><code>passportJs</code> for passportJs schema</li>
+<li><code>mongoose</code> for mongoose schema</li>
+<li><code>render</code> for yocto-render module schema</li>
+<li><code>router</code> for yocto-router module schema</li>
+</ul>
+<p>Example : </p>
+<pre class="prettyprint source lang-javascript"><code>var config  = require('yocto-config')();
+config.autoEnableValidators([ 'express', 'passportJs', 'mongoose' ]);
+// Extra process</code></pre><h2>Default configuration rules</h2><ul>
+<li>Mongoose schema can be find <a href="https://yoctore.github.re/yocto-config/schema.js.html#line741">here</a></li>
+<li>Express schema can be find <a href="https://yoctore.github.re/yocto-config/schema.js.html#line383">here</a></li>
+<li>Yocto Render schema can be find <a href="https://yoctore.github.re/yocto-config/schema.js.html#line869">here</a></li>
+<li>Yocto Router schema can be find <a href="https://yoctore.github.re/yocto-config/schema.js.html#line966">here</a></li>
+<li>Yocto PassportJS schema can be find <a href="https://yoctore.github.re/yocto-config/schema.js.html#line805">here</a></li>
+</ul>
+<h2>Logging in tool</h2><p>By Default this module include <a href="https://www.npmjs.com/package/yocto-logger">yocto-logger</a> for logging.
+It's possible to inject in your config instance your current logger instance if is another <code>yocto-logger</code> instance.</p>
+<h2>Changelog</h2><p>All history is <a href="https://github.com/yoctore/yocto-config/blob/master/CHANGELOG.md">here</a></p>
+<h2>Full Documenation</h2><p>You can find full online documentation <a href="https://yoctore.github.io/yocto-config">here</a></p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>Documentation for application <b>yocto-config<b> was generated at Tue Dec 06 2016 17:31:56 GMT+0400 (RET) with <a href='https://www.npmjs.com/package/yoctodoc'>yocto-doc</a> module - Copyright Yocto © 2016</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

@@ -1,3 +1,11 @@
+## 2.0.0 (2016-10-07)
+
+- Major package update dependencies
+- Add new env value `CONFIG_SUFFIX_PATH` to append like a suffix on the end of config path
+- Refactoring and merging all schema Class in a single class
+- Adding documentation form yocto-doc
+- Add more unit tests
+
 ## 1.8.2 (2016-10-07)
 
 - Add config for fingerprint for render part

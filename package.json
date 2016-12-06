@@ -1,7 +1,7 @@
 {
   "name": "yocto-config",
   "description": "A simple config manager for node app",
-  "version": "1.8.3",
+  "version": "2.0.0",
   "scripts": {
     "test": "grunt test"
   },
@@ -45,18 +45,19 @@
     "schema"
   ],
   "dependencies": {
-    "glob": "^7.0.6",
-    "joi": "^8.0.5",
-    "lodash": "^3.8.0",
+    "glob": "^7.1.1",
+    "joi": "^10.0.5",
+    "lodash": "^4.17.2",
     "q": "^1.4.1",
     "yocto-logger": "^1.1.6",
     "yocto-utils": "^1.2.8"
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "grunt": "^0.4.5",
-    "grunt-contrib-uglify": "^1.0.1",
-    "grunt-mocha-cli": "^2.1.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-mocha-cli": "^3.0.0",
+    "yocto-doc": "^2.1.6",
     "yocto-hint": "^1.3.7"
   }
 }

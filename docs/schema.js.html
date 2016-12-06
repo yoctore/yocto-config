@@ -1,19 +1,70 @@
-var joi = require('joi');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>schema.js - yocto-config</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/custom.css"/>
+    <link type="text/css" rel="stylesheet" href="styles/tomorrow-night.min.css"/>
+    <script type="text/javascript" src="scripts/lodash.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="scripts/search.js"></script>
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+  <a href="http://www.yocto.re" target="_blank"><img class="logo" src="./extras/logo-yocto.png" alt="logo-yocto"/></a>
+    <h2><a href="index.html">Home</a><span class="version">v2.0.0</span></h2><input class="search" placeholder="Type your search here ...." /><h3>Classes</h3><ul><li><a href="Config.html">Config</a><ul class='methods'><li data-type='method'><a href="Config.html#addCustomSchema">addCustomSchema</a></li><li data-type='method'><a href="Config.html#autoEnableValidators">autoEnableValidators</a></li><li data-type='method'><a href="Config.html#enableExpress">enableExpress</a></li><li data-type='method'><a href="Config.html#enableMongoose">enableMongoose</a></li><li data-type='method'><a href="Config.html#enablePassportJs">enablePassportJs</a></li><li data-type='method'><a href="Config.html#enableRender">enableRender</a></li><li data-type='method'><a href="Config.html#enableRouter">enableRouter</a></li><li data-type='method'><a href="Config.html#enableSchema">enableSchema</a></li><li data-type='method'><a href="Config.html#find">find</a></li><li data-type='method'><a href="Config.html#get">get</a></li><li data-type='method'><a href="Config.html#getConfig">getConfig</a></li><li data-type='method'><a href="Config.html#load">load</a></li><li data-type='method'><a href="Config.html#loadPassport">loadPassport</a></li><li data-type='method'><a href="Config.html#reload">reload</a></li><li data-type='method'><a href="Config.html#set">set</a></li><li data-type='method'><a href="Config.html#setConfigPath">setConfigPath</a></li></ul></li><li><a href="Schema.html">Schema</a><ul class='methods'><li data-type='method'><a href="Schema.html#getExpress">getExpress</a></li><li data-type='method'><a href="Schema.html#getMongoose">getMongoose</a></li><li data-type='method'><a href="Schema.html#getPassportJs">getPassportJs</a></li><li data-type='method'><a href="Schema.html#getRender">getRender</a></li><li data-type='method'><a href="Schema.html#getRouter">getRouter</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">schema.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+
+var joi   = require('joi');
+var _     = require('lodash');
+var utils = require('yocto-utils');
 
 /**
- * ExpressJs Config Schema
+ * Config Schema Class to manage each schema config for validation
  *
  * @date : 07/10/2015
- * @author : ROBERT Mathieu <mathieu@yocto.re>
+ * @author : ROBERT Mathieu &lt;mathieu@yocto.re>
  * @copyright : Yocto SAS, All right reserved
- * @class ExpressJs
+ * @class Schema
  */
-function ConfigExpressJs () {
+function Schema () {
   /**
-   * Default secret key for default value
+   * Default secret key for express value
    *
-   * @property secretKey
-   * @type {String}
+   * @public
+   * @memberof Schema
+   * @member {String} secretKey
    * @default yocto-secret-key
    */
   this.secretKey = 'yocto-secret-key';
@@ -21,8 +72,10 @@ function ConfigExpressJs () {
   /**
    * Current date value for default expires value
    *
-   * @property date
-   * @type {String}
+   * @public
+   * @memberof Schema
+   * @member {Date} date
+   * @default new Date()
    */
   this.date      = new Date();
 }
@@ -32,14 +85,16 @@ function ConfigExpressJs () {
  *
  * @return {Object} default schema for express configuration
  */
-ConfigExpressJs.prototype.getSchema = function () {
+Schema.prototype.getExpress = function () {
   // default schema
   var schema = {
     // default app rules
     app       : joi.object().required().keys({
       name        : joi.string().required().empty().min(3),
       stackError  : joi.boolean().default(true),
-      session     : joi.object().default({ timeout : 50000 }).keys({
+      session     : joi.object().default({
+        timeout : 50000
+      }).keys({
         timeout : joi.number().default(50000)
       }).allow('timeout')
     }).allow([ 'name', 'stackError', 'session' ]),
@@ -383,5 +438,260 @@ ConfigExpressJs.prototype.getSchema = function () {
   return schema;
 };
 
+/**
+ * Return current mongoose schema defintion
+ *
+ * @return {Object} default schema for mongoose configuration
+ */
+Schema.prototype.getMongoose = function () {
+  // native parser. Exclude it because underscore keys is not a good practicies and hint failed
+  // transformation will process at the end
+  var nParser = {
+    nativeParser : joi.boolean().default(false)
+  };
+
+  // replicaSet name. Exclude it because underscore keys is not a good practicies and hint failed
+  // transformation will process at the end
+  var rsName = {
+    rsName : joi.string().required().empty().min(3)
+  };
+
+  // default db Options
+  var dbOptions = _.extend({
+    serializeFunctions  : joi.boolean().default(false),
+    raw                 : joi.boolean().default(false),
+    retryMiliSeconds    : joi.number().min(0).default(5000),
+    numberOfRetries     : joi.number().min(0).default(5)
+  }, utils.obj.underscoreKeys(nParser));
+
+  // default schema
+  var schema = joi.object().required().keys({
+    type    : joi.string().default('mongoose').allow([ 'mongoose' ]),
+    uri     : joi.string().required().empty(),
+    options : joi.object().default({}).keys({
+      db          : joi.object().optional().keys(dbOptions),
+      server      : joi.object().optional().keys({
+        poolSize        : joi.number().min(5).default(5),
+        ssl             : joi.boolean().default(false),
+        sslValidate     : joi.boolean().default(true),
+        sslCA           : joi.array().default(null),
+        sslCert         : joi.string().default(null),
+        sslKey          : joi.string().default(null),
+        sslPass         : joi.string().default(null),
+        autoReconnect   : joi.boolean().default(true),
+        socketOptions   : joi.object().default({
+          noDelay           : true,
+          keepAlive         : 0,
+          connectTimeoutMS  : 0,
+          socketTimeoutMS   : 0
+        }).keys({
+          noDelay           : joi.boolean().default(true),
+          keepAlive         : joi.number().min(0).default(0),
+          connectTimeoutMS  : joi.number().min(0).default(0),
+          socketTimeoutMS   : joi.number().min(0).default(0)
+        }).allow([ 'noDelay', 'keepAlive', 'connectTimeoutMS', 'socketTimeoutMS' ])
+      }).allow([ 'poolSize', 'ssl', 'sslValidate', 'sslCA',
+                 'sslCert', 'sslKey', 'sslPass', 'autoReconnect', 'socketOptions']),
+      replset     : joi.object().optional().keys(utils.obj.underscoreKeys(rsName)),
+      user        : joi.string().optional().empty(),
+      pass        : joi.string().optional().empty()
+    }).allow([ 'db', 'server', 'replset', 'user', 'pass' ])
+  });
+
+  // default statement
+  return schema;
+};
+
+/**
+ * Return current passport js schema defintion
+ *
+ * @return {Object} default schema for passport configuration
+ */
+Schema.prototype.getPassportJs = function () {
+  // default validation schema
+  var baseSchema = {
+    identifier  : joi.string().required().empty().default(null), // clientID
+    secret      : joi.string().required().empty(), // sercet key
+    urls        : joi.object().required().keys({
+      connect   : joi.string().required().empty(), // init connection
+      callback  : joi.string().required().empty()  // system callback url
+    }),
+    db          : joi.object().required().keys({
+      method  : joi.string().required().empty()
+    })
+  };
+
+  // facebook Keys definition
+  var facebookKeys = _.extend(_.clone(baseSchema), {
+    fields : joi.array().required().items(
+      joi.string().valid([ 'id', 'name', 'gender', 'displayName',
+                           'photos', 'emails', 'profileUrl'
+                         ])
+    )
+  });
+
+  // twitter Keys definition
+  var twitterKeys         = _.clone(baseSchema);
+
+  // google Keys definition
+  var googleKeys          = _.extend(_.clone(baseSchema), {
+    scope : joi.array().required().items(joi.string().required().empty()).min(1)
+  });
+
+  // Ad Keys definition
+  var activeDirectoryKeys = _.extend(_.omit(_.clone(baseSchema), [ 'identifier', 'secret' ]), {
+    server : joi.object().required().keys({
+      bindDn             : joi.string().required().empty(),
+      bindCredentials    : joi.string().required().empty(),
+      url                : joi.string().required().empty(),
+      searchBase         : joi.string().required().empty(),
+      searchFilter       : joi.string().required().empty()
+    })
+  });
+
+  // standard auth
+  var standardAuthKeys =  _.omit(_.clone(baseSchema), [ 'identifier', 'secret', 'callback' ]);
+
+  // default schema
+  var schema = joi.object().required().keys({
+    internalUrlRedirect : joi.string().required().empty(),
+    facebook            : joi.object().optional().keys(facebookKeys),
+    twitter             : joi.object().optional().keys(twitterKeys),
+    google              : joi.object().optional().keys(googleKeys),
+    activeDirectory     : joi.array().optional().items(activeDirectoryKeys),
+    standard            : joi.array().optional().items(standardAuthKeys)
+  }).unknown();
+
+  // default statement
+  return schema;
+};
+
+/**
+ * Return current Render schema defintion
+ *
+ * @return {Object} default schema for passport configuration
+ */
+Schema.prototype.getRender = function () {
+  // define meta rules
+  var metaHttpEquivRules = joi.object().keys({
+    name  : joi.string().required().not(null),
+    value : joi.string().required().not(null)
+  });
+
+  // setting css media rules
+  var cssMediaRules = joi.object().keys({
+    link        : joi.string().required().not(null),
+    media       : joi.string().required().not(null),
+    defer       : joi.string().optional().allow('defer').not(null),
+    async       : joi.string().optional().allow('async').not(null),
+    fingerprint : joi.object().optional().keys({
+      enable      : joi.boolean().required().default(false),
+      key         : joi.string().optional().default(this.uuid),
+      dateFormat  : joi.string().optional().default('DD/MM/YYYY'),
+      qs          : joi.string().optional().empty().default('v'),
+      limit       : joi.number().optional().min(1)
+    })
+  });
+
+  // setting js media rules
+  var jsMediaRules = joi.object().keys({
+    link        : joi.string().required().not(null),
+    defer       : joi.string().optional().allow('defer').not(null),
+    async       : joi.string().optional().allow('async').not(null),
+    fingerprint : joi.object().optional().keys({
+      enable      : joi.boolean().required().default(false),
+      key         : joi.string().optional().default(this.uuid),
+      dateFormat  : joi.string().optional().default('DD/MM/YYYY'),
+      qs          : joi.string().optional().empty().default('v'),
+      limit       : joi.number().optional().min(1)
+    })
+  });
+
+  // setting up media type rules
+  var mediaTypeRules = {
+    css : joi.array().optional().min(1).items(cssMediaRules),
+    js  : joi.array().optional().min(1).items(jsMediaRules)
+  };
+
+  // setting up assets rules
+  var assetsRules = {
+    header : joi.object().optional().min(1).keys(mediaTypeRules),
+    footer : joi.object().optional().min(1).keys(mediaTypeRules)
+  };
+
+  // facebook twitter keys
+  var facebookTwitterKeys = {
+    property  : joi.string().required().empty(),
+    content   : joi.string().required().empty()
+  };
+
+  // google keys
+  var googleKeys = {
+    rel   : joi.string().required().empty(),
+    href  : joi.string().required().empty()
+  };
+
+  // setting up social keys
+  var socialRules = {
+    facebook  : joi.array().optional().items(facebookTwitterKeys).default([]),
+    twitter   : joi.array().optional().items(facebookTwitterKeys).default([]),
+    google    : joi.array().optional().items(googleKeys).default([])
+  };
+
+  // default statement
+  return joi.object().required().keys({
+    app       : joi.object().optional().min(1).keys({
+      name : joi.string().required().min(3).not(null).empty()
+    }),
+
+    // property list
+    property  : joi.object().optional().min(1).keys({
+      title       : joi.string().optional().min(3).not(null),
+      language    : joi.string().optional().length(2).not(null),
+      meta        : joi.array().optional().min(1).items(metaHttpEquivRules),
+      httpEquiv   : joi.array().optional().min(1).items(metaHttpEquivRules),
+      assets      : joi.object().optional().min(1).keys(assetsRules),
+      mobileIcons : joi.array().optional().min(1).items(
+        joi.object().required().keys({
+          rel   : joi.string().required().empty(),
+          sizes : joi.string().required().empty(),
+          href  : joi.string().required().empty()
+        })
+      ),
+      social      : joi.object().optional().min(1).keys(socialRules)
+    })
+  }).allow([ 'app', 'property' ]);
+};
+
+/**
+ * Return current router schema defintion
+ *
+ * @return {Object} default schema for passport configuration
+ */
+Schema.prototype.getRouter = function () {
+  // default statement
+  return joi.object().required().keys({
+    routes      : joi.string().required().empty().default(),
+    controllers : joi.string().required().empty().default()
+  }).allow([ 'routes', 'controllers' ]);
+};
+
 // Default export
-module.exports = new (ConfigExpressJs)();
+module.exports = new (Schema)();
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>Documentation for application <b>yocto-config<b> was generated at Tue Dec 06 2016 17:31:56 GMT+0400 (RET) with <a href='https://www.npmjs.com/package/yoctodoc'>yocto-doc</a> module - Copyright Yocto © 2016</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
