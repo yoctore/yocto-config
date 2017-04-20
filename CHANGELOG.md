@@ -1,3 +1,6 @@
+## 2.0.2 (2017-04-20)
+- Add into express schema the object staticServe
+
 ## 2.0.0 (2016-10-07)
 
 - Major package update dependencies
