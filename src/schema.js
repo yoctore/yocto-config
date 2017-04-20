@@ -54,6 +54,11 @@ Schema.prototype.getExpress = function () {
     }).allow([ 'name', 'stackError', 'session' ]),
     // express rules
     express   : joi.object().required().keys({
+      // express keys for static serving folder
+      staticServe     : joi.object().keys({
+        maxAge        : joi.number().integer().min(0).default(0),
+        lastModified  : joi.boolean().default(true)
+      }).default({}),
       jsonp           : joi.boolean().default(false),
       prettyHtml      : joi.boolean().default(true),
       viewEngine      : joi.string().empty().default('jade').allow('jade'),
@@ -340,6 +345,7 @@ Schema.prototype.getExpress = function () {
       joi.object().keys({ icons        :  joi.string().empty().min(1).default('/') }),
       joi.object().empty()
     ]),
+
     encrypt   : joi.object().default({ key : this.secretKey, type : 'hex' }).keys({
       key   : joi.string().default(this.secretKey).empty(),
       type  : joi.string().default('hex').valid([
