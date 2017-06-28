@@ -540,6 +540,9 @@ Schema.prototype.getRender = function () {
 
   // setting css media rules
   var cssMediaRules = joi.object().keys({
+    host        : joi.string().uri({
+      scheme : [ 'http', 'https' ]
+    }).optional().empty().default(''),
     link        : joi.string().required().not(null),
     media       : joi.string().required().not(null),
     defer       : joi.string().optional().allow('defer').not(null),
@@ -559,6 +562,9 @@ Schema.prototype.getRender = function () {
 
   // setting js media rules
   var jsMediaRules = joi.object().keys({
+    host        : joi.string().uri({
+      scheme : [ 'http', 'https' ]
+    }).optional().empty().default(''),
     link        : joi.string().required().not(null),
     defer       : joi.string().optional().allow('defer').not(null),
     async       : joi.string().optional().allow('async').not(null),

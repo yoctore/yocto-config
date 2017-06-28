@@ -586,6 +586,9 @@ Schema.prototype.getRender = function () {
 
   // setting css media rules
   var cssMediaRules = joi.object().keys({
+    host        : joi.string().uri({
+      scheme : [ 'http', 'https' ]
+    }).optional().empty().default(''),
     link        : joi.string().required().not(null),
     media       : joi.string().required().not(null),
     defer       : joi.string().optional().allow('defer').not(null),
@@ -605,6 +608,9 @@ Schema.prototype.getRender = function () {
 
   // setting js media rules
   var jsMediaRules = joi.object().keys({
+    host        : joi.string().uri({
+      scheme : [ 'http', 'https' ]
+    }).optional().empty().default(''),
     link        : joi.string().required().not(null),
     defer       : joi.string().optional().allow('defer').not(null),
     async       : joi.string().optional().allow('async').not(null),
@@ -703,7 +709,7 @@ module.exports = new (Schema)();
 
 <br class="clear">
 
-<footer>Documentation for application <b>yocto-config<b> was generated at Wed Jun 28 2017 12:59:47 GMT+0400 (+04) with <a href='https://www.npmjs.com/package/yoctodoc'>yocto-doc</a> module - Copyright Yocto © 2017</footer>
+<footer>Documentation for application <b>yocto-config<b> was generated at Wed Jun 28 2017 17:24:24 GMT+0400 (+04) with <a href='https://www.npmjs.com/package/yoctodoc'>yocto-doc</a> module - Copyright Yocto © 2017</footer>
 
 <script>prettyPrint();</script>
 <script src="scripts/linenumber.js"></script>
