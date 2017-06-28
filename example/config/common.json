@@ -47,6 +47,35 @@
   },
   "render" : {
     "property" : {
+      "assets" : { 
+        "header" : {
+          "css" : [ 
+            {
+              "link" : "header.css?r=toto", "media" : "media,print",
+              "fingerprint" : { "dateFormat" : "YY/MM/DD", "enable" : true, "qs" : "g", "limit" : 15, "key" : "1234" },
+              "base64" : { "enable" : true, "qs" : "r" }
+            },
+            { "link" : "header3.css", "media" : "media,print", "fingerprint" : { "dateFormat" : "YY/MM/DD", "enable" : true, "qs" : "g", "limit" : 15, "key" : "1234" } },
+            { "link" : "header2.css", "media" : "print" }
+          ],
+          "js" : [
+             { "link" : "header.js"  }, 
+             { "link" : "header2.js", "defer" : "defer", "base64" : { "enable" : true, "qs" : "r" } },
+             { "link" : "header3.js", "async" : "async" }
+          ]
+        }, 
+        "footer" : {
+          "css" : [
+            { "link" : "footer.css", "media" : "print" },
+            { "link" : "footer2.css", "media" : "screen" }
+          ],
+          "js" : [
+             { "link" : "footer.js"  }, 
+             { "link" : "footer2.js", "defer" : "defer" },
+             { "link" : "footer3.js", "async" : "async" }
+          ]
+        }
+      },
       "mobileIcons" : [
         {
           "rel" : "a",

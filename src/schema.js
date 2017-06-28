@@ -550,6 +550,10 @@ Schema.prototype.getRender = function () {
       dateFormat  : joi.string().optional().default('DD/MM/YYYY'),
       qs          : joi.string().optional().empty().default('v'),
       limit       : joi.number().optional().min(1)
+    }),
+    base64      : joi.object().optional().keys({
+      enable      : joi.boolean().required().default(false),
+      qs          : joi.string().optional().empty().default('r')
     })
   });
 
@@ -564,6 +568,10 @@ Schema.prototype.getRender = function () {
       dateFormat  : joi.string().optional().default('DD/MM/YYYY'),
       qs          : joi.string().optional().empty().default('v'),
       limit       : joi.number().optional().min(1)
+    }),
+    base64      : joi.object().optional().keys({
+      enable      : joi.boolean().required().default(false),
+      qs          : joi.string().optional().empty().default('r')
     })
   });
 
