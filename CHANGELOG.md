@@ -1,3 +1,8 @@
+## 3.0.0 (2018-02-14)
+
+- Major update of all dependencies
+- Update node version engine to >= 8.9.4
+
 ## 2.0.2 (2017-04-20)
 - Add into express schema the object staticServe
 

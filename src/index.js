@@ -38,6 +38,7 @@ var schema  = require('./schema');
  * @author : ROBERT Mathieu <mathieu@yocto.re>
  * @copyright : Yocto SAS, All right reserved
  * @class Config
+ * @param {Object} logger Defaut yocto-logger instance
  */
 function Config (logger) {
   /**
@@ -58,7 +59,7 @@ function Config (logger) {
    * @member {Boolean} state
    * @default false
    */
-  this.state  = false;
+  this.state = false;
 
   /**
    * Default env value
@@ -68,7 +69,7 @@ function Config (logger) {
    * @member {String} env
    * @default development
    */
-  this.env    = process.env.NODE_ENV || 'development';
+  this.env = process.env.NODE_ENV || 'development';
 
   /**
    * Default base path
@@ -77,7 +78,7 @@ function Config (logger) {
    * @memberof Config
    * @member {String} base
    */
-  this.base   = process.cwd();
+  this.base = process.cwd();
 
   /**
    * Default logger instance. can be override by set function
@@ -113,11 +114,11 @@ function Config (logger) {
    */
 
   this.schemaList = {
-    express       : schema.getExpress(),
-    mongoose      : schema.getMongoose(),
-    passportJs    : schema.getPassportJs(),
-    render        : schema.getRender(),
-    router        : schema.getRouter()
+    express    : schema.getExpress(),
+    mongoose   : schema.getMongoose(),
+    passportJs : schema.getPassportJs(),
+    render     : schema.getRender(),
+    router     : schema.getRouter()
   };
 
   /**
@@ -139,48 +140,51 @@ function Config (logger) {
  * @return {Boolean} true if all is ok falser otherwise
  */
 Config.prototype.find = function (name, complete) {
-  // message
-  this.logger.debug([ '[ Config.find ] - Try to enable config for', name].join(' '));
+  // Message
+  this.logger.debug([ '[ Config.find ] - Try to enable config for', name ].join(' '));
 
-  // search item
+  // Search item
   var item = _.has(this.schemaList, name);
 
-  // has item ?
+  // Has item ?
   if (item) {
-    // get value
+    // Get value
     item = this.schemaList[name];
 
-    // create default object
+    // Create default object
     var obj = _.set({}, name, item);
 
-    // express item ??
+    // Express item ??
     if (name === 'express' && _.has(obj, 'express')) {
-      // change depth assign
+      // Change depth assign
       obj = obj.express;
     }
 
-    // mongoose or sequelize item ?? transform to db
+    // Mongoose or sequelize item ?? transform to db
     if (name === 'mongoose' || name === 'sequelize') {
-      // change object name for db
+      // Change object name for db
       obj = {
         db : obj[name]
       };
     }
 
-    // add item at the end of list ?
+    // Add item at the end of list ?
     if (_.isBoolean(complete) && complete) {
-      // not extend but merge current object
+      // Not extend but merge current object
       _.merge(this.schema, obj);
     } else {
-      // simple assignation
+      // Simple assignation
       this.schema = obj;
     }
-    // message
-    this.logger.info(['[ Config.find ] -', name, 'config was correcty activated.'].join(' '));
-    // valid statement
+
+    // Message
+    this.logger.info([ '[ Config.find ] -', name, 'config was correcty activated.' ].join(' '));
+
+    // Valid statement
     return true;
   }
-  // default statement
+
+  // Default statement
   return false;
 };
 
@@ -190,8 +194,8 @@ Config.prototype.find = function (name, complete) {
  * @param {Boolean} complete true if we need to append new config after existing
  * @return {Boolean} true if all is ok falser otherwise
  */
-Config.prototype.enableExpress =  function (complete) {
-  // process
+Config.prototype.enableExpress = function (complete) {
+  // Process
   return this.enableSchema('express', complete);
 };
 
@@ -201,8 +205,8 @@ Config.prototype.enableExpress =  function (complete) {
  * @param {Boolean} complete true if we need to append new config after existing
  * @return {Boolean} true if all is ok falser otherwise
  */
-Config.prototype.enableRender =  function (complete) {
-  // process
+Config.prototype.enableRender = function (complete) {
+  // Process
   return this.enableSchema('render', complete);
 };
 
@@ -212,8 +216,8 @@ Config.prototype.enableRender =  function (complete) {
  * @param {Boolean} complete true if we need to append new config after existing
  * @return {Boolean} true if all is ok falser otherwise
  */
-Config.prototype.enableRouter =  function (complete) {
-  // process
+Config.prototype.enableRouter = function (complete) {
+  // Process
   return this.enableSchema('router', complete);
 };
 
@@ -224,7 +228,7 @@ Config.prototype.enableRouter =  function (complete) {
  * @return {Boolean} true if all is ok falser otherwise
  */
 Config.prototype.enableMongoose = function (complete) {
-  // process
+  // Process
   return this.enableSchema('mongoose', complete);
 };
 
@@ -235,7 +239,7 @@ Config.prototype.enableMongoose = function (complete) {
  * @return {Boolean} true if all is ok falser otherwise
  */
 Config.prototype.enablePassportJs = function (complete) {
-  // process
+  // Process
   return this.enableSchema('passportJs', complete);
 };
 
@@ -247,9 +251,10 @@ Config.prototype.enablePassportJs = function (complete) {
  * @return {Boolean} true if all is ok falser otherwise
  */
 Config.prototype.enableSchema = function (name, complete) {
-  // force complete to be a boolean
+  // Force complete to be a boolean
   complete = _.isBoolean(complete) ? complete : false;
-  // process
+
+  // Process
   return this.find(name, complete);
 };
 
@@ -260,27 +265,29 @@ Config.prototype.enableSchema = function (name, complete) {
  * @param {Object} value config value to add in schema
  * @param {Boolean} enable true if we need to add auto enable of config
  * @param {Boolean} complete true if we need to add new config after existing
+ * @return {Boolean} indicate success of this call
  */
 Config.prototype.addCustomSchema = function (name, value, enable, complete) {
-  // schema already exists ?
+  // Schema already exists ?
   if (_.has(this.schemaList, name) || !_.isObject(value)) {
-    // error schema already exists
+    // Error schema already exists
     this.logger.error([ '[ Config.addCustomerSchema ] - Cannot add new custom schema. Schema :',
-                        name, 'already exist, or given value is invalid.' ].join(' '));
-    // invalid schema
+      name, 'already exist, or given value is invalid.' ].join(' '));
+
+    // Invalid schema
     return false;
   }
 
-  // add new schema
+  // Add new schema
   _.extend(this.schemaList, _.set({}, name, value));
 
-  // auto enable ?
+  // Auto enable ?
   if (_.isBoolean(enable) && enable) {
-    // enable schema
+    // Enable schema
     return this.enableSchema(name, complete);
   }
 
-  // valid statement
+  // Valid statement
   return _.has(this.schemaList, name);
 };
 
@@ -292,28 +299,30 @@ Config.prototype.addCustomSchema = function (name, value, enable, complete) {
  * @return {Boolean} true if all is ok false otherwise
  */
 Config.prototype.set = function (name, value) {
-  // check requirements
+  // Check requirements
   if (!_.isUndefined(name) && _.isString(name) && !_.isEmpty(name)) {
-    // need to normalize path ?
+    // Need to normalize path ?
     if (name === 'base') {
-      // is relative path ?
+      // Is relative path ?
       if (!path.isAbsolute(value)) {
-        // normalize
+        // Normalize
         value = path.normalize([ process.cwd(), value ].join('/'));
       }
     }
 
-    // assign value
+    // Assign value
     this[name] = value;
-    // valid statement
+
+    // Valid statement
     return true;
-  } else {
-    // warn message
-    this.logger.warning([ '[ Core.set ] - Invalid value given.',
-                          'name must be a string and not empty. Operation aborted !' ].join(' '));
   }
 
-  // invalid statement
+  // Warn message
+  this.logger.warning([ '[ Core.set ] - Invalid value given.',
+    'name must be a string and not empty. Operation aborted !' ].join(' '));
+
+
+  // Invalid statement
   return false;
 };
 
@@ -323,7 +332,7 @@ Config.prototype.set = function (name, value) {
  * @return {Object} loaded object
  */
 Config.prototype.getConfig = function () {
-  // default statement
+  // Default statement
   return this.get('config');
 };
 
@@ -334,7 +343,7 @@ Config.prototype.getConfig = function () {
  * @return {Boolean} true if all is ok false otherwise
  */
 Config.prototype.setConfigPath = function (path) {
-  // default statement
+  // Default statement
   return this.set('base', path);
 };
 
@@ -345,7 +354,7 @@ Config.prototype.setConfigPath = function (path) {
  * @return {Mixed} needed data
  */
 Config.prototype.get = function (name) {
-  // default instance
+  // Default instance
   return this[name];
 };
 
@@ -356,13 +365,13 @@ Config.prototype.get = function (name) {
  * @return {Boolean} true if load succeed false otherwise
  */
 Config.prototype.reload = function (base) {
-  // check base before load for conditional assignation
+  // Check base before load for conditional assignation
   if (_.isString(base) && !_.isEmpty(base)) {
-    // change base
+    // Change base
     this.base = base;
   }
 
-  // return load statement
+  // Return load statement
   return this.load();
 };
 
@@ -372,7 +381,7 @@ Config.prototype.reload = function (base) {
  * @return {Object} return current promise
  */
 Config.prototype.loadPassport = function () {
-  // retreive passport schema
+  // Retreive passport schema
   // this.schema = this.passport.get();
   // default statement
   return this.load();
@@ -385,33 +394,34 @@ Config.prototype.loadPassport = function () {
  * @return {Boolean} true if all is ok false otherwise
  */
 Config.prototype.autoEnableValidators = function (items) {
-  // is valid format ?
+  // Is valid format ?
   if (!_.isArray(items) || _.isEmpty(items)) {
-    // warn message invalid data
+    // Warn message invalid data
     this.logger.warning([ '[ Config.autoEnableValidator ] - Cannot check items.',
-                          'Is not an array or is empty.' ].join(' '));
-    // invalid statement
+      'Is not an array or is empty.' ].join(' '));
+
+    // Invalid statement
     return false;
   }
 
-  // parse item and check
+  // Parse item and check
   _.each(items, function (item) {
-    // schema exists ?
+    // Schema exists ?
     if (_.has(this.schemaList, item)) {
-      // enable succeed ?
+      // Enable succeed ?
       if (!this.enableSchema(item, true)) {
-        // success or error ?
+        // Success or error ?
         this.logger.error([ '[ Config.autoEnableValidator ] - Auto enable [',
-                            item, '] failed' ].join(' '));
+          item, '] failed' ].join(' '));
       }
     } else {
-      // warning
+      // Warning
       this.logger.warning([ '[ Config.autoEnableValidator ] - Cannot enable [',
-                            item, '] schema does not exists' ].join(' '));
+        item, '] schema does not exists' ].join(' '));
     }
   }.bind(this));
 
-  // default statement
+  // Default statement
   return true;
 };
 
@@ -421,29 +431,29 @@ Config.prototype.autoEnableValidators = function (items) {
  * @return {Object} return current promise
  */
 Config.prototype.load = function () {
-  // create async process here
+  // Create async process here
   var deferred = Q.defer();
 
-  // any errors ?? try/catch it
+  // Any errors ?? try/catch it
   try {
-    // default config object
+    // Default config object
     var config  = {};
 
-    // build pattern
+    // Build pattern
     var pattern = path.normalize([ this.base, this.suffix, '*.json' ].join('/'));
     var penv    = path.normalize([ this.base, this.suffix, [
       this.env, '.json' ].join('')
     ].join('/'));
 
-    // get file (sync mode)
+    // Get file (sync mode)
     var paths = glob.sync(pattern);
 
-    // has a valid path ? no ? stop process
+    // Has a valid path ? no ? stop process
     if (_.isEmpty(paths)) {
       throw 'No config files was found. Operation aborted !';
     }
 
-    // sort path
+    // Sort path
     paths = _.sortBy(paths, function (p) {
       var all         = path.normalize([ this.base, this.suffix, 'all.json' ].join('/'));
       var common      = path.normalize([ this.base, this.suffix, 'common.json' ].join('/'));
@@ -451,87 +461,96 @@ Config.prototype.load = function () {
       var staging     = path.normalize([ this.base, this.suffix, 'staging.json' ].join('/'));
       var production  = path.normalize([ this.base, this.suffix, 'production.json' ].join('/'));
 
-      // return data order
+      // Return data order
       return [ p === production, p === staging,
-               p === development, p === common, p === all, p === p ].join('|');
+        p === development, p === common, p === all ].join('||');
     }.bind(this));
 
-    // parse all and merge if no error
+    // Parse all and merge if no error
     _.each(paths, function (path) {
-      // parse all file contains
+      // Parse all file contains
       var item = JSON.parse(fs.readFileSync(path, 'utf-8'));
-      // merge data
+
+      // Merge data
+
       _.merge(config, item);
 
-      // has current env ? if test return false stop env was founded
+      // Has current env ? if test return false stop env was founded
       return penv !== path;
     });
 
-    // build schema
+    // Build schema
     this.schema = joi.object().required().keys(this.schema).unknown(true);
 
-    // validate !!!
-    var result = joi.validate(config, this.schema, { abortEarly : false });
+    // Validate !!!
+    var result = joi.validate(config, this.schema, {
+      abortEarly : false
+    });
 
-    // has error
+    // Has error
     if (!_.isNull(result.error)) {
-      // parse details
+      // Parse details
       _.each(result.error.details, function (error) {
         this.logger.warning([ '[ Config.load ] - Cannot update config an error occured. Error is :',
-                              utils.obj.inspect(error) ].join(' '));
+          utils.obj.inspect(error) ].join(' '));
       }.bind(this));
 
-      // throw exception error occured
+      // Throw exception error occured
       throw 'Config validation failed';
     }
 
-    // build directory value to UPPERCASE constants
+    // Build directory value to UPPERCASE constants
     _.each(config.directory, function (dir) {
-      // build path
+      // Build path
       var p = _.first(_.values(dir));
 
-      // is relative path ?
+      // Is relative path ?
       if (!path.isAbsolute(p)) {
         p = path.normalize([ process.cwd(), p ].join('/'));
       }
 
-      // build key
+      // Build key
       var k = [ _.first(_.keys(dir)), 'directory' ].join('_').toUpperCase();
 
-      // assign
+      // Assign
       this[k] = p;
     }.bind(this));
 
-    // change state
+    // Change state
     this.state = true;
 
-    // valid so assign config
+    // Valid so assign config
     this.config = result.value;
-    // log message
+
+    // Log message
     this.logger.info([ '[ Config.load ] - Success - Config file was changed with files based on :',
-                       [ this.base, this.suffix ].join('/') ].join(' '));
-    // resolve with valid value
+      [ this.base, this.suffix ].join('/') ].join(' '));
+
+    // Resolve with valid value
     deferred.resolve(this.config);
   } catch (e) {
-    // error message
+    // Error message
     this.logger.error([ '[ Config.load ] - an error occured during load config file. Error is :',
-                        e ].join(' '));
-    // reject
+      e ].join(' '));
+
+    // Reject
     deferred.reject(e);
   }
 
-  // return true if all is ok
+  // Return true if all is ok
   return deferred.promise;
 };
 
 // Default export
 module.exports = function (l) {
-  // is a valid logger ?
+  // Is a valid logger ?
   if (_.isUndefined(l) || _.isNull(l)) {
     logger.warning('[ Config.constructor ] - Invalid logger given. Use internal logger');
-    // assign
+
+    // Assign
     l = logger;
   }
-  // default statement
-  return new (Config)(l);
+
+  // Default statement
+  return new Config(l);
 };
