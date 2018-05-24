@@ -402,12 +402,13 @@ Schema.prototype.getExpress = function () {
       key    : this.secretKey,
       ips    : []
     }).keys({
-      enable             : joi.boolean().default(false),
-      key                : joi.string().default(this.secretKey),
-      ips                : joi.array().items(joi.string().required().empty()),
-      allowedRoutes      : joi.array().optional().items(joi.string().required().empty()),
-      autoEncryptRequest : joi.boolean().optional().default(true),
-      autoDecryptRequest : joi.boolean().optional().default(true)
+      enable              : joi.boolean().default(false),
+      key                 : joi.string().default(this.secretKey),
+      ips                 : joi.array().items(joi.string().required().empty()),
+      allowedRoutes       : joi.array().optional().items(joi.string().required().empty()),
+      ignoreDecryptRoutes : joi.array().optional().items(joi.string().required().empty()),
+      autoEncryptRequest  : joi.boolean().optional().default(true),
+      autoDecryptRequest  : joi.boolean().optional().default(true)
     }),
     cors    : joi.boolean().default(false),
     corsCfg : joi.object().optional().keys({
